@@ -1,0 +1,6 @@
+{
+  "name": "Krishna Chaitanya Junior College",
+  "description": "India's premier junior college web platform for parents and students in Nellore, Andhra Pradesh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
