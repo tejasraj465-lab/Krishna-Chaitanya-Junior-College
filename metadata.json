@@ -1,0 +1,6 @@
+{
+  "name": "Krishna Chaitanya Junior College",
+  "description": "Krishna Chaitanya Junior College & Integrated Academy - Premier 2-Year Intermediate College web experience with AI Campus Guide, mobile bottom sheet admission flow, course explorer, campus virtual tour, and interactive student life showcases.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

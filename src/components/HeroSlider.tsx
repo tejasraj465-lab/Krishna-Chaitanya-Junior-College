@@ -1,0 +1,246 @@
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
+import { Download, Sparkles, MessageCircle, Bot, ArrowRight, ShieldCheck, Award, GraduationCap, CheckCircle2, Building2, Calendar } from 'lucide-react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+
+import { heroSlides } from '../data/heroData';
+import { COLLEGE_INFO } from '../data/collegeData';
+import { HIGHLIGHT_COUNTERS } from '../data/collegeData';
+
+interface HeroProps {
+  onOpenApplyModal?: () => void;
+  onOpenBrochureModal?: () => void;
+  onOpenAIGuide?: () => void;
+}
+
+export const HeroSlider: React.FC<HeroProps> = ({
+  onOpenApplyModal,
+  onOpenBrochureModal,
+  onOpenAIGuide
+}) => {
+  const iconMap: Record<string, React.ReactNode> = {
+    GraduationCap: <GraduationCap className="w-5 h-5 text-[#FBBF24]" />,
+    Building2: <Building2 className="w-5 h-5 text-[#FBBF24]" />,
+    Award: <Award className="w-5 h-5 text-[#FBBF24]" />,
+    Calendar: <Calendar className="w-5 h-5 text-[#FBBF24]" />,
+  };
+
+  return (
+    <section id="hero" className="relative w-full overflow-hidden select-none bg-slate-900">
+      {/* 1. Ultra-Wide Image Slider with exact 21:9 aspect ratio */}
+      <div className="w-full aspect-[4/3] sm:aspect-[21/9] min-h-[160px] sm:min-h-[280px] relative bg-[#020e28] overflow-hidden">
+        <Swiper
+          effect="fade"
+          fadeEffect={{ crossFade: true }}
+          loop={true}
+          autoplay={{
+            delay: 4500,
+            disableOnInteraction: false,
+          }}
+          navigation={true}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          modules={[Autoplay, Navigation, Pagination, EffectFade]}
+          className="w-full h-full hero-swiper"
+        >
+          {heroSlides.map((slide) => (
+            <SwiperSlide key={slide.id}>
+              <div className="relative w-full h-full bg-[#020e28] flex items-center justify-center p-1 sm:p-2 overflow-hidden">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  loading="eager"
+                  className="w-full h-full object-contain object-center max-w-full max-h-full rounded-md sm:rounded-lg"
+                  referrerPolicy="no-referrer"
+                />
+                {/* Subtle inner highlight border */}
+                <div className="absolute inset-0 border border-blue-500/20 pointer-events-none rounded-md sm:rounded-lg" />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      {/* 2. Hero Matter Section (Rendered directly below the Image Slider) */}
+      <div className="bg-gradient-to-b from-[#071D49] via-[#0B3C91] to-[#06245C] text-white py-4 sm:py-12 px-3 sm:px-6 lg:px-8 border-b border-blue-900 shadow-xl">
+        <div className="max-w-[1500px] mx-auto px-3 sm:px-6 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-8 items-center">
+            
+            {/* Left Main Content Block */}
+            <div className="lg:col-span-8 space-y-3 sm:space-y-5">
+              {/* Institutional Badge */}
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FBBF24] text-[#0B3C91] px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full font-black text-[9px] xs:text-xs sm:text-sm tracking-wide sm:tracking-wider uppercase shadow-md whitespace-nowrap max-w-full">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 fill-[#0B3C91] shrink-0" />
+                <span className="whitespace-nowrap">Krishna Chaitanya • Admissions 2026-27 Open</span>
+              </div>
+
+              {/* Title */}
+              <h1 className="text-xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white font-serif">
+                Admissions Open 2026-27 — Shape Your Future with Excellence
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-blue-100 text-xs sm:text-lg font-normal leading-relaxed max-w-3xl">
+                Integrated IIT-JEE, NEET, EAPCET, CA/CMA, Long Term & Intermediate Programs with 28+ Years of Academic Supremacy in Nellore.
+              </p>
+
+              {/* Action CTAs */}
+              <div className="pt-1 sm:pt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap items-stretch sm:items-center sm:gap-4">
+                <button
+                  onClick={onOpenApplyModal}
+                  className="bg-[#F97316] hover:bg-[#EA580C] text-white px-3.5 sm:px-8 py-2.5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-extrabold text-[10px] sm:text-sm uppercase tracking-wider transition-all shadow-xl hover:shadow-orange-500/30 transform active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer w-full"
+                >
+                  <span>Apply For Admission</span>
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </button>
+
+                <button
+                  onClick={onOpenBrochureModal}
+                  className="bg-white/10 hover:bg-white/20 text-white px-3.5 sm:px-7 py-2.5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-semibold text-[10px] sm:text-sm border border-white/25 backdrop-blur-md transition-all flex items-center justify-center gap-1.5 cursor-pointer w-full"
+                >
+                  <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FBBF24]" />
+                  <span>Syllabus Brochure</span>
+                </button>
+
+                <a
+                  href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya Admission Team! I am interested in Intermediate 2026-27 admission.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2.5 sm:px-5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-semibold text-[10px] sm:text-sm transition-all flex items-center justify-center gap-1.5 border border-emerald-400/30 cursor-pointer w-full"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white stroke-none" />
+                  <span>WhatsApp Desk</span>
+                </a>
+
+                {onOpenAIGuide && (
+                  <button
+                    onClick={onOpenAIGuide}
+                    className="hidden sm:flex bg-blue-900/80 hover:bg-blue-800 text-blue-100 px-4 py-3.5 min-h-[48px] rounded-xl font-semibold text-xs border border-blue-400/30 transition-all items-center gap-2 cursor-pointer"
+                  >
+                    <Bot className="w-4 h-4 text-[#FBBF24]" />
+                    <span>Ask AI Assistant</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Right Quick Key Stats Grid */}
+            <div className="lg:col-span-4 grid grid-cols-2 gap-2.5 sm:gap-3.5">
+              <div className="bg-white/10 p-2.5 sm:p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-0.5 sm:space-y-1 min-h-[92px] sm:min-h-0">
+                <ShieldCheck className="w-4 h-4 sm:w-6 sm:h-6 text-[#FBBF24]" />
+                <p className="text-lg sm:text-2xl font-black text-white leading-tight">28+ Yrs</p>
+                <p className="text-[10px] sm:text-xs text-blue-200 font-medium leading-tight">Academic Legacy</p>
+              </div>
+
+              <div className="bg-white/10 p-2.5 sm:p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-0.5 sm:space-y-1 min-h-[92px] sm:min-h-0">
+                <Award className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-400" />
+                <p className="text-lg sm:text-2xl font-black text-white leading-tight">AIR 1</p>
+                <p className="text-[10px] sm:text-xs text-blue-200 font-medium leading-tight">NEET 720/720 Score</p>
+              </div>
+
+              <div className="bg-white/10 p-2.5 sm:p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-0.5 sm:space-y-1 min-h-[92px] sm:min-h-0">
+                <GraduationCap className="w-4 h-4 sm:w-6 sm:h-6 text-orange-400" />
+                <p className="text-lg sm:text-2xl font-black text-white leading-tight">99.8%</p>
+                <p className="text-[10px] sm:text-xs text-blue-200 font-medium leading-tight">Board Pass Ratio</p>
+              </div>
+
+              <div className="bg-white/10 p-2.5 sm:p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-0.5 sm:space-y-1 min-h-[92px] sm:min-h-0">
+                <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6 text-cyan-400" />
+                <p className="text-lg sm:text-2xl font-black text-white leading-tight">10,000+</p>
+                <p className="text-[10px] sm:text-xs text-blue-200 font-medium leading-tight">Top Engineers & Doctors</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="mt-4 sm:mt-10 rounded-3xl border border-white/10 bg-white/6 backdrop-blur-md p-3.5 sm:p-6 shadow-2xl">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2.5 sm:gap-3 mb-3 sm:mb-5">
+              <div>
+                <span className="inline-flex items-center gap-1 text-[#FBBF24] bg-white/10 px-2.5 py-1 rounded-full text-[9px] sm:text-xs font-black uppercase tracking-wider border border-white/10">
+                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span>A Legacy of Triumph</span>
+                </span>
+                <h2 className="text-lg sm:text-3xl font-extrabold font-serif text-white mt-2.5 sm:mt-3 tracking-tight leading-tight">
+                  Krishna Chaitanya At A Glance
+                </h2>
+              </div>
+              <p className="text-[11px] sm:text-sm text-blue-100 max-w-2xl leading-relaxed">
+                Proven academic strength, trusted faculty, and a legacy of top results across engineering, medical, commerce, and board examinations.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
+              {HIGHLIGHT_COUNTERS.map((item) => (
+                <div key={item.id} className="rounded-2xl bg-white/10 border border-white/10 p-3 sm:p-4 shadow-lg min-h-[112px] sm:min-h-0">
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-2xl bg-white/10 flex items-center justify-center mb-2.5 sm:mb-3">
+                    {iconMap[item.icon] || <Award className="w-5 h-5 text-[#FBBF24]" />}
+                  </div>
+                  <div className="text-xl sm:text-3xl font-black text-[#FBBF24] font-serif leading-tight">
+                    {item.count.toLocaleString()}{item.suffix}
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-blue-100 mt-1 font-semibold leading-snug">
+                    {item.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Custom Swiper CSS Tweaks */}
+      <style>{`
+        @media (max-width: 639px) {
+          .hero-swiper .swiper-button-next,
+          .hero-swiper .swiper-button-prev {
+            display: none !important;
+          }
+        }
+        .hero-swiper .swiper-button-next,
+        .hero-swiper .swiper-button-prev {
+          color: #ffffff;
+          background: rgba(11, 60, 145, 0.7);
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          transition: all 0.2s ease;
+        }
+        .hero-swiper .swiper-button-next:after,
+        .hero-swiper .swiper-button-prev:after {
+          font-size: 15px;
+          font-weight: bold;
+        }
+        .hero-swiper .swiper-button-next:hover,
+        .hero-swiper .swiper-button-prev:hover {
+          background: #0B3C91;
+          color: #FBBF24;
+          border-color: #FBBF24;
+        }
+        .hero-swiper .swiper-pagination {
+          bottom: 6px !important;
+        }
+        .hero-swiper .swiper-pagination-bullet {
+          background: #ffffff;
+          opacity: 0.6;
+        }
+        .hero-swiper .swiper-pagination-bullet-active {
+          background: #FBBF24 !important;
+          opacity: 1;
+          width: 24px;
+          border-radius: 6px;
+        }
+      `}</style>
+    </section>
+  );
+};
+
+export default HeroSlider;

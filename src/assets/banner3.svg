@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" width="100%" height="100%" style="font-family: Arial, Helvetica, sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020e28"/>
+      <stop offset="50%" stop-color="#072d6e"/>
+      <stop offset="100%" stop-color="#020e28"/>
+    </linearGradient>
+    <linearGradient id="goldHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f1c40f"/>
+      <stop offset="100%" stop-color="#e67e22"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="800" fill="url(#bgGrad3)"/>
+
+  <!-- Top Blue Header -->
+  <rect x="0" y="0" width="1600" height="130" fill="#00183e"/>
+  <line x1="0" y1="130" x2="1600" y2="130" stroke="#f1c40f" stroke-width="4"/>
+
+  <!-- Institution Header -->
+  <g transform="translate(40, 20)">
+    <circle cx="50" cy="45" r="42" fill="#d63031" stroke="#f1c40f" stroke-width="3"/>
+    <text x="50" y="53" fill="#ffffff" font-size="28" font-weight="900" text-anchor="middle">KCJC</text>
+    
+    <text x="115" y="42" fill="#ffffff" font-size="40" font-weight="900" font-family="serif">KRISHNA CHAITANYA JUNIOR COLLEGE</text>
+    <text x="115" y="75" fill="#f1c40f" font-size="20" font-weight="bold" letter-spacing="1">28+ YEARS ACADEMIC SUPREMACY IN NELLORE CAMPUSES</text>
+  </g>
+
+  <!-- Top Right Admissions Open Tag -->
+  <g transform="translate(1250, 25)">
+    <rect x="0" y="0" width="310" height="80" rx="12" fill="#20bf6b" stroke="#ffffff" stroke-width="2"/>
+    <text x="155" y="36" fill="#000000" font-size="18" font-weight="900" text-anchor="middle" letter-spacing="1">ADMISSIONS OPEN</text>
+    <text x="155" y="64" fill="#ffffff" font-size="28" font-weight="900" text-anchor="middle">2026 - 2027</text>
+  </g>
+
+  <!-- CENTER CONTENT GRID -->
+
+  <!-- Left Card: Toppers and Results Highlights -->
+  <g transform="translate(40, 160)">
+    <rect x="0" y="0" width="740" height="460" rx="16" fill="#001a42" stroke="#f1c40f" stroke-width="3"/>
+    <text x="370" y="45" fill="#f1c40f" font-size="30" font-weight="900" text-anchor="middle">🏆 UNBEATABLE ACADEMIC RECORD</text>
+    <line x1="40" y1="65" x2="700" y2="65" stroke="#003885" stroke-width="2"/>
+
+    <!-- Highlights Grid -->
+    <g transform="translate(30, 85)">
+      <!-- NEET 720/720 -->
+      <rect x="0" y="0" width="320" height="150" rx="12" fill="#003323" stroke="#26de81" stroke-width="2"/>
+      <text x="160" y="55" fill="#26de81" font-size="48" font-weight="900" text-anchor="middle">720 / 720</text>
+      <text x="160" y="90" fill="#ffffff" font-size="20" font-weight="900" text-anchor="middle">NEET PERFECT SCORE</text>
+      <text x="160" y="120" fill="#a29bfe" font-size="15" font-weight="bold" text-anchor="middle">ALL INDIA RANK 1</text>
+
+      <!-- JEE 99.82 -->
+      <rect x="360" y="0" width="320" height="150" rx="12" fill="#3a1100" stroke="#ff7675" stroke-width="2"/>
+      <text x="520" y="55" fill="#ff7675" font-size="48" font-weight="900" text-anchor="middle">99.82 %ile</text>
+      <text x="520" y="90" fill="#ffffff" font-size="20" font-weight="900" text-anchor="middle">ELITE JEE MAIN TOPPER</text>
+      <text x="520" y="120" fill="#ffd700" font-size="15" font-weight="bold" text-anchor="middle">State Top Ranker</text>
+
+      <!-- Board Pass % -->
+      <rect x="0" y="180" width="320" height="150" rx="12" fill="#00264d" stroke="#74b9ff" stroke-width="2"/>
+      <text x="160" y="235" fill="#74b9ff" font-size="48" font-weight="900" text-anchor="middle">99.8%</text>
+      <text x="160" y="270" fill="#ffffff" font-size="20" font-weight="900" text-anchor="middle">BOARD PASS RATIO</text>
+      <text x="160" y="300" fill="#26de81" font-size="15" font-weight="bold" text-anchor="middle">Highest in Nellore District</text>
+
+      <!-- Top Doctors Engineers -->
+      <rect x="360" y="180" width="320" height="150" rx="12" fill="#2d004d" stroke="#a29bfe" stroke-width="2"/>
+      <text x="520" y="235" fill="#a29bfe" font-size="48" font-weight="900" text-anchor="middle">10,000+</text>
+      <text x="520" y="270" fill="#ffffff" font-size="20" font-weight="900" text-anchor="middle">DOCTORS &amp; ENGINEERS</text>
+      <text x="520" y="300" fill="#ffd700" font-size="15" font-weight="bold" text-anchor="middle">Alumni Across the Globe</text>
+    </g>
+  </g>
+
+  <!-- Right Card: Integrated Coaching Programs -->
+  <g transform="translate(820, 160)">
+    <rect x="0" y="0" width="740" height="460" rx="16" fill="#001438" stroke="#20bf6b" stroke-width="3"/>
+    <text x="370" y="45" fill="#26de81" font-size="30" font-weight="900" text-anchor="middle">📚 INTEGRATED COURSES OFFERED</text>
+    <line x1="40" y1="65" x2="700" y2="65" stroke="#003885" stroke-width="2"/>
+
+    <!-- Course List -->
+    <g transform="translate(40, 90)">
+      <!-- MPC -->
+      <rect x="0" y="0" width="660" height="75" rx="10" fill="#002b66" stroke="#f1c40f" stroke-width="2"/>
+      <text x="30" y="48" fill="#f1c40f" font-size="32" font-weight="900">MPC</text>
+      <text x="130" y="46" fill="#ffffff" font-size="20" font-weight="bold">Integrated IIT-JEE (Main &amp; Advanced) + EAPCET</text>
+
+      <!-- BiPC -->
+      <rect x="0" y="90" width="660" height="75" rx="10" fill="#00382b" stroke="#26de81" stroke-width="2"/>
+      <text x="30" y="138" fill="#26de81" font-size="32" font-weight="900">BiPC</text>
+      <text x="130" y="136" fill="#ffffff" font-size="20" font-weight="bold">Integrated NEET Intensive Medical Coaching</text>
+
+      <!-- MEC -->
+      <rect x="0" y="180" width="660" height="75" rx="10" fill="#3a1100" stroke="#ff7675" stroke-width="2"/>
+      <text x="30" y="228" fill="#ff7675" font-size="32" font-weight="900">MEC</text>
+      <text x="130" y="226" fill="#ffffff" font-size="20" font-weight="bold">Integrated CA-CPT / Foundation + Commerce</text>
+
+      <!-- CEC -->
+      <rect x="0" y="270" width="660" height="75" rx="10" fill="#2d004d" stroke="#a29bfe" stroke-width="2"/>
+      <text x="30" y="318" fill="#a29bfe" font-size="32" font-weight="900">CEC</text>
+      <text x="130" y="316" fill="#ffffff" font-size="20" font-weight="bold">Civils / CLAT Foundation + Civils Coaching</text>
+    </g>
+  </g>
+
+  <!-- BOTTOM FOOTER -->
+  <g transform="translate(0, 640)">
+    <rect x="0" y="0" width="1600" height="160" fill="#00091a"/>
+    <line x1="0" y1="0" x2="1600" y2="0" stroke="#f1c40f" stroke-width="3"/>
+
+    <text x="40" y="55" fill="#f1c40f" font-size="26" font-weight="900">ADMISSION HELPLINE HOTLINE</text>
+    <text x="40" y="105" fill="#ffffff" font-size="38" font-weight="900">9247033334 • 9248748102 • 9248748116</text>
+
+    <!-- Right Yellow CTA Button -->
+    <g transform="translate(1180, 25)">
+      <rect x="0" y="0" width="380" height="90" rx="16" fill="url(#goldHighlight)"/>
+      <text x="190" y="55" fill="#000000" font-size="28" font-weight="900" text-anchor="middle" letter-spacing="1">APPLY FOR ADMISSION</text>
+    </g>
+  </g>
+</svg>

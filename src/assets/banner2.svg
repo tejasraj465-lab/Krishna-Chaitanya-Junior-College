@@ -1,0 +1,245 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" width="100%" height="100%" style="font-family: Arial, Helvetica, sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#02143b"/>
+      <stop offset="50%" stop-color="#083885"/>
+      <stop offset="100%" stop-color="#02143b"/>
+    </linearGradient>
+    <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff275"/>
+      <stop offset="100%" stop-color="#f1c40f"/>
+    </linearGradient>
+    <radialGradient id="avatarGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd700" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffd700" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="800" fill="url(#bgGrad2)"/>
+
+  <!-- Decorative Dot Pattern Background -->
+  <pattern id="dotGrid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="15" cy="15" r="1.5" fill="#00d2d3" opacity="0.15"/>
+  </pattern>
+  <rect width="1600" height="800" fill="url(#dotGrid)"/>
+
+  <!-- TOP HEADER SECTION -->
+  <g transform="translate(30, 25)">
+    <!-- Logo Icon -->
+    <circle cx="45" cy="45" r="40" fill="#d63031" stroke="#ffd700" stroke-width="4"/>
+    <circle cx="45" cy="45" r="32" fill="none" stroke="#ffffff" stroke-width="2"/>
+    <text x="45" y="52" fill="#ffffff" font-size="24" font-weight="900" text-anchor="middle">KC</text>
+
+    <!-- Telugu Institution Name -->
+    <text x="105" y="40" fill="#ffffff" font-size="42" font-weight="900" font-family="serif">కృష్ణచైతన్య</text>
+    <text x="360" y="40" fill="#74b9ff" font-size="22" font-weight="bold">విద్యాసంస్థలు</text>
+
+    <!-- Yellow Subtitle Capsule -->
+    <rect x="105" y="55" width="320" height="28" rx="14" fill="#f1c40f"/>
+    <text x="265" y="74" fill="#000000" font-size="13" font-weight="900" text-anchor="middle" letter-spacing="1">NELLORE'S MOST TRUSTED INSTITUTION</text>
+
+    <!-- Main Banner Title -->
+    <text x="105" y="120" fill="#ffffff" font-size="48" font-weight="900" font-family="Arial Black" letter-spacing="2">ELITE JEE RESULTS 2024-2026</text>
+  </g>
+
+  <!-- RIGHT TOP BLACK GOLD BANNER: 43 STUDENTS SCORING 90+ PERCENTILE -->
+  <g transform="translate(850, 25)">
+    <rect x="0" y="0" width="720" height="70" rx="10" fill="#000000" stroke="#f1c40f" stroke-width="3"/>
+    <text x="360" y="48" fill="#f1c40f" font-size="36" font-weight="900" font-family="Arial Black" text-anchor="middle">
+      <tspan fill="#ffffff">43</tspan> STUDENTS SCORING <tspan fill="#ffffff">90+</tspan> PERCENTILE
+    </text>
+  </g>
+
+  <!-- MAIN TOPPERS DISPLAY SECTION -->
+
+  <!-- TOP 3 TOPPERS (LEFT SIDE) -->
+  <!-- Topper 1: J.Harshavardhan (99.82) -->
+  <g transform="translate(60, 200)">
+    <!-- Photo Avatar Frame -->
+    <circle cx="90" cy="90" r="75" fill="#00183e" stroke="#ffd700" stroke-width="5"/>
+    <circle cx="90" cy="90" r="68" fill="#072d6e"/>
+    <!-- Student Silhouette Icon -->
+    <circle cx="90" cy="70" r="28" fill="#f1c40f"/>
+    <path d="M 45 130 C 45 100, 135 100, 135 130 Z" fill="#f1c40f"/>
+
+    <!-- Score Big Pill -->
+    <rect x="0" y="170" width="180" height="85" rx="12" fill="url(#yellowGrad)" stroke="#ffffff" stroke-width="2"/>
+    <text x="90" y="230" fill="#000000" font-size="52" font-weight="900" font-family="Arial Black" text-anchor="middle">99.82</text>
+    <text x="90" y="248" fill="#d63031" font-size="13" font-weight="900" text-anchor="middle">Percentile</text>
+
+    <!-- Student Name -->
+    <text x="90" y="280" fill="#ffffff" font-size="16" font-weight="900" text-anchor="middle">J.HARSHAVARDHAN</text>
+    <text x="90" y="296" fill="#74b9ff" font-size="11" font-weight="bold" text-anchor="middle">H.T No: 240310679023</text>
+  </g>
+
+  <!-- Topper 2: G.Pratap Naidu (99.42) -->
+  <g transform="translate(320, 200)">
+    <circle cx="90" cy="90" r="75" fill="#00183e" stroke="#ffd700" stroke-width="5"/>
+    <circle cx="90" cy="90" r="68" fill="#072d6e"/>
+    <circle cx="90" cy="70" r="28" fill="#26de81"/>
+    <path d="M 45 130 C 45 100, 135 100, 135 130 Z" fill="#26de81"/>
+
+    <rect x="0" y="170" width="180" height="85" rx="12" fill="url(#yellowGrad)" stroke="#ffffff" stroke-width="2"/>
+    <text x="90" y="230" fill="#000000" font-size="52" font-weight="900" font-family="Arial Black" text-anchor="middle">99.42</text>
+    <text x="90" y="248" fill="#d63031" font-size="13" font-weight="900" text-anchor="middle">Percentile</text>
+
+    <text x="90" y="280" fill="#ffffff" font-size="16" font-weight="900" text-anchor="middle">G.PRATAP NAIDU</text>
+    <text x="90" y="296" fill="#74b9ff" font-size="11" font-weight="bold" text-anchor="middle">H.T No: 240310728160</text>
+  </g>
+
+  <!-- Topper 3: P.Nirmal Teja (99.23) -->
+  <g transform="translate(580, 200)">
+    <circle cx="90" cy="90" r="75" fill="#00183e" stroke="#ffd700" stroke-width="5"/>
+    <circle cx="90" cy="90" r="68" fill="#072d6e"/>
+    <circle cx="90" cy="70" r="28" fill="#ff7675"/>
+    <path d="M 45 130 C 45 100, 135 100, 135 130 Z" fill="#ff7675"/>
+
+    <rect x="0" y="170" width="180" height="85" rx="12" fill="url(#yellowGrad)" stroke="#ffffff" stroke-width="2"/>
+    <text x="90" y="230" fill="#000000" font-size="52" font-weight="900" font-family="Arial Black" text-anchor="middle">99.23</text>
+    <text x="90" y="248" fill="#d63031" font-size="13" font-weight="900" text-anchor="middle">Percentile</text>
+
+    <text x="90" y="280" fill="#ffffff" font-size="16" font-weight="900" text-anchor="middle">P.NIRMAL TEJA</text>
+    <text x="90" y="296" fill="#74b9ff" font-size="11" font-weight="bold" text-anchor="middle">H.T No: 250310253864</text>
+  </g>
+
+  <!-- 7 TOPPERS ROW (RIGHT SIDE) -->
+  <g transform="translate(850, 115)">
+    <!-- Student 1: 98.75 K.Abhinav Reddy -->
+    <g transform="translate(0, 0)">
+      <circle cx="40" cy="40" r="32" fill="#072d6e" stroke="#26de81" stroke-width="3"/>
+      <circle cx="40" cy="30" r="12" fill="#26de81"/>
+      <path d="M 20 60 C 20 45, 60 45, 60 60 Z" fill="#26de81"/>
+      <text x="40" y="98" fill="#ffd700" font-size="22" font-weight="900" text-anchor="middle">98.75</text>
+      <text x="40" y="114" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">K.Abhinav Reddy</text>
+    </g>
+
+    <!-- Student 2: 98.23 M.D. Asjob Safi -->
+    <g transform="translate(100, 0)">
+      <circle cx="40" cy="40" r="32" fill="#072d6e" stroke="#26de81" stroke-width="3"/>
+      <circle cx="40" cy="30" r="12" fill="#74b9ff"/>
+      <path d="M 20 60 C 20 45, 60 45, 60 60 Z" fill="#74b9ff"/>
+      <text x="40" y="98" fill="#ffd700" font-size="22" font-weight="900" text-anchor="middle">98.23</text>
+      <text x="40" y="114" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">M.D. Asjob Safi</text>
+    </g>
+
+    <!-- Student 3: 97.41 Surya Prakash -->
+    <g transform="translate(200, 0)">
+      <circle cx="40" cy="40" r="32" fill="#072d6e" stroke="#26de81" stroke-width="3"/>
+      <circle cx="40" cy="30" r="12" fill="#ff7675"/>
+      <path d="M 20 60 C 20 45, 60 45, 60 60 Z" fill="#ff7675"/>
+      <text x="40" y="98" fill="#ffd700" font-size="22" font-weight="900" text-anchor="middle">97.41</text>
+      <text x="40" y="114" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Surya Prakash</text>
+    </g>
+
+    <!-- Student 4: 97.27 Vikram -->
+    <g transform="translate(300, 0)">
+      <circle cx="40" cy="40" r="32" fill="#072d6e" stroke="#26de81" stroke-width="3"/>
+      <circle cx="40" cy="30" r="12" fill="#fd79a8"/>
+      <path d="M 20 60 C 20 45, 60 45, 60 60 Z" fill="#fd79a8"/>
+      <text x="40" y="98" fill="#ffd700" font-size="22" font-weight="900" text-anchor="middle">97.27</text>
+      <text x="40" y="114" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Vikram</text>
+    </g>
+
+    <!-- Student 5: 97.18 Divya Sree -->
+    <g transform="translate(400, 0)">
+      <circle cx="40" cy="40" r="32" fill="#072d6e" stroke="#26de81" stroke-width="3"/>
+      <circle cx="40" cy="30" r="12" fill="#a29bfe"/>
+      <path d="M 20 60 C 20 45, 60 45, 60 60 Z" fill="#a29bfe"/>
+      <text x="40" y="98" fill="#ffd700" font-size="22" font-weight="900" text-anchor="middle">97.18</text>
+      <text x="40" y="114" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Divya Sree</text>
+    </g>
+
+    <!-- Student 6: 97.11 Mounika -->
+    <g transform="translate(500, 0)">
+      <circle cx="40" cy="40" r="32" fill="#072d6e" stroke="#26de81" stroke-width="3"/>
+      <circle cx="40" cy="30" r="12" fill="#ffeaa7"/>
+      <path d="M 20 60 C 20 45, 60 45, 60 60 Z" fill="#ffeaa7"/>
+      <text x="40" y="98" fill="#ffd700" font-size="22" font-weight="900" text-anchor="middle">97.11</text>
+      <text x="40" y="114" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Mounika</text>
+    </g>
+
+    <!-- Student 7: 97.06 Jyotirmayie -->
+    <g transform="translate(600, 0)">
+      <circle cx="40" cy="40" r="32" fill="#072d6e" stroke="#26de81" stroke-width="3"/>
+      <circle cx="40" cy="30" r="12" fill="#81ecec"/>
+      <path d="M 20 60 C 20 45, 60 45, 60 60 Z" fill="#81ecec"/>
+      <text x="40" y="98" fill="#ffd700" font-size="22" font-weight="900" text-anchor="middle">97.06</text>
+      <text x="40" y="114" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Jyotirmayie</text>
+    </g>
+  </g>
+
+  <!-- BOTTOM SUBJECT STATS AND ADMISSIONS SECTION -->
+
+  <!-- Left Stats Group: 35 in Math, 28 in Phys, 31 in Chem -->
+  <g transform="translate(30, 520)">
+    <!-- NCC Shield Logo -->
+    <polygon points="40,10 70,10 75,40 40,75 5,40 10,10" fill="#d63031" stroke="#ffd700" stroke-width="2"/>
+    <text x="40" y="42" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">NCC</text>
+
+    <!-- Math Stat -->
+    <g transform="translate(100, 0)">
+      <rect x="0" y="0" width="220" height="100" rx="10" fill="#001d4a" stroke="#f1c40f" stroke-width="2"/>
+      <text x="35" y="60" fill="#f1c40f" font-size="56" font-weight="900">35</text>
+      <text x="110" y="45" fill="#ffffff" font-size="14" font-weight="900">STUDENTS</text>
+      <text x="110" y="68" fill="#26de81" font-size="13" font-weight="bold">95+ %ile in</text>
+      <text x="110" y="86" fill="#ffd700" font-size="14" font-weight="900">MATHEMATICS</text>
+    </g>
+
+    <!-- Physics Stat -->
+    <g transform="translate(335, 0)">
+      <rect x="0" y="0" width="220" height="100" rx="10" fill="#001d4a" stroke="#26de81" stroke-width="2"/>
+      <text x="35" y="60" fill="#26de81" font-size="56" font-weight="900">28</text>
+      <text x="110" y="45" fill="#ffffff" font-size="14" font-weight="900">STUDENTS</text>
+      <text x="110" y="68" fill="#74b9ff" font-size="13" font-weight="bold">95+ %ile in</text>
+      <text x="110" y="86" fill="#26de81" font-size="14" font-weight="900">PHYSICS</text>
+    </g>
+
+    <!-- Chemistry Stat -->
+    <g transform="translate(570, 0)">
+      <rect x="0" y="0" width="220" height="100" rx="10" fill="#001d4a" stroke="#ff7675" stroke-width="2"/>
+      <text x="35" y="60" fill="#ff7675" font-size="56" font-weight="900">31</text>
+      <text x="110" y="45" fill="#ffffff" font-size="14" font-weight="900">STUDENTS</text>
+      <text x="110" y="68" fill="#a29bfe" font-size="13" font-weight="bold">95+ %ile in</text>
+      <text x="110" y="86" fill="#ff7675" font-size="14" font-weight="900">CHEMISTRY</text>
+    </g>
+  </g>
+
+  <!-- Right Admissions Box -->
+  <g transform="translate(850, 275)">
+    <rect x="0" y="0" width="720" height="345" rx="12" fill="#001438" stroke="#f1c40f" stroke-width="3"/>
+    
+    <text x="360" y="55" fill="#ffffff" font-size="34" font-weight="900" font-family="Arial Black" text-anchor="middle" letter-spacing="2">ADMISSIONS OPEN</text>
+    <text x="360" y="105" fill="#f1c40f" font-size="26" font-weight="900" text-anchor="middle">ELITE IIT | ELITE NEET | ELITE LONGTERM</text>
+
+    <line x1="50" y1="135" x2="670" y2="135" stroke="#003885" stroke-width="2"/>
+
+    <text x="360" y="175" fill="#00d2d3" font-size="22" font-weight="bold" text-anchor="middle">Courses offered</text>
+    
+    <!-- Course Pills -->
+    <g transform="translate(60, 205)">
+      <rect x="0" y="0" width="130" height="55" rx="10" fill="#d63031"/>
+      <text x="65" y="38" fill="#ffffff" font-size="28" font-weight="900" text-anchor="middle">MPC</text>
+
+      <rect x="155" y="0" width="130" height="55" rx="10" fill="#00b894"/>
+      <text x="220" y="38" fill="#ffffff" font-size="28" font-weight="900" text-anchor="middle">BiPC</text>
+
+      <rect x="310" y="0" width="130" height="55" rx="10" fill="#0984e3"/>
+      <text x="375" y="38" fill="#ffffff" font-size="28" font-weight="900" text-anchor="middle">MEC</text>
+
+      <rect x="465" y="0" width="130" height="55" rx="10" fill="#6c5ce7"/>
+      <text x="530" y="38" fill="#ffffff" font-size="28" font-weight="900" text-anchor="middle">CEC</text>
+    </g>
+  </g>
+
+  <!-- BOTTOM FOOTER STRIP -->
+  <g transform="translate(0, 640)">
+    <rect x="0" y="0" width="1600" height="160" fill="#000a1c"/>
+    <line x1="0" y1="0" x2="1600" y2="0" stroke="#f1c40f" stroke-width="3"/>
+
+    <text x="40" y="65" fill="#00d2d3" font-size="24" font-weight="bold">#everystudentmatters</text>
+    <text x="40" y="115" fill="#ffffff" font-size="32" font-weight="900">Join The Best : <tspan fill="#f1c40f">9247033334, 9248748102, 9248748116</tspan></text>
+
+    <text x="1560" y="90" fill="#26de81" font-size="28" font-weight="900" text-anchor="end">NELLORE CAMPUSES</text>
+  </g>
+</svg>

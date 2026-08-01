@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" width="100%" height="100%" style="font-family: Arial, Helvetica, sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#021438"/>
+      <stop offset="50%" stop-color="#072d6e"/>
+      <stop offset="100%" stop-color="#021438"/>
+    </linearGradient>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0051ba"/>
+      <stop offset="50%" stop-color="#003782"/>
+      <stop offset="100%" stop-color="#0051ba"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff2a1"/>
+      <stop offset="100%" stop-color="#f1c40f"/>
+    </linearGradient>
+    <linearGradient id="mpcGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#063d33"/>
+      <stop offset="100%" stop-color="#02211b"/>
+    </linearGradient>
+    <linearGradient id="bipcGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5e0f34"/>
+      <stop offset="100%" stop-color="#36081e"/>
+    </linearGradient>
+    <linearGradient id="srGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#594005"/>
+      <stop offset="100%" stop-color="#2e2102"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="800" fill="url(#bgGrad1)"/>
+
+  <!-- Top Blue Header Bar -->
+  <rect x="0" y="0" width="1600" height="110" fill="url(#headerGrad)"/>
+  <line x1="0" y1="110" x2="1600" y2="110" stroke="#f1c40f" stroke-width="4"/>
+
+  <!-- Top Header Telugu Headline Badge -->
+  <rect x="20" y="15" width="700" height="80" rx="10" fill="#00183e" stroke="#f1c40f" stroke-width="2"/>
+  <text x="35" y="52" fill="#ffffff" font-size="28" font-weight="bold">ఇంటర్ 2026 ఫలితాలలో అన్ని గ్రూప్స్‌లోనూ</text>
+  <text x="35" y="82" fill="#ffd700" font-size="28" font-weight="900">కృష్ణచైతన్య</text>
+  <rect x="195" y="60" width="80" height="30" rx="5" fill="#d63031"/>
+  <text x="203" y="82" fill="#ffffff" font-size="22" font-weight="900">No.1</text>
+
+  <!-- Center Institution Logo -->
+  <circle cx="850" cy="55" r="40" fill="#d63031" stroke="#ffd700" stroke-width="3"/>
+  <circle cx="850" cy="55" r="32" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="850" y="58" fill="#ffffff" font-size="22" font-weight="900" text-anchor="middle">KC</text>
+  <text x="850" y="73" fill="#ffd700" font-size="9" font-weight="bold" text-anchor="middle">NELLORE</text>
+  <text x="960" y="48" fill="#ffffff" font-size="30" font-weight="900" font-family="serif" letter-spacing="1">KRISHNA CHAITANYA</text>
+  <text x="960" y="75" fill="#f1c40f" font-size="18" font-weight="bold" letter-spacing="2">EDUCATIONAL INSTITUTIONS</text>
+
+  <!-- Top Right Phone Numbers -->
+  <g transform="translate(1330, 25)">
+    <rect x="0" y="0" width="250" height="60" rx="8" fill="#001a42" stroke="#26de81" stroke-width="2"/>
+    <text x="125" y="26" fill="#26de81" font-size="15" font-weight="bold" text-anchor="middle">📞 ADMISSION HELPLINE</text>
+    <text x="125" y="48" fill="#ffffff" font-size="15" font-weight="900" text-anchor="middle">9247033334, 9248748102</text>
+  </g>
+
+  <!-- Subtitle Tagline -->
+  <text x="35" y="140" fill="#ff7675" font-size="22" font-style="italic" font-weight="bold">Unstoppable Results Year after Year..</text>
+
+  <!-- MAIN RESULTS SECTION GRID -->
+
+  <!-- LEFT BOX: Jr MPC -->
+  <g transform="translate(20, 155)">
+    <rect x="0" y="0" width="760" height="470" rx="12" fill="url(#mpcGrad)" stroke="#20bf6b" stroke-width="3"/>
+    
+    <!-- Box Header -->
+    <rect x="15" y="12" width="110" height="32" rx="6" fill="#20bf6b"/>
+    <text x="70" y="34" fill="#000000" font-size="18" font-weight="900" text-anchor="middle">Jr MPC</text>
+    <text x="140" y="34" fill="#26de81" font-size="16" font-weight="bold">TOP MARKS (Max 470)</text>
+
+    <!-- Top Score Pills (467 - 465) -->
+    <g transform="translate(15, 55)">
+      <!-- 467 Topper -->
+      <rect x="0" y="0" width="68" height="65" rx="6" fill="#f1c40f" stroke="#ffffff" stroke-width="2"/>
+      <text x="34" y="32" fill="#000" font-size="28" font-weight="900" text-anchor="middle">467</text>
+      <text x="34" y="52" fill="#d63031" font-size="11" font-weight="bold" text-anchor="middle">470 (S.Charini)</text>
+
+      <!-- 466 Row -->
+      <rect x="75" y="0" width="62" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="106" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">466</text>
+      <text x="106" y="50" fill="#26de81" font-size="10" text-anchor="middle">G.Chaya</text>
+
+      <rect x="142" y="0" width="62" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="173" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">466</text>
+      <text x="173" y="50" fill="#26de81" font-size="10" text-anchor="middle">MV.Nagasree</text>
+
+      <!-- 465 Row -->
+      <rect x="209" y="0" width="60" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="239" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">465</text>
+      <text x="239" y="50" fill="#aaa" font-size="10" text-anchor="middle">K.Praveen</text>
+
+      <rect x="274" y="0" width="60" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="304" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">465</text>
+      <text x="304" y="50" fill="#aaa" font-size="10" text-anchor="middle">KVV.Omkar</text>
+
+      <rect x="339" y="0" width="60" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="369" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">465</text>
+      <text x="369" y="50" fill="#aaa" font-size="10" text-anchor="middle">MV.Dharmendra</text>
+
+      <rect x="404" y="0" width="60" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="434" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">465</text>
+      <text x="434" y="50" fill="#aaa" font-size="10" text-anchor="middle">P.Sathwik</text>
+
+      <rect x="469" y="0" width="60" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="499" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">465</text>
+      <text x="499" y="50" fill="#aaa" font-size="10" text-anchor="middle">SV.Sahasraa</text>
+
+      <rect x="534" y="0" width="60" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="564" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">465</text>
+      <text x="564" y="50" fill="#aaa" font-size="10" text-anchor="middle">K.Hima</text>
+
+      <rect x="599" y="0" width="60" height="65" rx="6" fill="#00183e" stroke="#26de81" stroke-width="1.5"/>
+      <text x="629" y="32" fill="#fff" font-size="24" font-weight="900" text-anchor="middle">465</text>
+      <text x="629" y="50" fill="#aaa" font-size="10" text-anchor="middle">D.Snigdha</text>
+    </g>
+
+    <!-- Dense Scores Grid (464 - 457) -->
+    <g transform="translate(15, 130)">
+      <text x="0" y="25" fill="#00d2d3" font-size="24" font-weight="900">464 464 464 464 464 464 464 464 464 464</text>
+      <text x="0" y="60" fill="#20bf6b" font-size="24" font-weight="900">463 463 463 463 462 462 462 462 462 462</text>
+      <text x="0" y="95" fill="#ffffff" font-size="24" font-weight="900">462 462 462 462 462 461 461 461 461 461</text>
+      <text x="0" y="130" fill="#00d2d3" font-size="24" font-weight="900">461 461 461 461 461 461 460 460 460 460</text>
+      <text x="0" y="165" fill="#20bf6b" font-size="24" font-weight="900">460 460 459 459 459 459 459 459 459 458</text>
+      <text x="0" y="200" fill="#ffffff" font-size="24" font-weight="900">458 458 457 457 457 457 457 457 457 457</text>
+    </g>
+    <text x="15" y="360" fill="#74b9ff" font-size="13" font-weight="bold">And 450+ Score Achievers: 233 Students in Jr Intermediate MPC</text>
+  </g>
+
+  <!-- CENTER-RIGHT BOX: Jr BiPC & Jr MEC / CEC -->
+  <g transform="translate(795, 155)">
+    <!-- Jr BiPC -->
+    <rect x="0" y="0" width="380" height="225" rx="10" fill="url(#bipcGrad)" stroke="#fd79a8" stroke-width="2"/>
+    <rect x="15" y="10" width="90" height="28" rx="5" fill="#e84393"/>
+    <text x="60" y="30" fill="#ffffff" font-size="16" font-weight="900" text-anchor="middle">Jr BiPC</text>
+    <text x="120" y="30" fill="#ff7675" font-size="20" font-weight="900">451 / 455 Max</text>
+    
+    <g transform="translate(15, 50)">
+      <text x="0" y="25" fill="#ffffff" font-size="22" font-weight="900">448  448  447  446  444</text>
+      <text x="0" y="58" fill="#fd79a8" font-size="22" font-weight="900">443  442  442  441  440</text>
+      <text x="0" y="90" fill="#ffffff" font-size="20" font-weight="900">439  438  437  436  435</text>
+    </g>
+
+    <!-- Jr MEC & CEC -->
+    <rect x="0" y="240" width="380" height="225" rx="10" fill="#062238" stroke="#0984e3" stroke-width="2"/>
+    <rect x="15" y="252" width="80" height="26" rx="4" fill="#0984e3"/>
+    <text x="55" y="270" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">Jr MEC</text>
+    <text x="110" y="272" fill="#74b9ff" font-size="22" font-weight="900">495 <tspan font-size="14" fill="#aaa">/ 500</tspan></text>
+    <text x="15" y="315" fill="#ffffff" font-size="17" font-weight="bold">489, 484, 481, 475 Score Rankers</text>
+
+    <line x1="15" y1="330" x2="365" y2="330" stroke="#0984e3" stroke-width="1" stroke-dasharray="4"/>
+
+    <rect x="15" y="342" width="80" height="26" rx="4" fill="#6c5ce7"/>
+    <text x="55" y="360" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">Jr CEC</text>
+    <text x="110" y="362" fill="#a29bfe" font-size="22" font-weight="900">492 <tspan font-size="14" fill="#aaa">/ 500</tspan></text>
+    <text x="15" y="405" fill="#ffffff" font-size="17" font-weight="bold">487, 480, 476 Top Scorers</text>
+  </g>
+
+  <!-- RIGHT BOX: Sr Inter -->
+  <g transform="translate(1190, 155)">
+    <rect x="0" y="0" width="390" height="470" rx="12" fill="url(#srGrad)" stroke="#f1c40f" stroke-width="3"/>
+    <rect x="15" y="12" width="110" height="32" rx="6" fill="#f1c40f"/>
+    <text x="70" y="34" fill="#000000" font-size="18" font-weight="900" text-anchor="middle">Sr Inter</text>
+    <text x="140" y="34" fill="#ffd700" font-size="16" font-weight="bold">MAX 1000 MARKS</text>
+
+    <!-- Top Score 991 -->
+    <rect x="15" y="55" width="360" height="60" rx="8" fill="#d63031" stroke="#ffffff" stroke-width="2"/>
+    <text x="30" y="98" fill="#ffffff" font-size="38" font-weight="900">991</text>
+    <text x="110" y="85" fill="#ffd700" font-size="16" font-weight="bold">STATE TOPPER SCORE</text>
+    <text x="110" y="105" fill="#ffffff" font-size="13">V.Varshitha (1000 Max Score)</text>
+
+    <!-- Sr Inter Scores Grid -->
+    <g transform="translate(15, 130)">
+      <text x="0" y="25" fill="#ffd700" font-size="23" font-weight="900">990  989  988  987  987</text>
+      <text x="0" y="60" fill="#ffffff" font-size="23" font-weight="900">985  985  985  984  984</text>
+      <text x="0" y="95" fill="#ffd700" font-size="23" font-weight="900">984  983  982  982  981</text>
+      <text x="0" y="130" fill="#ffffff" font-size="23" font-weight="900">981  981  981  980  980</text>
+      <text x="0" y="165" fill="#ffd700" font-size="23" font-weight="900">980  979  979  979  979</text>
+      <text x="0" y="200" fill="#ffffff" font-size="23" font-weight="900">978  978  977  977  976</text>
+      <text x="0" y="235" fill="#ffd700" font-size="23" font-weight="900">976  976  975  975  974</text>
+    </g>
+    <text x="15" y="400" fill="#ffeaa7" font-size="13" font-weight="bold">950+ Marks: 156 Students | 900+ Marks: 418 Students</text>
+  </g>
+
+  <!-- BOTTOM FOOTER RIBBON -->
+  <g transform="translate(0, 640)">
+    <rect x="0" y="0" width="1600" height="160" fill="#000d26"/>
+    <line x1="0" y1="0" x2="1600" y2="0" stroke="#0051ba" stroke-width="4"/>
+
+    <!-- Hashtag and Unstoppable Success -->
+    <text x="30" y="45" fill="#00d2d3" font-size="22" font-weight="bold">#everystudentmatters</text>
+    <text x="30" y="115" fill="url(#goldGrad)" font-size="62" font-weight="900" font-family="Arial Black" letter-spacing="1">Unstoppable SUCCESS</text>
+
+    <!-- Stats Banner Boxes -->
+    <g transform="translate(800, 20)">
+      <!-- Sr Inter Box -->
+      <rect x="0" y="0" width="380" height="110" rx="10" fill="#002b66" stroke="#00d2d3" stroke-width="2"/>
+      <text x="190" y="30" fill="#00d2d3" font-size="18" font-weight="900" text-anchor="middle">SR. INTERMEDIATE - 2026</text>
+      <text x="190" y="65" fill="#ffffff" font-size="22" font-weight="900" text-anchor="middle">950 - 156 Students &amp; Above</text>
+      <text x="190" y="95" fill="#ffd700" font-size="20" font-weight="bold" text-anchor="middle">900 - 418 Students &amp; Above</text>
+
+      <!-- Jr Inter Box -->
+      <rect x="400" y="0" width="370" height="110" rx="10" fill="#00382b" stroke="#26de81" stroke-width="2"/>
+      <text x="585" y="30" fill="#26de81" font-size="18" font-weight="900" text-anchor="middle">JR. INTERMEDIATE (MPC) - 2026</text>
+      <text x="585" y="65" fill="#ffffff" font-size="22" font-weight="900" text-anchor="middle">450 - 233 Students &amp; Above</text>
+      <text x="585" y="95" fill="#ffd700" font-size="20" font-weight="bold" text-anchor="middle">400 - 459 Students &amp; Above</text>
+    </g>
+
+    <!-- Bottom Yellow Strip -->
+    <rect x="0" y="135" width="1600" height="25" fill="#f1c40f"/>
+    <text x="800" y="153" fill="#000000" font-size="16" font-weight="900" text-anchor="middle" letter-spacing="2">TOP PASS PERCENTAGE IN NELLORE • ADMISSIONS OPEN FOR 2026-27</text>
+  </g>
+</svg>
