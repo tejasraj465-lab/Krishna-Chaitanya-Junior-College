@@ -10,6 +10,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ onNavigateHome }) => {
   return (
     <main className="w-full overflow-hidden">
       <PageBanner
+        variant="hero"
         eyebrow="Campus Gallery"
         title="Gallery"
         description="A curated visual archive of classrooms, laboratories, sports, NCC, NSS, celebrations, and everyday campus life."

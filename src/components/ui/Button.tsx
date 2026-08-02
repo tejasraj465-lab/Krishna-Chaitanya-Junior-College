@@ -44,7 +44,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={`
-        inline-flex items-center justify-center font-bold uppercase tracking-wider
+        inline-flex items-center justify-center font-sans font-bold uppercase tracking-wide
         transition-all duration-200 cursor-pointer
         transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
         disabled:opacity-50 disabled:pointer-events-none

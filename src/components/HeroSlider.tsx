@@ -30,6 +30,37 @@ export const HeroSlider: React.FC<HeroProps> = ({
     Calendar: <Calendar className="w-5 h-5 text-[#FBBF24]" />,
   };
 
+  const quickStats = [
+    {
+      id: 'legacy',
+      icon: ShieldCheck,
+      iconClass: 'text-[#FBBF24]',
+      value: '28+ Yrs',
+      label: 'Academic Legacy',
+    },
+    {
+      id: 'neet',
+      icon: Award,
+      iconClass: 'text-emerald-400',
+      value: 'AIR 1',
+      label: 'NEET 720/720 Score',
+    },
+    {
+      id: 'pass-ratio',
+      icon: GraduationCap,
+      iconClass: 'text-orange-400',
+      value: '99.8%',
+      label: 'Board Pass Ratio',
+    },
+    {
+      id: 'alumni',
+      icon: CheckCircle2,
+      iconClass: 'text-cyan-400',
+      value: '10,000+',
+      label: 'Top Engineers & Doctors',
+    },
+  ] as const;
+
   return (
     <section id="hero" className="relative w-full overflow-hidden select-none bg-slate-900">
       {/* 1. Ultra-Wide Image Slider with exact 21:9 aspect ratio */}
@@ -76,18 +107,18 @@ export const HeroSlider: React.FC<HeroProps> = ({
             {/* Left Main Content Block */}
             <div className="lg:col-span-8 space-y-3 sm:space-y-5">
               {/* Institutional Badge */}
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FBBF24] text-[#0B3C91] px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full font-black text-[9px] xs:text-xs sm:text-sm tracking-wide sm:tracking-wider uppercase shadow-md whitespace-nowrap max-w-full">
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FBBF24] text-[#0B3C91] px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-eyebrow shadow-md whitespace-nowrap max-w-full">
                 <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 fill-[#0B3C91] shrink-0" />
                 <span className="whitespace-nowrap">Krishna Chaitanya • Admissions 2026-27 Open</span>
               </div>
 
               {/* Title */}
-              <h1 className="text-xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white font-serif">
+              <h1 className="text-display text-white">
                 Admissions Open 2026-27 — Shape Your Future with Excellence
               </h1>
 
               {/* Subtitle */}
-              <p className="text-blue-100 text-xs sm:text-lg font-normal leading-relaxed max-w-3xl">
+              <p className="text-blue-100 text-body-sm sm:text-lg font-normal leading-relaxed max-w-3xl">
                 Integrated IIT-JEE, NEET, EAPCET, CA/CMA, Long Term & Intermediate Programs with 28+ Years of Academic Supremacy in Nellore.
               </p>
 
@@ -95,7 +126,7 @@ export const HeroSlider: React.FC<HeroProps> = ({
               <div className="pt-1 sm:pt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap items-stretch sm:items-center sm:gap-4">
                 <button
                   onClick={onOpenApplyModal}
-                  className="bg-[#F97316] hover:bg-[#EA580C] text-white px-3.5 sm:px-8 py-2.5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-extrabold text-[10px] sm:text-sm uppercase tracking-wider transition-all shadow-xl hover:shadow-orange-500/30 transform active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer w-full"
+                  className="bg-[#F97316] hover:bg-[#EA580C] text-white px-3.5 sm:px-8 py-2.5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-bold text-caption sm:text-sm uppercase tracking-wide transition-all shadow-xl hover:shadow-orange-500/30 transform active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer w-full"
                 >
                   <span>Apply For Admission</span>
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -103,7 +134,7 @@ export const HeroSlider: React.FC<HeroProps> = ({
 
                 <button
                   onClick={onOpenBrochureModal}
-                  className="bg-white/10 hover:bg-white/20 text-white px-3.5 sm:px-7 py-2.5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-semibold text-[10px] sm:text-sm border border-white/25 backdrop-blur-md transition-all flex items-center justify-center gap-1.5 cursor-pointer w-full"
+                  className="bg-white/10 hover:bg-white/20 text-white px-3.5 sm:px-7 py-2.5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-semibold text-caption sm:text-sm border border-white/25 backdrop-blur-md transition-all flex items-center justify-center gap-1.5 cursor-pointer w-full"
                 >
                   <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FBBF24]" />
                   <span>Syllabus Brochure</span>
@@ -113,7 +144,7 @@ export const HeroSlider: React.FC<HeroProps> = ({
                   href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya Admission Team! I am interested in Intermediate 2026-27 admission.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2.5 sm:px-5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-semibold text-[10px] sm:text-sm transition-all flex items-center justify-center gap-1.5 border border-emerald-400/30 cursor-pointer w-full"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2.5 sm:px-5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-semibold text-caption sm:text-sm transition-all flex items-center justify-center gap-1.5 border border-emerald-400/30 cursor-pointer w-full"
                 >
                   <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white stroke-none" />
                   <span>WhatsApp Desk</span>
@@ -131,61 +162,103 @@ export const HeroSlider: React.FC<HeroProps> = ({
               </div>
             </div>
 
-            {/* Right Quick Key Stats Grid */}
-            <div className="lg:col-span-4 grid grid-cols-2 gap-2.5 sm:gap-3.5">
-              <div className="bg-white/10 p-2.5 sm:p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-0.5 sm:space-y-1 min-h-[92px] sm:min-h-0">
-                <ShieldCheck className="w-4 h-4 sm:w-6 sm:h-6 text-[#FBBF24]" />
-                <p className="text-lg sm:text-2xl font-black text-white leading-tight">28+ Yrs</p>
-                <p className="text-[10px] sm:text-xs text-blue-200 font-medium leading-tight">Academic Legacy</p>
-              </div>
-
-              <div className="bg-white/10 p-2.5 sm:p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-0.5 sm:space-y-1 min-h-[92px] sm:min-h-0">
-                <Award className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-400" />
-                <p className="text-lg sm:text-2xl font-black text-white leading-tight">AIR 1</p>
-                <p className="text-[10px] sm:text-xs text-blue-200 font-medium leading-tight">NEET 720/720 Score</p>
-              </div>
-
-              <div className="bg-white/10 p-2.5 sm:p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-0.5 sm:space-y-1 min-h-[92px] sm:min-h-0">
-                <GraduationCap className="w-4 h-4 sm:w-6 sm:h-6 text-orange-400" />
-                <p className="text-lg sm:text-2xl font-black text-white leading-tight">99.8%</p>
-                <p className="text-[10px] sm:text-xs text-blue-200 font-medium leading-tight">Board Pass Ratio</p>
-              </div>
-
-              <div className="bg-white/10 p-2.5 sm:p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-0.5 sm:space-y-1 min-h-[92px] sm:min-h-0">
-                <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6 text-cyan-400" />
-                <p className="text-lg sm:text-2xl font-black text-white leading-tight">10,000+</p>
-                <p className="text-[10px] sm:text-xs text-blue-200 font-medium leading-tight">Top Engineers & Doctors</p>
+            {/* Right Quick Key Stats — desktop sidebar only */}
+            <div className="hidden lg:block lg:col-span-4">
+              <div className="grid grid-cols-2 gap-3.5">
+                {quickStats.map((stat) => {
+                  const StatIcon = stat.icon;
+                  return (
+                    <div
+                      key={stat.id}
+                      className="bg-white/10 p-4 rounded-2xl border border-white/15 backdrop-blur-sm space-y-1"
+                    >
+                      <StatIcon className={`w-6 h-6 ${stat.iconClass}`} />
+                      <p className="text-2xl font-black text-white leading-tight">{stat.value}</p>
+                      <p className="text-xs text-blue-200 font-medium leading-tight">{stat.label}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
           </div>
 
-          <div className="mt-4 sm:mt-10 rounded-3xl border border-white/10 bg-white/6 backdrop-blur-md p-3.5 sm:p-6 shadow-2xl">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2.5 sm:gap-3 mb-3 sm:mb-5">
+          {/* Stats — mobile: one unified block | desktop: At A Glance only (quick stats in sidebar above) */}
+          <div className="mt-3 lg:mt-10 rounded-2xl lg:rounded-3xl border border-white/10 bg-white/6 backdrop-blur-md p-2.5 lg:p-6 shadow-2xl">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-1.5 sm:gap-3 mb-2 lg:mb-5">
               <div>
-                <span className="inline-flex items-center gap-1 text-[#FBBF24] bg-white/10 px-2.5 py-1 rounded-full text-[9px] sm:text-xs font-black uppercase tracking-wider border border-white/10">
-                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <span className="inline-flex items-center gap-1 text-[#FBBF24] bg-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-eyebrow border border-white/10">
+                  <Sparkles className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
                   <span>A Legacy of Triumph</span>
                 </span>
-                <h2 className="text-lg sm:text-3xl font-extrabold font-serif text-white mt-2.5 sm:mt-3 tracking-tight leading-tight">
+                <h2 className="text-base lg:text-section-title text-white mt-1.5 lg:mt-3 leading-snug">
                   Krishna Chaitanya At A Glance
                 </h2>
               </div>
-              <p className="text-[11px] sm:text-sm text-blue-100 max-w-2xl leading-relaxed">
+              <p className="hidden md:block text-body-sm sm:text-sm text-blue-100 max-w-2xl leading-relaxed">
                 Proven academic strength, trusted faculty, and a legacy of top results across engineering, medical, commerce, and board examinations.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
+            {/* Mobile: single horizontal scroll — quick stats + highlight counters */}
+            <div className="lg:hidden -mx-0.5">
+              <div className="flex gap-2 overflow-x-auto pb-0.5 snap-x snap-mandatory scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {quickStats.map((stat) => {
+                  const StatIcon = stat.icon;
+                  return (
+                    <div
+                      key={stat.id}
+                      className="snap-start shrink-0 w-[44%] rounded-xl bg-white/10 border border-white/10 p-2.5 shadow-lg"
+                    >
+                      <div className="flex items-center gap-2">
+                        <StatIcon className={`w-3.5 h-3.5 shrink-0 ${stat.iconClass}`} />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-base font-black text-white leading-none">{stat.value}</p>
+                          <p className="text-[10px] text-blue-200 font-medium leading-tight mt-0.5 line-clamp-2">
+                            {stat.label}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+                {HIGHLIGHT_COUNTERS.map((item) => (
+                  <div
+                    key={item.id}
+                    className="snap-start shrink-0 w-[44%] rounded-xl bg-white/10 border border-white/10 p-2.5 shadow-lg"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0 [&_svg]:w-3.5 [&_svg]:h-3.5">
+                        {iconMap[item.icon] || <Award className="w-3.5 h-3.5 text-[#FBBF24]" />}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-base font-black text-[#FBBF24] font-serif leading-none">
+                          {item.count.toLocaleString()}{item.suffix}
+                        </div>
+                        <p className="text-[10px] text-blue-100 mt-0.5 font-semibold leading-tight line-clamp-2">
+                          {item.label}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop: highlight counters grid only */}
+            <div className="hidden lg:grid lg:grid-cols-5 gap-4">
               {HIGHLIGHT_COUNTERS.map((item) => (
-                <div key={item.id} className="rounded-2xl bg-white/10 border border-white/10 p-3 sm:p-4 shadow-lg min-h-[112px] sm:min-h-0">
-                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-2xl bg-white/10 flex items-center justify-center mb-2.5 sm:mb-3">
+                <div
+                  key={item.id}
+                  className="rounded-2xl bg-white/10 border border-white/10 p-4 shadow-lg"
+                >
+                  <div className="w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center mb-3 [&_svg]:w-5 [&_svg]:h-5">
                     {iconMap[item.icon] || <Award className="w-5 h-5 text-[#FBBF24]" />}
                   </div>
-                  <div className="text-xl sm:text-3xl font-black text-[#FBBF24] font-serif leading-tight">
+                  <div className="text-3xl font-black text-[#FBBF24] font-serif leading-tight">
                     {item.count.toLocaleString()}{item.suffix}
                   </div>
-                  <p className="text-[10px] sm:text-xs text-blue-100 mt-1 font-semibold leading-snug">
+                  <p className="text-xs text-blue-100 mt-1 font-semibold leading-snug">
                     {item.label}
                   </p>
                 </div>

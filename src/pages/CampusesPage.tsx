@@ -48,6 +48,7 @@ export const CampusesPage: React.FC<CampusesPageProps> = ({
   return (
     <main className="w-full overflow-hidden">
       <PageBanner
+        variant="hero"
         eyebrow="Campus Network"
         title="Campuses"
         description="Explore the existing Krishna Chaitanya campuses using the real data already available in the site."

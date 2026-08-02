@@ -117,10 +117,10 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold font-serif tracking-tight text-white uppercase leading-tight">
+              <h1 className="text-display text-white uppercase leading-tight">
                 KRISHNA <span className="text-[#FBBF24]">CHAITANYA</span>
               </h1>
-              <p className="text-xs sm:text-sm md:text-base text-blue-200 font-semibold tracking-widest uppercase mt-2">
+              <p className="text-brand-sub text-blue-200 mt-2">
                 Junior College & Integrated Academy
               </p>
             </motion.div>

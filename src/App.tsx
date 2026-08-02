@@ -319,8 +319,6 @@ export default function App() {
       {routeKey === 'why-choose-kcjc' && (
         <WhyChooseKcjcPage
           onNavigateHome={() => navigateToSection('hero')}
-          onOpenApplyModal={handleOpenApplyModal}
-          onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
         />
       )}
 

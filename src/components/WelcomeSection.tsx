@@ -4,7 +4,6 @@ import {
   Award,
   Target,
   Compass,
-  CheckCircle2,
   ChevronRight,
   BookOpen,
   X,
@@ -32,13 +31,6 @@ export const WelcomeSection: React.FC = () => {
       title: 'Integrated Direction',
       desc: 'A clear path from Intermediate learning to top engineering, medical, commerce, and civil service goals.',
     },
-  ];
-
-  const highlights = [
-    'Micro-Syllabus Mapping with daily line-by-line NCERT & Board coverage',
-    'Daily speed-accuracy diagnostic tests with instant performance analytics',
-    'Dedicated residential wardens & 24/7 doctor assistance on campus',
-    'Active NCC Battalion & NSS Wings for character and leadership building',
   ];
 
   return (
@@ -98,15 +90,6 @@ export const WelcomeSection: React.FC = () => {
               </p>
             </GlassCard>
           </div>
-
-          <GlassCard className="p-5 sm:p-6 space-y-3" hover={false}>
-            {highlights.map((item, idx) => (
-              <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </GlassCard>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Button

@@ -195,7 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="th-header header-layout2 sticky top-0 z-50 w-full font-sans">
       {/* Header Top Bar */}
-      <div className="th-header-top bg-[#031333] text-white text-[10px] sm:text-[11px] py-1 sm:py-1.5 px-3 sm:px-4 border-b border-blue-950/50">
+      <div className="th-header-top bg-[#031333] text-white text-caption sm:text-xs py-1 sm:py-1.5 px-3 sm:px-4 border-b border-blue-950/50">
         <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-2">
           {/* Left: Contact Info */}
           <div className="flex items-center gap-2 sm:gap-4 text-slate-200 shrink-0">
@@ -204,7 +204,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center gap-1 hover:text-[#FBBF24] transition-colors"
             >
               <Phone className="w-3 h-3 text-[#FBBF24]" />
-              <span className="font-semibold text-[10px] sm:text-xs">{COLLEGE_INFO.phonePrimary}</span>
+              <span className="font-semibold text-caption sm:text-xs">{COLLEGE_INFO.phonePrimary}</span>
             </a>
             
             <div className="hidden sm:flex items-center gap-1.5 text-slate-300">
@@ -215,7 +215,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right: Announcement & Quick Actions */}
           <div className="flex items-center gap-2 sm:gap-3 font-medium">
-            <span className="bg-[#FBBF24] text-[#0B3C91] font-black px-1.5 sm:px-2 py-0.5 rounded text-[8px] sm:text-[9px] tracking-wider uppercase shrink-0 flex items-center gap-1 shadow-sm">
+            <span className="bg-[#FBBF24] text-[#0B3C91] font-black px-1.5 sm:px-2 py-0.5 rounded text-label shrink-0 flex items-center gap-1 shadow-sm">
               <Sparkles className="w-2.5 h-2.5 shrink-0" />
               <span>ADMISSIONS 2026-27 OPEN</span>
             </span>
@@ -267,18 +267,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             />
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1">
-                <span className="font-extrabold text-xs xs:text-sm sm:text-lg tracking-tight text-[#0B3C91] uppercase font-serif leading-tight whitespace-nowrap">
+                <span className="text-brand text-xs sm:text-lg text-[#0B3C91] leading-tight whitespace-nowrap">
                   KRISHNA <span className="text-[#EA580C]">CHAITANYA</span>
                 </span>
               </div>
-              <p className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] text-slate-500 tracking-wider uppercase font-semibold leading-none mt-0.5 truncate">
+              <p className="text-brand-sub text-slate-500 mt-0.5 truncate">
                 Junior College & Integrated Academy
               </p>
             </div>
           </a>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden xl:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-semibold shrink-0">
+          <div className="hidden xl:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-semibold shrink-0 font-sans">
             <button
               onClick={() => handleNavClick('#welcome')}
               className={`transition-all py-1.5 cursor-pointer whitespace-nowrap px-2.5 rounded-lg font-semibold border-b-2 ${

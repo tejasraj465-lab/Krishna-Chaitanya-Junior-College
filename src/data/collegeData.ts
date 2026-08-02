@@ -147,6 +147,7 @@ export const COURSES: Course[] = [
   }
 ];
 
+/** @deprecated Use verified content from ./whyChooseData.ts for public-facing Why Choose sections */
 export const WHY_CHOOSE_US = [
   {
     id: 1,

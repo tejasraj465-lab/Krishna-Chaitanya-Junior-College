@@ -50,10 +50,10 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
 
         {/* Heading */}
         <div className="max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-5xl font-black font-serif text-white tracking-tight leading-tight">
+          <h2 className="text-section-title text-white tracking-tight leading-tight">
             Take The First Step Toward Your Dream Rank Today
           </h2>
-          <p className="text-sm sm:text-lg text-blue-100 font-normal">
+          <p className="text-body-sm sm:text-lg text-blue-100 font-normal">
             Limited seats per campus. Secure early batch preference, preferred stream selection, and hostel allocation.
           </p>
         </div>

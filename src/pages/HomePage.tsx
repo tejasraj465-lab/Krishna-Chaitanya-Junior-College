@@ -50,8 +50,6 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       <WhyChooseUs
         variant="home"
-        onOpenApplyModal={() => onOpenApplyModal()}
-        onOpenCampusVisit={onOpenCampusVisit}
         onExploreFullPage={() => onNavigateToPath('/why-choose-kcjc')}
       />
 
