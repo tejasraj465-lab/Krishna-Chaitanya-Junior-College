@@ -15,7 +15,6 @@ import { FinalCTA } from '../components/FinalCTA';
 
 interface HomePageProps {
   onOpenApplyModal: (course?: string, campus?: string) => void;
-  onOpenBrochureModal: () => void;
   onOpenAIGuide: () => void;
   onOpenCampusVisit: () => void;
   onSelectProgram: (programId: string) => void;
@@ -25,7 +24,6 @@ interface HomePageProps {
 
 export const HomePage: React.FC<HomePageProps> = ({
   onOpenApplyModal,
-  onOpenBrochureModal,
   onOpenAIGuide,
   onOpenCampusVisit,
   onSelectProgram,
@@ -36,7 +34,6 @@ export const HomePage: React.FC<HomePageProps> = ({
     <main className="w-full overflow-hidden">
       <HeroSlider
         onOpenApplyModal={() => onOpenApplyModal()}
-        onOpenBrochureModal={onOpenBrochureModal}
         onOpenAIGuide={onOpenAIGuide}
       />
 
@@ -44,7 +41,6 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       <CoursesSection
         onOpenApplyModal={onOpenApplyModal}
-        onOpenBrochureModal={onOpenBrochureModal}
         onSelectProgram={onSelectProgram}
       />
 

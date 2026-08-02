@@ -13,27 +13,33 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { ChatMessage } from '../types';
-import { COLLEGE_INFO } from '../data/collegeData';
+import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
 import { CuteRobotIcon } from './CuteRobotIcon';
 
 interface AICampusGuideProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenApplyModal: () => void;
+  onNavigateToSection?: (sectionId: string) => void;
+  onNavigateToPath?: (path: string) => void;
 }
 
 export const AICampusGuide: React.FC<AICampusGuideProps> = ({
   isOpen,
   onClose,
-  onOpenApplyModal
+  onOpenApplyModal,
+  onNavigateToSection,
+  onNavigateToPath,
 }) => {
   const MAIN_MENU_OPTIONS = [
     '🏛️ About College',
     '📚 Courses & Streams',
+    '⭐ Why Choose KCJC',
     '🏆 Ranks & Results',
     '🎖️ NCC Cadet Wing',
     '🏢 Nellore Campuses',
     '🏠 Hostels & Facilities',
+    '🎓 Life at KCJC',
     '📝 Apply Online Now',
     '💬 Talk on WhatsApp'
   ];
@@ -42,7 +48,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     {
       id: 'm1',
       sender: 'ai',
-      text: `Welcome to Sri Krishna Chaitanya Educational Institutions, Nellore!\n\nI'm Campus Guide AI, your virtual assistant for admissions and student support.\n\nI can help you with Courses, IIT-JEE & NEET Coaching, Admissions, Campus Facilities, Fees, and General Information.\n\nLanguages: English • తెలుగు • हिन्दी\n\nHow may I assist you today?`,
+      text: `Welcome to Sri Krishna Chaitanya Educational Institutions, Nellore!\n\nI'm Campus Guide AI — trained on our full website including courses, all ${CAMPUSES.length} campuses, facilities, admissions, ranks, NCC, gallery, and student life.\n\nLanguages: English • తెలుగు • हिन्दी\n\nHow may I assist you today?`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       quickReplies: MAIN_MENU_OPTIONS
     }
@@ -64,10 +70,15 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
 
   // Handle page scrolling if response contains [NAV:target]
   const scrollToSection = (targetId: string, autoCloseMobile: boolean = true) => {
-    // Auto-close AI guide modal on mobile screens (< 768px) so user can see the target section
     if (autoCloseMobile && typeof window !== 'undefined' && window.innerWidth < 768) {
       onClose();
     }
+
+    if (onNavigateToSection) {
+      onNavigateToSection(targetId);
+      return;
+    }
+
     setTimeout(() => {
       const element = document.getElementById(targetId);
       if (element) {
@@ -80,9 +91,28 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     }, 150);
   };
 
+  const navigateToPage = (path: string, autoCloseMobile: boolean = true) => {
+    if (autoCloseMobile && typeof window !== 'undefined' && window.innerWidth < 768) {
+      onClose();
+    }
+    if (onNavigateToPath) {
+      onNavigateToPath(path);
+    } else {
+      window.history.pushState({}, '', path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const processNavigation = (text: string): string | undefined => {
+    const pageMatch = text.match(/\[NAV:page:(.*?)\]/);
+    if (pageMatch?.[1]) {
+      const path = pageMatch[1].trim();
+      navigateToPage(path, false);
+      return `page:${path}`;
+    }
+
     const navMatch = text.match(/\[NAV:(.*?)\]/);
-    if (navMatch && navMatch[1]) {
+    if (navMatch?.[1]) {
       const targetId = navMatch[1].trim();
       scrollToSection(targetId, false);
       return targetId;
@@ -91,6 +121,20 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
   };
 
   const getSectionTitle = (target: string) => {
+    if (target.startsWith('page:')) {
+      const path = target.replace('page:', '');
+      switch (path) {
+        case '/why-choose-kcjc': return 'Why Choose KCJC';
+        case '/facilities': return 'Facilities Page';
+        case '/campuses': return 'Campuses Page';
+        case '/gallery': return 'Gallery';
+        case '/life-at-kcjc': return 'Life at KCJC';
+        default:
+          if (path.startsWith('/campuses/')) return 'Campus Details';
+          return 'Website Page';
+      }
+    }
+
     switch (target) {
       case 'facilities': return 'Facilities & Hostels';
       case 'courses': return 'Courses & Streams';
@@ -101,6 +145,8 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       case 'admissions': return 'Admissions';
       case 'leadership': return 'Leadership';
       case 'life-at-kc': return 'Student Life';
+      case 'why-us': return 'Why Choose KCJC';
+      case 'gallery': return 'Gallery';
       default: return 'College Section';
     }
   };
@@ -151,8 +197,28 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       return;
     }
     if (qr === '🏠 Hostels & Facilities' || qr === 'Hostel & Facilities' || qr === 'Ask Facilities') {
-      scrollToSection('facilities');
-      handleSend("What hostel, AC rooms, dining mess, and transport facilities are provided?");
+      if (onNavigateToPath) {
+        onNavigateToPath('/facilities');
+      } else {
+        scrollToSection('facilities');
+      }
+      handleSend("What hostel, AC rooms, dining mess, labs, and transport facilities are listed on the website?");
+      return;
+    }
+    if (qr === '⭐ Why Choose KCJC' || qr === 'Why Choose KCJC') {
+      if (onNavigateToPath) {
+        onNavigateToPath('/why-choose-kcjc');
+      }
+      handleSend("Why should I choose Krishna Chaitanya Junior College? Show verified advantages from the website.");
+      return;
+    }
+    if (qr === '🎓 Life at KCJC' || qr === 'Life at KCJC') {
+      if (onNavigateToPath) {
+        onNavigateToPath('/life-at-kcjc');
+      } else {
+        scrollToSection('life-at-kc');
+      }
+      handleSend("Tell me about student life, clubs, sports, NCC/NSS, and cultural activities at KCJC");
       return;
     }
 
@@ -205,7 +271,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       const aiMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'ai',
-        text: replyText.replace(/\[NAV:.*?\]/g, '').trim(), // clean nav tag from visual chat text
+        text: replyText.replace(/\[NAV:.*?\]/g, '').trim(), // clean nav tags from visual chat text
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         quickReplies: MAIN_MENU_OPTIONS,
         navTarget: navTarget
@@ -302,7 +368,13 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
                   
                   {msg.navTarget && (
                     <button
-                      onClick={() => scrollToSection(msg.navTarget!, true)}
+                      onClick={() => {
+                        if (msg.navTarget!.startsWith('page:')) {
+                          navigateToPage(msg.navTarget!.replace('page:', ''), true);
+                        } else {
+                          scrollToSection(msg.navTarget!, true);
+                        }
+                      }}
                       className="mt-2.5 w-full bg-[#0B3C91] hover:bg-[#072B6B] active:bg-[#04122B] text-white text-[11px] font-bold px-3 py-2 rounded-xl shadow-xs transition-all cursor-pointer border border-blue-400/30 flex items-center justify-center gap-1.5"
                     >
                       <ArrowDown className="w-3.5 h-3.5 text-[#FBBF24] animate-bounce" />

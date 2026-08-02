@@ -7,7 +7,6 @@ import { Footer } from './components/Footer';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { AdmissionModalBottomSheet } from './components/AdmissionModalBottomSheet';
 import { AICampusGuide } from './components/AICampusGuide';
-import { BrochureModal } from './components/BrochureModal';
 import { CampusVisitModal } from './components/CampusVisitModal';
 import { CourseDetailModal } from './components/CourseDetailModal';
 import { FloatingAssistancePopup } from './components/FloatingAssistancePopup';
@@ -101,7 +100,6 @@ export default function App() {
   const [applyCourse, setApplyCourse] = useState('MPC');
   const [applyCampus, setApplyCampus] = useState('Nellore Main Residential Campus');
 
-  const [isBrochureModalOpen, setIsBrochureModalOpen] = useState(false);
   const [isAIGuideOpen, setIsAIGuideOpen] = useState(false);
   const [isCampusVisitOpen, setIsCampusVisitOpen] = useState(false);
 
@@ -283,7 +281,6 @@ export default function App() {
         onNavigateToPath={navigateToPath}
         onNavigateToSection={navigateToSection}
         onOpenApplyModal={handleOpenApplyModal}
-        onOpenBrochureModal={() => setIsBrochureModalOpen(true)}
         onOpenAIGuide={() => setIsAIGuideOpen(true)}
         onSelectProgram={(programId) => setSelectedProgramId(programId)}
       />
@@ -291,7 +288,6 @@ export default function App() {
       {routeKey === 'home' && (
         <HomePage
           onOpenApplyModal={handleOpenApplyModal}
-          onOpenBrochureModal={() => setIsBrochureModalOpen(true)}
           onOpenAIGuide={() => setIsAIGuideOpen(true)}
           onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
           onSelectProgram={(programId) => setSelectedProgramId(programId)}
@@ -375,11 +371,8 @@ export default function App() {
           setIsAIGuideOpen(false);
           handleOpenApplyModal();
         }}
-      />
-
-      <BrochureModal
-        isOpen={isBrochureModalOpen}
-        onClose={() => setIsBrochureModalOpen(false)}
+        onNavigateToSection={navigateToSection}
+        onNavigateToPath={navigateToPath}
       />
 
       <CampusVisitModal

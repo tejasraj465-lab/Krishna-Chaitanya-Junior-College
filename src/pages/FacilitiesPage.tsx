@@ -10,6 +10,7 @@ export const FacilitiesPage: React.FC<FacilitiesPageProps> = ({ onNavigateHome }
   return (
     <main className="w-full overflow-hidden">
       <PageBanner
+        variant="hero"
         eyebrow="Campus Infrastructure"
         title="Facilities & Infrastructure"
         description="A complete look at the college's academic, residential, transport, safety, and student-support facilities, arranged for comfort and focused learning."

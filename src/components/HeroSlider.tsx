@@ -1,7 +1,7 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
-import { Download, Sparkles, MessageCircle, Bot, ArrowRight, ShieldCheck, Award, GraduationCap, CheckCircle2, Building2, Calendar } from 'lucide-react';
+import { Sparkles, MessageCircle, Bot, ArrowRight, ShieldCheck, Award, GraduationCap, CheckCircle2, Building2, Calendar } from 'lucide-react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -14,13 +14,11 @@ import { HIGHLIGHT_COUNTERS } from '../data/collegeData';
 
 interface HeroProps {
   onOpenApplyModal?: () => void;
-  onOpenBrochureModal?: () => void;
   onOpenAIGuide?: () => void;
 }
 
 export const HeroSlider: React.FC<HeroProps> = ({
   onOpenApplyModal,
-  onOpenBrochureModal,
   onOpenAIGuide
 }) => {
   const iconMap: Record<string, React.ReactNode> = {
@@ -130,14 +128,6 @@ export const HeroSlider: React.FC<HeroProps> = ({
                 >
                   <span>Apply For Admission</span>
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                </button>
-
-                <button
-                  onClick={onOpenBrochureModal}
-                  className="bg-white/10 hover:bg-white/20 text-white px-3.5 sm:px-7 py-2.5 sm:py-3.5 min-h-[42px] sm:min-h-[48px] rounded-xl font-semibold text-caption sm:text-sm border border-white/25 backdrop-blur-md transition-all flex items-center justify-center gap-1.5 cursor-pointer w-full"
-                >
-                  <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FBBF24]" />
-                  <span>Syllabus Brochure</span>
                 </button>
 
                 <a

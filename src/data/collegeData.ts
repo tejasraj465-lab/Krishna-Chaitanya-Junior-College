@@ -29,7 +29,7 @@ export const HERO_SLIDES = [
     badge: "ADMISSIONS OPEN 2026-27",
     image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=80",
     ctaPrimary: "Apply For Admission",
-    ctaSecondary: "Download Syllabus Brochure"
+    ctaSecondary: "Talk To Counselor"
   },
   {
     id: 2,

@@ -3,7 +3,6 @@ import {
   Phone, 
   MessageCircle, 
   GraduationCap, 
-  Download, 
   Menu, 
   X, 
   Sparkles, 
@@ -20,7 +19,6 @@ import kcLogo from '../assets/kc_logo.svg';
 interface NavbarProps {
   activeSection?: string;
   onOpenApplyModal: (course?: string, campus?: string) => void;
-  onOpenBrochureModal: () => void;
   onOpenAIGuide: () => void;
   onSelectProgram?: (programId: string) => void;
   onSectionChange?: (sectionId: string) => void;
@@ -31,7 +29,6 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   activeSection,
   onOpenApplyModal,
-  onOpenBrochureModal,
   onOpenAIGuide,
   onSelectProgram,
   onSectionChange,
@@ -106,8 +103,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         setCoursesDropdownOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
   const navLinks = [
@@ -193,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="th-header header-layout2 sticky top-0 z-50 w-full font-sans">
+    <header className="th-header header-layout2 sticky top-0 z-50 w-full font-sans overflow-visible">
       {/* Header Top Bar */}
       <div className="th-header-top bg-[#031333] text-white text-caption sm:text-xs py-1 sm:py-1.5 px-3 sm:px-4 border-b border-blue-950/50">
         <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-2">
@@ -229,14 +226,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <MessageCircle className="w-3.5 h-3.5 fill-emerald-400 stroke-none" />
               <span>WhatsApp Admission Desk</span>
             </a>
-
-            <button
-              onClick={onOpenBrochureModal}
-              className="hidden sm:flex items-center gap-1 hover:text-[#FBBF24] transition-colors text-slate-200 cursor-pointer font-medium"
-            >
-              <Download className="w-3.5 h-3.5 text-[#FBBF24]" />
-              <span>Syllabus</span>
-            </button>
           </div>
         </div>
       </div>
@@ -249,7 +238,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             : 'bg-white/95 backdrop-blur-sm py-2 sm:py-2.5 text-slate-900 border-slate-100'
         }`}
       >
-        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-2 flex-nowrap overflow-hidden">
+        <div className="max-w-[1500px] mx-auto px-3 sm:px-6 lg:px-10 grid grid-cols-[minmax(0,1fr)_auto] xl:flex xl:items-center xl:justify-between gap-2 items-center overflow-visible">
           {/* Logo & Brand Info */}
           <a 
             href="/" 
@@ -257,7 +246,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               e.preventDefault();
               handleNavClick('#hero');
             }}
-            className="flex items-center gap-2 sm:gap-2.5 group shrink min-w-0 cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2.5 group min-w-0 overflow-hidden cursor-pointer"
             title="Go to Hero Section"
           >
             <img 
@@ -265,20 +254,18 @@ export const Navbar: React.FC<NavbarProps> = ({
               alt="Sri Krishna Chaitanya Educational Institutions Logo" 
               className="w-9 h-9 sm:w-11 sm:h-11 object-contain transform group-hover:scale-105 transition-transform shrink-0 drop-shadow-sm" 
             />
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1">
-                <span className="text-brand text-xs sm:text-lg text-[#0B3C91] leading-tight whitespace-nowrap">
-                  KRISHNA <span className="text-[#EA580C]">CHAITANYA</span>
-                </span>
-              </div>
-              <p className="text-brand-sub text-slate-500 mt-0.5 truncate">
+            <div className="min-w-0 overflow-hidden">
+              <span className="text-brand block text-sm leading-snug sm:text-lg text-[#0B3C91] line-clamp-2 sm:line-clamp-none sm:truncate">
+                KRISHNA <span className="text-[#EA580C]">CHAITANYA</span>
+              </span>
+              <p className="text-brand-sub text-slate-500 mt-0.5 truncate leading-tight">
                 Junior College & Integrated Academy
               </p>
             </div>
           </a>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden xl:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-semibold shrink-0 font-sans">
+          <div className="hidden xl:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-semibold shrink-0 font-sans overflow-visible">
             <button
               onClick={() => handleNavClick('#welcome')}
               className={`transition-all py-1.5 cursor-pointer whitespace-nowrap px-2.5 rounded-lg font-semibold border-b-2 ${
@@ -291,10 +278,20 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             {/* Courses Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            <div
+              className="relative overflow-visible"
+              ref={dropdownRef}
+              onMouseEnter={() => setCoursesDropdownOpen(true)}
+              onMouseLeave={() => setCoursesDropdownOpen(false)}
+            >
               <button
-                onClick={() => setCoursesDropdownOpen(!coursesDropdownOpen)}
-                onMouseEnter={() => setCoursesDropdownOpen(true)}
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setCoursesDropdownOpen((open) => !open);
+                }}
+                aria-expanded={coursesDropdownOpen}
+                aria-haspopup="true"
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap font-bold border-b-2 ${
                   coursesDropdownOpen || currentActiveSection === 'courses'
                     ? 'bg-[#0B3C91] text-white shadow-md border-[#EA580C]'
@@ -308,10 +305,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* Mega Dropdown Menu */}
               {coursesDropdownOpen && (
-                <div 
-                  className="absolute left-0 mt-2 w-[680px] bg-white rounded-2xl shadow-2xl border border-slate-200 text-slate-800 p-5 z-50 animate-fadeIn grid grid-cols-2 gap-4"
-                  onMouseLeave={() => setCoursesDropdownOpen(false)}
-                >
+                <div className="absolute left-0 top-full z-[100] pt-2 w-[680px] max-w-[calc(100vw-2rem)]">
+                  <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 text-slate-800 p-5 animate-fadeIn grid grid-cols-2 gap-4">
                   {COURSE_CATEGORIES.map((cat) => (
                     <div key={cat.code} className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 hover:border-blue-300 transition-all">
                       <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-2">
@@ -357,6 +352,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <ChevronRight className="w-3 h-3" />
                     </button>
                   </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -393,17 +389,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Controls */}
-          <div className="flex xl:hidden items-center gap-1.5 xs:gap-2 shrink-0">
+          <div className="flex xl:hidden items-center gap-1.5 shrink-0">
             <button
               onClick={() => onOpenApplyModal()}
-              className="bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold text-[11px] xs:text-xs px-3.5 py-2.5 min-h-[48px] rounded-xl shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer uppercase tracking-wider shrink-0 active:scale-95"
+              className="bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold text-[10px] sm:text-xs px-2.5 sm:px-3.5 py-2 sm:py-2.5 min-h-[40px] sm:min-h-[44px] rounded-lg sm:rounded-xl shadow-sm transition-all flex items-center justify-center gap-0.5 sm:gap-1 cursor-pointer uppercase tracking-wide shrink-0 active:scale-95"
             >
               <span>Apply</span>
-              <ChevronRight className="w-3.5 h-3.5" />
+              <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 min-h-[48px] min-w-[48px] text-slate-800 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 rounded-xl focus:outline-none border border-slate-200 cursor-pointer flex items-center justify-center shrink-0 transition-colors"
+              className="p-2 min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] text-slate-800 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 rounded-lg sm:rounded-xl focus:outline-none border border-slate-200 cursor-pointer flex items-center justify-center shrink-0 transition-colors"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5 text-[#EA580C]" /> : <Menu className="w-5 h-5 text-[#0B3C91]" />}
@@ -415,7 +411,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="xl:hidden bg-white border-b-2 border-[#F97316] text-slate-800 px-4 py-4 space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto animate-fadeIn divide-y divide-slate-100">
-          {/* Quick Contact & Prospectus Bar */}
+          {/* Quick Contact Bar */}
           <div className="pb-1 space-y-2">
             <div className="grid grid-cols-2 gap-2">
               <a
@@ -435,14 +431,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span>WhatsApp</span>
               </a>
             </div>
-
-            <button
-              onClick={() => { setMobileMenuOpen(false); onOpenBrochureModal(); }}
-              className="w-full flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-[#0B3C91] text-xs font-bold py-3 min-h-[48px] px-4 rounded-xl border border-blue-200 transition-all cursor-pointer"
-            >
-              <Download className="w-4 h-4 text-[#EA580C]" />
-              <span>Download Syllabus Prospectus</span>
-            </button>
           </div>
 
           <div className="pt-3 space-y-1.5">
@@ -462,7 +450,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               currentActiveSection === 'courses' ? 'border-[#0B3C91] bg-blue-50/70' : 'border-slate-200 bg-slate-50'
             }`}>
               <button
-                onClick={() => setMobileCoursesOpen(!mobileCoursesOpen)}
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setMobileCoursesOpen((open) => !open);
+                }}
+                aria-expanded={mobileCoursesOpen}
                 className={`w-full px-3.5 py-3 text-sm font-bold flex items-center justify-between cursor-pointer ${
                   currentActiveSection === 'courses' ? 'text-[#0B3C91] border-l-4 border-[#F97316]' : 'text-[#0B3C91]'
                 }`}

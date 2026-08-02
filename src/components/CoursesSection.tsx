@@ -14,7 +14,6 @@ import {
   Clock, 
   Users, 
   Sparkles,
-  Download,
   ChevronRight,
   Tablet,
   Award
@@ -26,13 +25,11 @@ import { Container, SectionHeader, GlassCard } from './ui';
 
 interface CoursesSectionProps {
   onOpenApplyModal: (courseCode?: string) => void;
-  onOpenBrochureModal: () => void;
   onSelectProgram?: (programId: string) => void;
 }
 
 export const CoursesSection: React.FC<CoursesSectionProps> = ({
   onOpenApplyModal,
-  onOpenBrochureModal,
   onSelectProgram
 }) => {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -306,15 +303,7 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({
                   </div>
 
                   {/* Actions */}
-                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
-                    <button
-                      onClick={() => { setSelectedCourse(null); onOpenBrochureModal(); }}
-                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl flex items-center gap-2 cursor-pointer"
-                    >
-                      <Download className="w-4 h-4 text-[#0B3C91]" />
-                      <span>Download PDF Syllabus</span>
-                    </button>
-
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-end gap-3">
                     <button
                       onClick={() => {
                         const code = selectedCourse.code;
