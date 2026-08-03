@@ -5,21 +5,16 @@ import {
   Microscope, 
   TrendingUp, 
   Scale, 
-  CheckCircle, 
-  CheckCircle2, 
-  Briefcase, 
   BookOpen, 
   ArrowRight, 
-  X, 
-  Clock, 
-  Users, 
-  Sparkles,
+  MessageCircle,
   ChevronRight,
-  Tablet,
-  Award
+  Sparkles,
 } from 'lucide-react';
-import { COURSES } from '../data/collegeData';
+import { COURSES, COLLEGE_INFO } from '../data/collegeData';
 import { COURSE_CATEGORIES } from '../data/courseDetailsData';
+import { getCourseStreamDetail } from '../data/courseStreamDetails';
+import { CourseStreamDetailModal } from './CourseStreamDetailModal';
 import { Course } from '../types';
 import { Container, SectionHeader, GlassCard } from './ui';
 
@@ -27,6 +22,14 @@ interface CoursesSectionProps {
   onOpenApplyModal: (courseCode?: string) => void;
   onSelectProgram?: (programId: string) => void;
 }
+
+const COURSE_CARD_SUMMARIES: Record<string, string> = {
+  MPC: 'Best for students aspiring for IIT, NITs, IIITs, Engineering, and other technical careers.',
+  BiPC: 'Ideal for future doctors, pharmacists, dentists, and life science professionals preparing for NEET and related examinations.',
+  MEC: 'Designed for students aiming for CA, CMA, CS, BBA, Economics, and Business careers.',
+  CEC: 'Perfect for students interested in Civil Services, Law, Commerce, Humanities, and Management.',
+  'Long Term': "Specialized repeaters' program focused on IIT-JEE, NEET, and EAPCET with intensive mentoring and performance improvement.",
+};
 
 export const CoursesSection: React.FC<CoursesSectionProps> = ({
   onOpenApplyModal,
@@ -51,14 +54,14 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({
     : COURSES.filter(c => c.code.toLowerCase() === activeTab.toLowerCase());
 
   return (
-    <section id="courses" className="section-padding-sm bg-gradient-to-b from-[#EFF6FF] to-white scroll-mt-20 relative overflow-hidden">
+    <section id="courses" className="section-padding-sm bg-gradient-to-b from-[#EFF6FF] to-white scroll-mt-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-mesh-light pointer-events-none" />
       <Container className="relative z-10">
         
         <SectionHeader
-          eyebrow="2-Year Intermediate Programs (Class XI & XII)"
-          title="Integrated Academic Streams Offered"
-          description="Engineered for high performance in Telangana & Andhra Pradesh Board exams alongside premier All-India entrance coaching."
+          eyebrow="Programs Offered | Admissions 2026–2027"
+          title="Choose the Right Program for Your Future"
+          description="Whether your goal is IIT, Medicine, Commerce, CA/CMA or other competitive examinations, Krishna Chaitanya offers specialized programs designed to help you succeed."
         />
 
         {/* Filter Pills — horizontal scroll on mobile */}
@@ -101,107 +104,59 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative group h-full"
             >
-              {/* Top Bar Badge & Code */}
+              {/* Course code & summary */}
               <div>
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div
-                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shadow-sm shrink-0"
-                      style={{ backgroundColor: course.color }}
-                    >
-                      {getIcon(course.iconName, 'sm')}
-                    </div>
-                    <div className="min-w-0">
-                      <span className="text-base sm:text-lg font-black font-serif text-[#0B3C91] tracking-wide leading-none">
-                        {course.code}
-                      </span>
-                      <p className="text-[10px] sm:text-xs text-slate-500 font-medium mt-0.5">{course.duration}</p>
-                    </div>
-                  </div>
-
-                  <span
-                    className="text-[9px] sm:text-[10px] font-extrabold uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full tracking-wide text-center max-w-[88px] sm:max-w-none leading-tight shrink-0"
-                    style={{ backgroundColor: `${course.color}15`, color: course.color }}
+                <div className="flex items-center gap-2.5 mb-3">
+                  <div
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shadow-sm shrink-0"
+                    style={{ backgroundColor: course.color }}
                   >
-                    {course.tag}
-                  </span>
-                </div>
-
-                {/* Course Title & Subtitle */}
-                <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-                  {course.title}
-                </h3>
-                <p className="text-[11px] sm:text-xs text-[#0B3C91] font-semibold mt-0.5 leading-snug">
-                  {course.subtitle}
-                </p>
-
-                <p className="text-[11px] sm:text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2 sm:line-clamp-none">
-                  {course.description}
-                </p>
-
-                {/* Specialized Program Batches */}
-                <div className="mt-3 pt-3 border-t border-slate-100">
-                  <p className="text-[10px] sm:text-xs font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center justify-between gap-1">
-                    <span className="flex items-center gap-1 text-[#0B3C91]">
-                      <Award className="w-3 h-3 text-[#FBBF24] shrink-0" />
-                      <span className="truncate">{course.code} Tracks</span>
+                    {getIcon(course.iconName, 'sm')}
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-base sm:text-lg font-black font-serif text-[#0B3C91] tracking-wide leading-none">
+                      {course.code}
                     </span>
-                    <span className="text-[9px] text-slate-400 font-normal shrink-0 hidden sm:inline">Tap to view</span>
-                  </p>
-                  <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
-                    {COURSE_CATEGORIES.find(cat => cat.code === course.code)?.tracks.map((track) => (
-                      <button
-                        key={track.id}
-                        onClick={() => onSelectProgram && onSelectProgram(track.id)}
-                        className="text-left p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-[#0B3C91] hover:bg-[#072B6B] text-white transition-all border border-blue-800/50 shadow-sm group cursor-pointer flex items-center justify-between gap-1 min-h-[44px]"
-                      >
-                        <div className="min-w-0">
-                          <p className="text-[10px] sm:text-xs font-bold text-white group-hover:text-[#FBBF24] transition-colors truncate">
-                            {track.label}
-                          </p>
-                          <p className="text-[9px] sm:text-[10px] text-blue-200 font-medium truncate">
-                            {track.tag}
-                          </p>
-                        </div>
-                        <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FBBF24] shrink-0" />
-                      </button>
-                    ))}
+                    <p className="text-[10px] sm:text-xs text-slate-500 font-medium mt-0.5">{course.duration}</p>
                   </div>
                 </div>
 
-                {/* Integrated Coaching Highlights */}
-                <div className="mt-3 pt-3 border-t border-slate-100">
-                  <p className="text-[10px] sm:text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-[#F97316] shrink-0" />
-                    <span>Integrated Coaching</span>
-                  </p>
-                  <div className="flex flex-wrap gap-1">
-                    {course.integratedCoaching.map((coach, cIdx) => (
-                      <span
-                        key={cIdx}
-                        className="bg-slate-100 text-[#0B3C91] text-[9px] sm:text-[10px] font-semibold px-2 py-0.5 sm:py-1 rounded-md"
-                      >
-                        {coach}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  {COURSE_CARD_SUMMARIES[course.code] ?? course.description}
+                </p>
 
-                {/* Career Opportunities — hidden on smallest screens to keep cards compact */}
-                <div className="mt-3 hidden sm:block">
-                  <p className="text-[10px] sm:text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                    <Briefcase className="w-3 h-3 text-emerald-600 shrink-0" />
-                    <span>Career Pathways</span>
-                  </p>
-                  <div className="grid grid-cols-2 gap-1 text-[10px] sm:text-xs text-slate-600">
-                    {course.careerOptions.slice(0, 4).map((career, crIdx) => (
-                      <div key={crIdx} className="flex items-center gap-1 min-w-0">
-                        <CheckCircle className="w-3 h-3 text-emerald-600 shrink-0" />
-                        <span className="truncate">{career}</span>
+                {/* Program streams — light topper-style chips */}
+                {(() => {
+                  const tracks = COURSE_CATEGORIES.find((cat) => cat.code === course.code)?.tracks ?? [];
+                  if (tracks.length === 0) return null;
+
+                  return (
+                    <div className="mt-3 pt-3 border-t border-slate-100">
+                      <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3 text-[#FBBF24] shrink-0" />
+                        <span>Program Streams</span>
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {tracks.map((track) => (
+                          <button
+                            key={track.id}
+                            type="button"
+                            onClick={() => onSelectProgram?.(track.id)}
+                            className="group inline-flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-[#FFFBEB] to-[#EFF6FF] hover:from-[#FEF3C7] hover:to-[#DBEAFE] border border-amber-200/70 hover:border-[#FBBF24]/50 shadow-xs transition-all cursor-pointer text-left max-w-full"
+                          >
+                            <span className="text-[10px] sm:text-xs font-bold text-[#0B3C91] leading-tight">
+                              {track.label}
+                            </span>
+                            <span className="text-[9px] font-semibold text-[#EA580C] uppercase tracking-wide">
+                              {track.tag}
+                            </span>
+                            <ChevronRight className="w-3 h-3 text-[#FBBF24] opacity-70 group-hover:opacity-100 shrink-0" />
+                          </button>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Bottom Action Buttons */}
@@ -211,14 +166,14 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({
                   className="flex-1 py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-[11px] sm:text-xs rounded-lg sm:rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer min-h-[40px]"
                 >
                   <BookOpen className="w-3.5 h-3.5 text-[#0B3C91]" />
-                  <span>Details</span>
+                  <span>Explore Program</span>
                 </button>
 
                 <button
                   onClick={() => onOpenApplyModal(course.code)}
-                  className="flex-1 py-2.5 px-3 bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold text-[11px] sm:text-xs rounded-lg sm:rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer uppercase tracking-wider min-h-[40px]"
+                  className="flex-1 py-2.5 px-3 bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold text-[11px] sm:text-xs rounded-lg sm:rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer min-h-[40px]"
                 >
-                  <span>Apply</span>
+                  <span>Apply for This Program</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -226,98 +181,40 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({
           ))}
         </div>
 
+        {/* Career guidance CTA */}
+        <GlassCard className="mt-8 sm:mt-12 p-6 sm:p-8 text-center max-w-3xl mx-auto" hover={false}>
+          <h3 className="text-lg sm:text-xl font-bold font-serif text-[#0B3C91] mb-2">
+            Not Sure Which Program is Right for You?
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
+            Our admission counselors will help you choose the best stream based on your interests, career goals, and
+            academic performance.
+          </p>
+          <a
+            href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya! I need free career guidance to choose the right Intermediate program.')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs sm:text-sm px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl shadow-lg transition-all min-h-[44px]"
+          >
+            <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
+            <span>Get Free Career Guidance — Talk to an Admission Counselor (WhatsApp)</span>
+          </a>
+        </GlassCard>
+
         {/* Course Detail Modal */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {selectedCourse && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto relative shadow-2xl border border-blue-100"
-              >
-                <button
-                  onClick={() => setSelectedCourse(null)}
-                  className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                <div className="space-y-6">
-                  {/* Modal Header */}
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-md"
-                      style={{ backgroundColor: selectedCourse.color }}
-                    >
-                      {getIcon(selectedCourse.iconName)}
-                    </div>
-                    <div>
-                      <span className="text-xs font-bold text-[#0B3C91] uppercase tracking-wider">
-                        {selectedCourse.code} Stream Blueprint
-                      </span>
-                      <h3 className="text-xl font-bold font-serif text-slate-900">
-                        {selectedCourse.title}
-                      </h3>
-                    </div>
-                  </div>
-
-                  {/* Key Stats */}
-                  <div className="grid grid-cols-3 gap-3 p-4 bg-blue-50 rounded-2xl border border-blue-100 text-center text-xs">
-                    <div>
-                      <Clock className="w-4 h-4 text-[#0B3C91] mx-auto mb-1" />
-                      <p className="font-bold text-slate-900">{selectedCourse.duration}</p>
-                      <p className="text-[10px] text-slate-500">Duration</p>
-                    </div>
-                    <div>
-                      <Users className="w-4 h-4 text-[#0B3C91] mx-auto mb-1" />
-                      <p className="font-bold text-slate-900">{selectedCourse.seats} Seats/Campus</p>
-                      <p className="text-[10px] text-slate-500">Intake Capacity</p>
-                    </div>
-                    <div>
-                      <CheckCircle2 className="w-4 h-4 text-[#0B3C91] mx-auto mb-1" />
-                      <p className="font-bold text-emerald-600">Integrated Batch</p>
-                      <p className="text-[10px] text-slate-500">Board + Entrance</p>
-                    </div>
-                  </div>
-
-                  {/* Full Subjects List */}
-                  <div>
-                    <h4 className="text-xs font-bold text-[#0B3C91] uppercase tracking-wider mb-2">
-                      Board & Entrance Subjects Syllabus:
-                    </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {selectedCourse.subjects.map((sub, sIdx) => (
-                        <div key={sIdx} className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-xs text-slate-700">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
-                          <span>{sub}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Eligibility */}
-                  <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-1">
-                    <p className="font-bold">Eligibility Criteria:</p>
-                    <p>{selectedCourse.eligibility}</p>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-end gap-3">
-                    <button
-                      onClick={() => {
-                        const code = selectedCourse.code;
-                        setSelectedCourse(null);
-                        onOpenApplyModal(code);
-                      }}
-                      className="px-6 py-2.5 bg-[#F97316] hover:bg-[#EA580C] text-white text-xs font-extrabold rounded-xl shadow-md cursor-pointer uppercase tracking-wider"
-                    >
-                      Apply For {selectedCourse.code}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+            <CourseStreamDetailModal
+              key={selectedCourse.id}
+              course={selectedCourse}
+              detail={getCourseStreamDetail(selectedCourse.code)}
+              onClose={() => setSelectedCourse(null)}
+              onApply={(code) => {
+                setSelectedCourse(null);
+                onOpenApplyModal(code);
+              }}
+              renderIcon={(iconName) => getIcon(iconName, 'sm')}
+            />
           )}
         </AnimatePresence>
 

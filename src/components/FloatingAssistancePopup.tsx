@@ -35,7 +35,7 @@ export const FloatingAssistancePopup: React.FC<FloatingAssistancePopupProps> = (
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.9 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
-        className="fixed bottom-20 md:bottom-24 right-4 sm:right-6 z-40 max-w-[340px] sm:max-w-[360px] w-full bg-white rounded-3xl p-4 shadow-2xl border-2 border-blue-200/80 font-sans"
+        className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom,0px))] md:bottom-24 right-4 sm:right-6 z-40 max-w-[340px] sm:max-w-[360px] w-full bg-white rounded-3xl p-4 shadow-2xl border-2 border-blue-200/80 font-sans"
       >
         {/* Top Header */}
         <div className="flex items-start justify-between gap-2 pb-2 border-b border-slate-100">

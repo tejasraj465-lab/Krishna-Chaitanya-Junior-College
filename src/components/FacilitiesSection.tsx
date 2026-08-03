@@ -51,7 +51,7 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
   };
 
   return (
-    <section id="facilities" className={variant === 'home' ? 'py-16 md:py-24 bg-[#EFF6FF] scroll-mt-20' : 'py-8 md:py-12 bg-white text-[#1E293B]'}>
+    <section id="facilities" className={variant === 'home' ? 'py-16 md:py-24 bg-[#EFF6FF] scroll-mt-24' : 'py-8 md:py-12 bg-white text-[#1E293B]'}>
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
         {variant === 'home' && (
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -77,7 +77,9 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.05 }}
               onClick={() => setSelectedFacility(facility)}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-blue-100 group cursor-pointer flex flex-col justify-between"
+              className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-blue-100 group cursor-pointer flex flex-col justify-between ${
+                idx >= 3 ? 'max-sm:hidden' : ''
+              }`}
             >
               <div>
                 <div className="relative h-44 overflow-hidden">

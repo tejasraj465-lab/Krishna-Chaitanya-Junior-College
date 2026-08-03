@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
+import { generateFallbackReply } from '../data/aiKnowledgeBase';
 import { CuteRobotIcon } from './CuteRobotIcon';
 
 interface AICampusGuideProps {
@@ -40,15 +41,16 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     '🏢 Nellore Campuses',
     '🏠 Hostels & Facilities',
     '🎓 Life at KCJC',
+    '🖼️ Gallery',
     '📝 Apply Online Now',
-    '💬 Talk on WhatsApp'
+    '💬 Talk on WhatsApp',
   ];
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'm1',
       sender: 'ai',
-      text: `Welcome to Sri Krishna Chaitanya Educational Institutions, Nellore!\n\nI'm Campus Guide AI — trained on our full website including courses, all ${CAMPUSES.length} campuses, facilities, admissions, ranks, NCC, gallery, and student life.\n\nLanguages: English • తెలుగు • हिन्दी\n\nHow may I assist you today?`,
+      text: `Welcome to ${COLLEGE_INFO.name}, Nellore!\n\nI'm Campus Guide AI — trained on our complete website for mobile and desktop, including courses, all ${CAMPUSES.length} campuses, facilities, admissions, ranks, NCC, gallery, and student life.\n\nLanguages: English • తెలుగు • हिन्दी\n\nTap 📋 Menu or ask anything below.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       quickReplies: MAIN_MENU_OPTIONS
     }
@@ -123,12 +125,19 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
   const getSectionTitle = (target: string) => {
     if (target.startsWith('page:')) {
       const path = target.replace('page:', '');
-      switch (path) {
-        case '/why-choose-kcjc': return 'Why Choose KCJC';
-        case '/facilities': return 'Facilities Page';
-        case '/campuses': return 'Campuses Page';
-        case '/gallery': return 'Gallery';
-        case '/life-at-kcjc': return 'Life at KCJC';
+      if (path.includes('category=Day')) return 'Day Campuses';
+      if (path.includes('category=Residential')) return 'Residential Campuses';
+      switch (path.split('?')[0]) {
+        case '/why-choose-kcjc':
+          return 'Why Choose KCJC';
+        case '/facilities':
+          return 'Facilities Page';
+        case '/campuses':
+          return 'Campuses Page';
+        case '/gallery':
+          return 'Gallery';
+        case '/life-at-kcjc':
+          return 'Life at KCJC';
         default:
           if (path.startsWith('/campuses/')) return 'Campus Details';
           return 'Website Page';
@@ -136,18 +145,30 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     }
 
     switch (target) {
-      case 'facilities': return 'Facilities & Hostels';
-      case 'courses': return 'Courses & Streams';
-      case 'campuses': return 'Campuses';
-      case 'results': return 'Ranks & Results';
-      case 'ncc-nss': return 'NCC Cadet Wing';
-      case 'welcome': return 'About College';
-      case 'admissions': return 'Admissions';
-      case 'leadership': return 'Leadership';
-      case 'life-at-kc': return 'Student Life';
-      case 'why-us': return 'Why Choose KCJC';
-      case 'gallery': return 'Gallery';
-      default: return 'College Section';
+      case 'facilities':
+        return 'Facilities & Hostels';
+      case 'courses':
+        return 'Courses & Streams';
+      case 'campuses':
+        return 'Campuses';
+      case 'results':
+        return 'Ranks & Results';
+      case 'ncc-nss':
+        return 'NCC Cadet Wing';
+      case 'welcome':
+        return 'About College';
+      case 'hero':
+        return 'Homepage';
+      case 'leadership':
+        return 'Leadership';
+      case 'life-at-kc':
+        return 'Student Life';
+      case 'why-us':
+        return 'Why Choose KCJC';
+      case 'gallery':
+        return 'Gallery';
+      default:
+        return 'College Section';
     }
   };
 
@@ -193,7 +214,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     }
     if (qr === '🏢 Nellore Campuses' || qr === 'Campus Locations' || qr === 'Show Campuses') {
       scrollToSection('campuses');
-      handleSend("List all 12 campuses in Nellore for Day and Residential students");
+      handleSend(`List all ${CAMPUSES.length} campuses in Nellore — ${CAMPUSES.filter((c) => c.category === 'Day').length} Day and ${CAMPUSES.filter((c) => c.category === 'Residential').length} Residential`);
       return;
     }
     if (qr === '🏠 Hostels & Facilities' || qr === 'Hostel & Facilities' || qr === 'Ask Facilities') {
@@ -218,11 +239,33 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       } else {
         scrollToSection('life-at-kc');
       }
-      handleSend("Tell me about student life, clubs, sports, NCC/NSS, and cultural activities at KCJC");
+      handleSend('Tell me about student life, clubs, sports, NCC/NSS, and cultural activities at KCJC');
+      return;
+    }
+    if (qr === '🖼️ Gallery' || qr === 'Gallery') {
+      if (onNavigateToPath) {
+        onNavigateToPath('/gallery');
+      } else {
+        scrollToSection('gallery');
+      }
+      handleSend('What photos and events are in the KCJC gallery?');
       return;
     }
 
     handleSend(qr);
+  };
+
+  const appendAiReply = (replyText: string) => {
+    const navTarget = processNavigation(replyText);
+    const aiMsg: ChatMessage = {
+      id: (Date.now() + 1).toString(),
+      sender: 'ai',
+      text: replyText.replace(/\[NAV:.*?\]/g, '').trim(),
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      quickReplies: MAIN_MENU_OPTIONS,
+      navTarget,
+    };
+    setMessages((prev) => [...prev, aiMsg]);
   };
 
   const handleSend = async (userText?: string) => {
@@ -263,35 +306,15 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       });
 
       const data = await response.json();
-      const replyText = data.reply || "Thank you for asking! For personalized guidance, you can also connect directly on WhatsApp.";
+      const replyText =
+        data.reply ||
+        generateFallbackReply(query) ||
+        'Thank you for asking! For personalized guidance, connect on WhatsApp.';
 
-      // Check navigation & trigger scroll
-      const navTarget = processNavigation(replyText);
-
-      const aiMsg: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        sender: 'ai',
-        text: replyText.replace(/\[NAV:.*?\]/g, '').trim(), // clean nav tags from visual chat text
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        quickReplies: MAIN_MENU_OPTIONS,
-        navTarget: navTarget
-      };
-
-      setMessages((prev) => [...prev, aiMsg]);
+      appendAiReply(replyText);
     } catch (error) {
-      console.error("AI Chat Error:", error);
-      const fallbackTarget = (query.toLowerCase().includes("hostel") || query.toLowerCase().includes("facility")) ? "facilities" : "courses";
-      scrollToSection(fallbackTarget);
-
-      const fallbackMsg: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        sender: 'ai',
-        text: "Sri Krishna Chaitanya Junior College offers 2-year Intermediate in MPC, BiPC, MEC, and CEC with integrated IIT-JEE and NEET coaching across 12 campuses in Nellore.",
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        quickReplies: MAIN_MENU_OPTIONS,
-        navTarget: fallbackTarget
-      };
-      setMessages((prev) => [...prev, fallbackMsg]);
+      console.error('AI Chat Error:', error);
+      appendAiReply(generateFallbackReply(query));
     } finally {
       setIsTyping(false);
     }

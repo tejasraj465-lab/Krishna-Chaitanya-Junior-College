@@ -19,7 +19,7 @@ export const ResultsSection: React.FC = () => {
     : RANKERS.filter(r => r.exam === filterExam);
 
   return (
-    <section id="results" className="py-16 md:py-24 bg-[#0B3C91] text-white relative overflow-hidden scroll-mt-20">
+    <section id="results" className="py-16 md:py-24 bg-[#0B3C91] text-white relative overflow-hidden scroll-mt-24">
       {/* Background Accent */}
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
 

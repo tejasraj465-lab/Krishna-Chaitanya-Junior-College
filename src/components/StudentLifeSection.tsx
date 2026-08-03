@@ -95,7 +95,7 @@ export const StudentLifeSection: React.FC<StudentLifeSectionProps> = ({
     <section
       id="life-at-kc"
       className={variant === 'home'
-        ? 'py-16 md:py-24 bg-gradient-to-b from-white via-slate-50 to-blue-50/40 text-[#1E293B] scroll-mt-20 relative overflow-hidden'
+        ? 'py-16 md:py-24 bg-gradient-to-b from-white via-slate-50 to-blue-50/40 text-[#1E293B] scroll-mt-24 relative overflow-hidden'
         : 'py-10 md:py-14 bg-white text-[#1E293B]'}
     >
       {variant === 'home' && (

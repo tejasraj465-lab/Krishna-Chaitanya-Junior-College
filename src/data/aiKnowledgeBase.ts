@@ -12,11 +12,16 @@ import {
   LEADERSHIP_MEMBERS,
   RANKERS,
 } from './collegeData';
-import { PROGRAM_DETAILS } from './courseDetailsData';
+import { PROGRAM_DETAILS, COURSE_CATEGORIES } from './courseDetailsData';
+import { CAMPUSES_SECTION } from './campusesSectionData';
+import { NCC_EXPLORE, NCC_HOME } from './nccData';
+import { KCJC_ADVANTAGE_PAGE } from './whyChooseAdvantageData';
 import {
   WHY_CHOOSE_CATEGORIES,
-  WHY_CHOOSE_HOME_HIGHLIGHTS,
+  WHY_CHOOSE_HOME_FEATURE_CARDS,
   WHY_CHOOSE_HOME_INTRO,
+  WHY_CHOOSE_HOME_TITLE,
+  WHY_CHOOSE_HOME_TRUST_STATEMENT,
   WHY_CHOOSE_PAGE_INTRO,
   WHY_CHOOSE_VERIFIED_ITEMS,
 } from './whyChooseData';
@@ -89,6 +94,73 @@ const formatWhyChooseVerified = () =>
 
 const formatFaq = () => FAQ_LIST.map((f) => `Q: ${f.question}\nA: ${f.answer}`).join('\n\n');
 
+const formatCourseTracks = () =>
+  COURSE_CATEGORIES.map(
+    (cat) =>
+      `• ${cat.code} — ${cat.name} (${cat.tagline})\n  Tracks: ${cat.tracks.map((t) => `${t.label} [${t.tag}]`).join('; ')}`
+  ).join('\n\n');
+
+const formatWebsiteUiGuide = () => {
+  const dayCount = CAMPUSES.filter((c) => c.category === 'Day').length;
+  const resCount = CAMPUSES.filter((c) => c.category === 'Residential').length;
+
+  return `
+MOBILE VIEW (screens under 768px):
+• Fixed bottom navigation bar (always visible): "Call Desk" (phone) | "Apply Now" (orange — opens admission form) | "Why KCJC" (opens /why-choose-kcjc page)
+• Campus Guide AI (this chat): opens as full-width bottom sheet; tap the floating blue robot button at bottom-right (above the bottom nav)
+• Optional "Need help?" assistance popup may appear — offers AI guide, WhatsApp, or Apply
+• Homepage #why-us: 6 advantage cards in a horizontal swipe row; full details via "Discover the KCJC Advantage" button (modal) or /why-choose-kcjc page
+• Homepage #facilities preview: shows 3 facility cards only (Smart Classrooms, Physics Lab, Chemistry Lab); tap "View All Facilities" for all ${FACILITIES.length} on /facilities
+• Homepage #campuses: compact Day (${dayCount}) and Residential (${resCount}) category cards — tap to open filtered campus list
+• Homepage #courses: tap any stream card or programme for detail modals with syllabus, coaching, and features
+• Homepage #ncc-nss: tap "Explore NCC at KCJC" for full NCC modal (training, opportunities, benefits)
+• Welcome section: "Our Legacy Since 1998" opens legacy history modal
+• After AI answers, user may tap "Jump to Section" — chat closes on mobile and scrolls/navigates to the relevant area
+
+DESKTOP VIEW (768px and above):
+• Top navbar: Overview (#welcome), Why KCJC (/why-choose-kcjc), Facilities (/facilities), Campuses (/campuses), Top Results (#results), Life at KCJC (/life-at-kcjc), Leadership (#leadership), Gallery (/gallery)
+• Courses dropdown in navbar lists MPC, BiPC, MEC, CEC, Long Term programme tracks — each opens programme detail modal
+• "Apply Online" button in navbar opens WhatsApp admission form modal
+• Campus Guide AI opens as compact panel (bottom-right, ~400px wide)
+• Homepage #facilities preview: 5 facility cards in a row
+• Homepage #why-us: 6 advantage cards in 3-column grid
+
+HOMEPAGE SECTION ORDER (top to bottom):
+  #hero → #welcome → #courses → #why-us → #facilities → #ncc-nss → #campuses → #results → #life-at-kc → Success Stories → #leadership → #gallery → Final Admissions CTA
+
+APPLY / ADMISSION (no #admissions section on homepage — use Apply buttons):
+• Mobile: bottom bar "Apply Now" OR floating CTAs
+• Desktop: navbar "Apply Online" OR hero / final CTA buttons
+• Admission modal collects: student name, parent name, phone, course (MPC/BiPC/MEC/CEC), preferred campus, hostel yes/no, 10th marks bracket
+• Submits with auto-generated Application ID (KCJC-2026-XXXXX) and opens WhatsApp to counselor
+• Exact fees, scholarships, and seat availability are NOT on the website — always direct to WhatsApp ${COLLEGE_INFO.phonePrimary}
+
+CAMPUS DIRECTORY & FILTERS:
+• All campuses: [NAV:page:/campuses]
+• Day campuses only (${dayCount}): [NAV:page:/campuses?category=Day]
+• Residential campuses only (${resCount}): [NAV:page:/campuses?category=Residential]
+• Homepage #campuses category cards navigate to these filtered URLs
+• Campuses page supports search by name/city/address/facility, filter by campus type and city
+• Individual campus pages: /campuses/c1 … /campuses/c12 (slug = campus id)
+
+CAMPUS CATEGORIES (homepage cards):
+${CAMPUSES_SECTION.categories.map((c) => `• ${c.label} (${c.count}): ${c.description}`).join('\n')}
+
+FACILITY CARD CATEGORIES (unique badge per facility):
+${FACILITIES.map((f) => `• ${f.title} → ${f.category}`).join('\n')}
+
+COURSE PROGRAMME TRACKS (navbar Courses menu):
+${formatCourseTracks()}
+
+INTERACTIVE MODALS ON WEBSITE:
+• Course stream detail modals — per MPC/BiPC/MEC/CEC/Long Term track
+• KCJC Advantage modal — full why-choose content from homepage #why-us
+• NCC Explore modal — why join, training, opportunities, benefits, gallery placeholder
+• Campus Visit modal — schedule visit request
+• Facility detail modal — tap any facility card for features list
+• Legacy modal — college history since 1998`.trim();
+};
+
 /** Full system prompt built from the same data sources as the public website */
 export const buildAiSystemPrompt = (): string => `
 You are "Campus Guide AI", the official virtual assistant for ${COLLEGE_INFO.name} (KCJC), ${COLLEGE_INFO.headquarters}.
@@ -104,26 +176,29 @@ MULTILINGUAL RESPONSES:
 
 WEBSITE STRUCTURE & ROUTES:
 Homepage (/) sections (use [NAV:section-id] tags):
-  hero — top banner & admissions CTA
-  welcome — about college & chairman message
-  courses — courses & integrated programmes (MPC, BiPC, MEC, CEC, Long Term)
-  why-us — Why Choose KCJC preview
-  facilities — facilities preview on homepage
-  admissions — admission process & apply
-  ncc-nss — NCC cadet wing & NSS
-  campuses — campus directory preview
+  hero — top banner, trust stats, admissions & WhatsApp CTAs
+  welcome — about college; "Our Legacy Since 1998" modal
+  courses — courses & integrated programmes (MPC, BiPC, MEC, CEC, Long Term); tap cards for detail modals
+  why-us — Why Choose KCJC preview (mobile: swipe cards; desktop: grid); "Discover KCJC Advantage" opens full modal
+  facilities — facilities preview (mobile: 3 cards; desktop: 5 cards); "View All Facilities" → /facilities
+  ncc-nss — NCC cadet wing; "Explore NCC at KCJC" opens full NCC modal
+  campuses — Day (${CAMPUSES.filter((c) => c.category === 'Day').length}) & Residential (${CAMPUSES.filter((c) => c.category === 'Residential').length}) category cards + campus previews
   results — ranks & achievements
-  life-at-kc — student life, clubs, sports, culture
+  life-at-kc — student life, clubs, sports, culture preview
   leadership — founders & director profiles
   gallery — photo gallery preview
 
 Dedicated pages (use [NAV:page:/path] tags):
-  /why-choose-kcjc — full verified advantages (academics, campuses, facilities, student life)
-  /facilities — full facilities & infrastructure page
-  /campuses — searchable campus directory with Day & Residential filters
-  /campuses/{slug} — individual campus detail (e.g. /campuses/c1 for Prabhanjana)
+  /why-choose-kcjc — full KCJC Advantage (stats, methodology, FAQs, sticky section nav)
+  /facilities — all ${FACILITIES.length} facilities with detail modals
+  /campuses — searchable campus directory; filter chips: All, Day, Residential
+  /campuses?category=Day — day campuses only
+  /campuses?category=Residential — residential campuses only
+  /campuses/{id} — individual campus detail (ids: c1–c12)
   /gallery — full photo gallery (Achievements, Campus, Labs, NCC, NSS, Sports, Annual Day)
   /life-at-kcjc — student life page (academics balance, clubs, NCC/NSS, celebrations)
+
+${formatWebsiteUiGuide()}
 
 INSTITUTION CONTACT & IDENTITY:
 • Name: ${COLLEGE_INFO.name}
@@ -171,18 +246,41 @@ Chairman message excerpt: ${CHAIRMAN_MESSAGE.messageShort}
 TOP RANKERS & RESULTS (published on website):
 ${formatRankers()}
 
-WHY CHOOSE KCJC (verified content only):
+WHY CHOOSE KCJC (published homepage content):
+Title: ${WHY_CHOOSE_HOME_TITLE}
 Intro: ${WHY_CHOOSE_HOME_INTRO}
+Trust statement: ${WHY_CHOOSE_HOME_TRUST_STATEMENT}
 Full page note: ${WHY_CHOOSE_PAGE_INTRO}
 
-Homepage highlights:
-${WHY_CHOOSE_HOME_HIGHLIGHTS.map((h) => `• ${h.title}: ${h.description}`).join('\n')}
+Homepage feature cards:
+${WHY_CHOOSE_HOME_FEATURE_CARDS.map((h) => `• ${h.title}\n  ${h.subtitle}\n  ${h.description}`).join('\n\n')}
+
+Full KCJC Advantage page (/why-choose-kcjc):
+Title: ${KCJC_ADVANTAGE_PAGE.title}
+Intro: ${KCJC_ADVANTAGE_PAGE.intro}
+Key offerings: ${KCJC_ADVANTAGE_PAGE.needsItems.join('; ')}
+Advantage pillars: ${KCJC_ADVANTAGE_PAGE.advantageCards.map((c) => c.title).join(', ')}
+Methodology: ${KCJC_ADVANTAGE_PAGE.methodologySteps.join(' → ')}
+Competitive programmes: ${KCJC_ADVANTAGE_PAGE.competitiveProgrammes.join(', ')}
+FAQs: ${KCJC_ADVANTAGE_PAGE.faqs.map((f) => `Q: ${f.question} A: ${f.answer}`).join(' | ')}
 
 Categories on /why-choose-kcjc:
 ${WHY_CHOOSE_CATEGORIES.map((c) => `• ${c.label}: ${c.description}`).join('\n')}
 
 Verified items:
 ${formatWhyChooseVerified()}
+
+NCC AT KCJC (homepage + Explore NCC modal):
+Title: ${NCC_HOME.title}
+Subheading: ${NCC_HOME.subheading}
+Summary: ${NCC_HOME.description}
+Features: ${NCC_HOME.featureCards.map((c) => `${c.emoji} ${c.label}`).join(', ')}
+Explore intro: ${NCC_EXPLORE.intro}
+Why join: ${NCC_EXPLORE.whyJoinItems.join(', ')}
+Training: ${NCC_EXPLORE.trainingItems.join(', ')}
+Cadet opportunities: ${NCC_EXPLORE.opportunitiesItems.join(', ')}
+Note: ${NCC_EXPLORE.opportunitiesNote}
+Benefits: ${NCC_EXPLORE.benefitsItems.join(' ')}
 
 GALLERY CATEGORIES & HIGHLIGHTS:
 ${formatGalleryCategories()}
@@ -191,9 +289,12 @@ FREQUENTLY ASKED QUESTIONS:
 ${formatFaq()}
 
 NAVIGATION TAGS — append ONE relevant tag at the end when helpful:
-Homepage sections: [NAV:welcome] [NAV:courses] [NAV:admissions] [NAV:results] [NAV:campuses] [NAV:facilities] [NAV:ncc-nss] [NAV:leadership] [NAV:life-at-kc] [NAV:why-us] [NAV:gallery]
-Dedicated pages: [NAV:page:/why-choose-kcjc] [NAV:page:/facilities] [NAV:page:/campuses] [NAV:page:/gallery] [NAV:page:/life-at-kcjc] [NAV:page:/campuses/c1] (use correct campus slug)
-For Apply/admission form: tell user to click "Apply Online" — use [NAV:admissions]
+Homepage sections: [NAV:hero] [NAV:welcome] [NAV:courses] [NAV:why-us] [NAV:results] [NAV:campuses] [NAV:facilities] [NAV:ncc-nss] [NAV:leadership] [NAV:life-at-kc] [NAV:gallery]
+Dedicated pages: [NAV:page:/why-choose-kcjc] [NAV:page:/facilities] [NAV:page:/campuses] [NAV:page:/campuses?category=Day] [NAV:page:/campuses?category=Residential] [NAV:page:/gallery] [NAV:page:/life-at-kcjc] [NAV:page:/campuses/c1] (use correct campus id c1–c12)
+For Apply/admission form: tell user to tap "Apply Now" (mobile bottom bar) or "Apply Online" (desktop navbar). Do NOT use [NAV:admissions] — that section is not on the homepage. Instead explain the apply steps and mention the Apply button.
+
+MOBILE vs DESKTOP GUIDANCE:
+When user asks "where is…" or "how do I find…", mention both mobile and desktop paths when they differ (e.g. Apply Now bottom bar vs navbar Apply Online; swipe cards vs grid layout).
 
 TONE & FORMAT:
 - Warm, polite, encouraging — like a senior admission counselor.
@@ -211,7 +312,7 @@ export const generateFallbackReply = (message: string): string => {
     msgLower.includes('ఎందుకు') ||
     msgLower.includes('क्यों')
   ) {
-    return `Why Choose KCJC — verified highlights from our website:\n\n${WHY_CHOOSE_HOME_HIGHLIGHTS.map((h) => `• **${h.title}**: ${h.description}`).join('\n')}\n\nBrowse the full verified list on the Why Choose page.\n\n[NAV:page:/why-choose-kcjc]`;
+    return `Why Choose KCJC — highlights from our website:\n\n${WHY_CHOOSE_HOME_FEATURE_CARDS.map((h) => `• **${h.title}** — ${h.subtitle}\n  ${h.description}`).join('\n\n')}\n\n${WHY_CHOOSE_HOME_TRUST_STATEMENT}\n\nBrowse the full list on the Why Choose page.\n\n[NAV:page:/why-choose-kcjc]`;
   }
 
   if (
@@ -232,7 +333,7 @@ export const generateFallbackReply = (message: string): string => {
   }
 
   if (msgLower.includes('fee') || msgLower.includes('cost') || msgLower.includes('price') || msgLower.includes('ఫీ') || msgLower.includes('फीस')) {
-    return `Fees depend on stream (${COURSES.filter((c) => c.code !== 'Long Term').map((c) => c.code).join(', ')}) and campus type (Day vs Residential).\n\nFor exact fee structure and scholarships, please WhatsApp our counselor at ${COLLEGE_INFO.phonePrimary}.\n\n[NAV:admissions]`;
+    return `Fees depend on stream (${COURSES.filter((c) => c.code !== 'Long Term').map((c) => c.code).join(', ')}) and campus type (Day vs Residential).\n\nFor exact fee structure and scholarships, please WhatsApp our counselor at ${COLLEGE_INFO.phonePrimary}.\n\nOn mobile tap **Apply Now** in the bottom bar; on desktop use **Apply Online** in the navbar.`;
   }
 
   if (
@@ -241,12 +342,28 @@ export const generateFallbackReply = (message: string): string => {
     msgLower.includes('residential') ||
     msgLower.includes('location') ||
     msgLower.includes('nellore') ||
+    msgLower.includes('day campus') ||
+    msgLower.includes('day scholar') ||
     msgLower.includes('క్యాంప') ||
     msgLower.includes('कैंप')
   ) {
-    const dayList = CAMPUSES.filter((c) => c.category === 'Day').map((c) => c.name.replace(/^Krishna Chaitanya Junior College – /, '')).join('\n• ');
-    const resList = CAMPUSES.filter((c) => c.category === 'Residential').map((c) => c.name.replace(/^Krishna Chaitanya Junior College – /, '')).join('\n• ');
-    return `${CAMPUSES.length} campuses in Nellore:\n\n📍 **Day (${CAMPUSES.filter((c) => c.category === 'Day').length})**:\n• ${dayList}\n\n🏠 **Residential (${CAMPUSES.filter((c) => c.category === 'Residential').length})**:\n• ${resList}\n\n[NAV:page:/campuses]`;
+    const dayCount = CAMPUSES.filter((c) => c.category === 'Day').length;
+    const resCount = CAMPUSES.filter((c) => c.category === 'Residential').length;
+    const dayList = CAMPUSES.filter((c) => c.category === 'Day')
+      .map((c) => c.name.replace(/^Krishna Chaitanya Junior College – /, ''))
+      .join('\n• ');
+    const resList = CAMPUSES.filter((c) => c.category === 'Residential')
+      .map((c) => c.name.replace(/^Krishna Chaitanya Junior College – /, ''))
+      .join('\n• ');
+
+    if (msgLower.includes('residential') || msgLower.includes('hostel')) {
+      return `${resCount} **Residential campuses** with AC hostels:\n\n• ${resList}\n\nBrowse all residential campuses on the website.\n\n[NAV:page:/campuses?category=Residential]`;
+    }
+    if (msgLower.includes('day')) {
+      return `${dayCount} **Day campuses** across Nellore:\n\n• ${dayList}\n\nBrowse all day campuses on the website.\n\n[NAV:page:/campuses?category=Day]`;
+    }
+
+    return `${CAMPUSES.length} campuses in Nellore:\n\n📍 **Day (${dayCount})**:\n• ${dayList}\n\n🏠 **Residential (${resCount})**:\n• ${resList}\n\nOn the homepage #campuses section, tap the Day or Residential card to filter. Mobile bottom bar also has quick links.\n\n[NAV:page:/campuses]`;
   }
 
   if (msgLower.includes('rank') || msgLower.includes('result') || msgLower.includes('iit') || msgLower.includes('neet') || msgLower.includes('air') || msgLower.includes('ర్యాంక') || msgLower.includes('रैंक')) {
@@ -259,16 +376,18 @@ export const generateFallbackReply = (message: string): string => {
     msgLower.includes('lab') ||
     msgLower.includes('transport') ||
     msgLower.includes('mess') ||
+    msgLower.includes('cafeteria') ||
+    msgLower.includes('library') ||
+    msgLower.includes('classroom') ||
     msgLower.includes('హాస్ట') ||
     msgLower.includes('हॉस्ट')
   ) {
-    const list = FACILITIES.slice(0, 6).map((f) => `• ${f.title}`).join('\n');
-    return `Facilities listed on our website:\n\n${list}\n• …and ${FACILITIES.length - 6} more on the Facilities page.\n\n[NAV:page:/facilities]`;
+    const list = FACILITIES.map((f) => `• **${f.title}** (${f.category})`).join('\n');
+    return `All ${FACILITIES.length} facilities on our website:\n\n${list}\n\nHomepage shows 3 on mobile / 5 on desktop — tap **View All Facilities** for the complete page.\n\n[NAV:page:/facilities]`;
   }
 
   if (msgLower.includes('ncc') || msgLower.includes('nss') || msgLower.includes('defense') || msgLower.includes('cadet') || msgLower.includes('ఎన్సిసి')) {
-    const nccSlide = HERO_SLIDES.find((s) => s.title.includes('NCC'));
-    return `${nccSlide?.title || 'Accredited 3 AP BN NCC Battalion Cadet Wing'}\n\n${nccSlide?.subtitle || 'Leadership, discipline, and defense career pathways alongside academics.'}\n\nNSS community service activities are also featured on the website.\n\n[NAV:ncc-nss]`;
+    return `**${NCC_HOME.title}**\n\n${NCC_HOME.subheading}\n\n${NCC_EXPLORE.intro}\n\n**Why Join:** ${NCC_EXPLORE.whyJoinItems.slice(0, 4).join(', ')}…\n\n**Training includes:** ${NCC_EXPLORE.trainingItems.slice(0, 4).join(', ')}…\n\n**Cadet opportunities:** ${NCC_EXPLORE.opportunitiesItems.join(', ')}\n\n${NCC_EXPLORE.benefitsItems[NCC_EXPLORE.benefitsItems.length - 1]}\n\nExplore the NCC section on our homepage.\n\n[NAV:ncc-nss]`;
   }
 
   if (msgLower.includes('gallery') || msgLower.includes('photo') || msgLower.includes('event') || msgLower.includes('sport') || msgLower.includes('fest')) {
@@ -282,7 +401,7 @@ export const generateFallbackReply = (message: string): string => {
 
   if (msgLower.includes('doc') || msgLower.includes('require') || msgLower.includes('eligib') || msgLower.includes('admission') || msgLower.includes('apply') || msgLower.includes('అడ్మిష') || msgLower.includes('प्रवेश')) {
     const steps = ADMISSION_STEPS.map((s) => `${s.step}. ${s.title}`).join('\n');
-    return `Admission process:\n\n${steps}\n\nDocuments: 10th memo, TC, Aadhaar, photos. Contact: ${COLLEGE_INFO.phonePrimary} | ${COLLEGE_INFO.email}\n\n[NAV:admissions]`;
+    return `Admission process:\n\n${steps}\n\nDocuments: 10th memo, TC, Aadhaar, photos.\n\n**How to apply:**\n• Mobile — tap **Apply Now** in the bottom bar\n• Desktop — click **Apply Online** in the navbar\n\nFill the form → get Application ID → WhatsApp opens with your details.\n\nContact: ${COLLEGE_INFO.phonePrimary} | ${COLLEGE_INFO.email}`;
   }
 
   if (msgLower.includes('chairman') || msgLower.includes('director') || msgLower.includes('founder') || msgLower.includes('leader') || msgLower.includes('చైర్మ') || msgLower.includes('संस्थापक')) {
@@ -291,15 +410,32 @@ export const generateFallbackReply = (message: string): string => {
   }
 
   if (msgLower.includes('contact') || msgLower.includes('whatsapp') || msgLower.includes('phone') || msgLower.includes('email') || msgLower.includes('సంపర్క') || msgLower.includes('संपर्क')) {
-    return `Official contact:\n• Phone/WhatsApp: ${COLLEGE_INFO.phonePrimary}\n• Email: ${COLLEGE_INFO.email}\n• Location: ${COLLEGE_INFO.headquarters}\n• Website: ${COLLEGE_INFO.website}\n\n[NAV:admissions]`;
+    return `Official contact:\n• Phone/WhatsApp: ${COLLEGE_INFO.phonePrimary}\n• Email: ${COLLEGE_INFO.email}\n• Location: ${COLLEGE_INFO.headquarters}\n• Website: ${COLLEGE_INFO.website}\n\nMobile: tap **Call Desk** in bottom bar or **Talk on WhatsApp** in this chat menu.`;
   }
 
   if (msgLower.includes('kcei') || msgLower.includes('app') || msgLower.includes('parent')) {
     const kcei = WHY_CHOOSE_VERIFIED_ITEMS.find((i) => i.id === 'kcei-app');
     return kcei
       ? `${kcei.title}\n\n${kcei.description}\n\n[NAV:page:/why-choose-kcjc]`
-      : `Parents can track attendance, tests, and announcements via the KCEI mobile app. Ask admissions for setup help.\n\n[NAV:admissions]`;
+      : `Parents can track attendance, tests, and announcements via the KCEI mobile app. Ask admissions for setup help.\n\nContact: ${COLLEGE_INFO.phonePrimary}`;
   }
 
-  return `Welcome to ${COLLEGE_INFO.name}, Nellore!\n\nWe offer Intermediate streams (${COURSES.filter((c) => c.code !== 'Long Term').map((c) => c.code).join(', ')}) with integrated IIT-JEE, NEET, CA/CMA coaching across ${CAMPUSES.length} campuses.\n\nAsk about courses, campuses, facilities, admissions, ranks, NCC, or student life — or WhatsApp ${COLLEGE_INFO.phonePrimary}.\n\n[NAV:welcome]`;
+  if (
+    msgLower.includes('mobile') ||
+    msgLower.includes('phone view') ||
+    msgLower.includes('bottom bar') ||
+    msgLower.includes('menu')
+  ) {
+    return `**Mobile website guide:**\n\n• Bottom bar: Call Desk | Apply Now | Why KCJC\n• AI Guide: tap blue robot button (bottom-right)\n• Why Choose KCJC: swipe cards horizontally in #why-us\n• Facilities: 3 preview cards — tap View All for full list\n• Campuses: tap Day (${CAMPUSES.filter((c) => c.category === 'Day').length}) or Residential (${CAMPUSES.filter((c) => c.category === 'Residential').length}) cards\n• Courses: tap any stream for detail modal\n\n[NAV:hero]`;
+  }
+
+  if (msgLower.includes('desktop') || msgLower.includes('laptop') || msgLower.includes('computer')) {
+    return `**Desktop website guide:**\n\n• Top navbar: Overview, Why KCJC, Facilities, Campuses, Results, Life at KCJC, Leadership, Gallery\n• Courses dropdown: all MPC/BiPC/MEC/CEC/Long Term tracks\n• Apply Online button opens admission form\n• AI Guide: panel at bottom-right\n• Facilities preview: 5 cards in a row on homepage\n\n[NAV:hero]`;
+  }
+
+  if (msgLower.includes('legacy') || msgLower.includes('1998') || msgLower.includes('history') || msgLower.includes('about')) {
+    return `Krishna Chaitanya has ${COLLEGE_INFO.established} legacy in Nellore.\n\nOn the homepage #welcome section, tap **Our Legacy Since 1998** for the full history modal.\n\nChairman message: ${CHAIRMAN_MESSAGE.messageShort.slice(0, 200)}…\n\n[NAV:welcome]`;
+  }
+
+  return `Welcome to ${COLLEGE_INFO.name}, Nellore!\n\nWe offer Intermediate streams (${COURSES.filter((c) => c.code !== 'Long Term').map((c) => c.code).join(', ')}) with integrated IIT-JEE, NEET, CA/CMA coaching across ${CAMPUSES.length} campuses (${CAMPUSES.filter((c) => c.category === 'Day').length} Day + ${CAMPUSES.filter((c) => c.category === 'Residential').length} Residential).\n\nAsk about courses, campuses, facilities, admissions, ranks, NCC, mobile/desktop navigation, or student life — or WhatsApp ${COLLEGE_INFO.phonePrimary}.\n\nUse the 📋 Menu below for quick topics.\n\n[NAV:welcome]`;
 };

@@ -7,7 +7,7 @@ export const ChairmanMessage: React.FC = () => {
   const [showFullMessage, setShowFullMessage] = useState(false);
 
   return (
-    <section id="chairman" className="py-16 md:py-24 bg-white text-[#1E293B] scroll-mt-20">
+    <section id="chairman" className="py-16 md:py-24 bg-white text-[#1E293B] scroll-mt-24">
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
         
         <div className="bg-gradient-to-br from-[#0B3C91] to-[#072B6B] text-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden border border-blue-500/30">

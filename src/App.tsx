@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { AnimatePresence } from 'motion/react';
 import { SeoHead } from './components/SeoHead';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { OpeningAnimation } from './components/OpeningAnimation';
@@ -16,7 +17,7 @@ import { FacilitiesPage } from './pages/FacilitiesPage';
 import { GalleryPage } from './pages/GalleryPage';
 import { LifeAtKcjcPage } from './pages/LifeAtKcjcPage';
 import { WhyChooseKcjcPage } from './pages/WhyChooseKcjcPage';
-import { CampusesPage } from './pages/CampusesPage';
+import { CampusesPage, CampusCategoryFilter } from './pages/CampusesPage';
 import { CampusDetailPage } from './pages/CampusDetailPage';
 import { CAMPUSES } from './data/collegeData';
 
@@ -95,6 +96,12 @@ const getSeoDescription = (routeKey: RouteKey, campusName?: string | null) => {
   }
 };
 
+const getCampusCategoryFromSearch = (search = window.location.search): CampusCategoryFilter => {
+  const value = new URLSearchParams(search).get('category');
+  if (value === 'Day' || value === 'Residential') return value;
+  return 'All';
+};
+
 export default function App() {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [applyCourse, setApplyCourse] = useState('MPC');
@@ -104,6 +111,9 @@ export default function App() {
   const [isCampusVisitOpen, setIsCampusVisitOpen] = useState(false);
 
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
+  const [campusCategory, setCampusCategory] = useState<CampusCategoryFilter>(() =>
+    getCampusCategoryFromSearch()
+  );
   const initialRouteState = getRouteState(window.location.pathname);
   const [routeKey, setRouteKey] = useState<RouteKey>(initialRouteState.routeKey);
   const [campusSlug, setCampusSlug] = useState<string | null>(initialRouteState.campusSlug);
@@ -136,6 +146,7 @@ export default function App() {
 
       setRouteKey(nextRouteState.routeKey);
       setCampusSlug(nextRouteState.campusSlug);
+      setCampusCategory(getCampusCategoryFromSearch());
       setPendingSection(nextSection);
 
       if (nextRouteState.routeKey === 'home') {
@@ -177,7 +188,7 @@ export default function App() {
 
     const observer = new IntersectionObserver(handleIntersect, {
       root: null,
-      rootMargin: '-80px 0px -40% 0px',
+      rootMargin: '-96px 0px -40% 0px',
       threshold: [0.1, 0.3, 0.6]
     });
 
@@ -224,17 +235,27 @@ export default function App() {
   const navigateToPath = (path: string) => {
     window.history.pushState({}, '', path);
 
-    const nextRouteState = getRouteState(new URL(path, window.location.origin).pathname);
+    const url = new URL(path, window.location.origin);
+    const nextRouteState = getRouteState(url.pathname);
     const nextSection = path.includes('#') ? (path.split('#')[1] || null) : null;
 
     setRouteKey(nextRouteState.routeKey);
     setCampusSlug(nextRouteState.campusSlug);
+    if (nextRouteState.routeKey === 'campuses') {
+      setCampusCategory(getCampusCategoryFromSearch(url.search));
+    }
     setPendingSection(nextSection);
     setActiveSection(nextRouteState.routeKey === 'home' ? (nextSection || 'welcome') : nextRouteState.routeKey);
 
     if (nextRouteState.routeKey !== 'home') {
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
+  };
+
+  const handleCampusCategoryChange = (category: CampusCategoryFilter) => {
+    setCampusCategory(category);
+    const nextPath = category === 'All' ? '/campuses' : `/campuses?category=${category}`;
+    window.history.replaceState({}, '', nextPath);
   };
 
   const navigateToCampus = (campusSlugValue: string) => {
@@ -270,7 +291,7 @@ export default function App() {
   const seoDescription = getSeoDescription(routeKey, currentCampus?.name ?? campusSlug);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] font-sans antialiased selection:bg-[#FBBF24] selection:text-[#0B3C91] pb-12 md:pb-0 bg-mesh-light">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] font-sans antialiased selection:bg-[#FBBF24] selection:text-[#0B3C91] pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:pb-0 bg-mesh-light">
       <OpeningAnimation />
       <ScrollProgressBar />
       <SeoHead title={seoTitle} description={seoDescription} />
@@ -315,6 +336,8 @@ export default function App() {
       {routeKey === 'why-choose-kcjc' && (
         <WhyChooseKcjcPage
           onNavigateHome={() => navigateToSection('hero')}
+          onOpenApplyModal={handleOpenApplyModal}
+          onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
         />
       )}
 
@@ -323,6 +346,8 @@ export default function App() {
           onNavigateHome={() => navigateToSection('hero')}
           onNavigateToCampus={navigateToCampus}
           onOpenApplyModal={handleOpenApplyModal}
+          categoryFilter={campusCategory}
+          onCategoryChange={handleCampusCategoryChange}
         />
       )}
 
@@ -380,11 +405,16 @@ export default function App() {
         onClose={() => setIsCampusVisitOpen(false)}
       />
 
-      <CourseDetailModal
-        programId={selectedProgramId}
-        onClose={() => setSelectedProgramId(null)}
-        onApplyForProgram={(programName) => handleOpenApplyModal(programName)}
-      />
+      <AnimatePresence mode="wait">
+        {selectedProgramId && (
+          <CourseDetailModal
+            key={selectedProgramId}
+            programId={selectedProgramId}
+            onClose={() => setSelectedProgramId(null)}
+            onApplyForProgram={(programName) => handleOpenApplyModal(programName)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

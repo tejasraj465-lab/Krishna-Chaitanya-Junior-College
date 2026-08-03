@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquareMore, Sparkles, X, MessageCircle } from 'lucide-react';
-import { COLLEGE_INFO } from '../data/collegeData';
+import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
 import { CuteRobotIcon } from './CuteRobotIcon';
 
 interface AIBotWidgetFloatingProps {
@@ -24,7 +24,7 @@ export const AIBotWidgetFloating: React.FC<AIBotWidgetFloatingProps> = ({
       "Have questions? Ask AI Guide 🤖",
       "2026-27 Admissions Open! 🎓",
       "Ask about JEE/NEET Coaching 🏆",
-      "12 Nellore Campuses Info 📍"
+      `${CAMPUSES.length} Nellore Campuses Info 📍`
     ];
     let idx = 0;
     const interval = setInterval(() => {
@@ -36,41 +36,41 @@ export const AIBotWidgetFloating: React.FC<AIBotWidgetFloatingProps> = ({
   }, []);
 
   return (
-    <div className="fixed bottom-[76px] md:bottom-6 right-3 sm:right-6 z-50 flex items-center gap-2 sm:gap-3 font-sans pointer-events-auto">
-      {/* Speech Callout Pill (matching screenshot style) */}
+    <div className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:bottom-6 right-3 sm:right-6 z-40 flex items-center gap-2 sm:gap-3 font-sans pointer-events-auto">
       <AnimatePresence>
         {showCallout && !isOpen && (
           <motion.div
             initial={{ opacity: 0, x: 20, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 10, scale: 0.9 }}
-            className="relative bg-white text-[#0B3C91] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full shadow-lg border border-[#0070CD]/30 flex items-center gap-1.5 cursor-pointer group"
-            onClick={onToggle}
+            className="relative bg-white text-[#0B3C91] pl-2.5 pr-1 py-1 sm:pl-3 sm:pr-1.5 sm:py-1.5 rounded-full shadow-lg border border-[#0070CD]/30 flex items-center gap-1"
           >
-            {/* Online Green Pulsing Indicator */}
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-
-            <p className="text-[11px] sm:text-xs font-bold tracking-tight whitespace-nowrap text-[#0B3C91]">
-              {calloutText}
-            </p>
-
-            {/* Close callout cross */}
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowCallout(false);
-              }}
-              className="text-slate-400 hover:text-slate-600 p-0.5 ml-0.5 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+              type="button"
+              onClick={onToggle}
+              className="flex items-center gap-1.5 cursor-pointer group pr-1"
+              aria-label="Open AI Campus Guide"
+            >
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span className="text-[11px] sm:text-xs font-bold tracking-tight whitespace-nowrap text-[#0B3C91]">
+                {calloutText}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowCallout(false)}
+              className="text-slate-400 hover:text-slate-600 p-0.5 rounded-full hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
               title="Dismiss prompt"
+              aria-label="Dismiss AI guide prompt"
             >
               <X className="w-3.5 h-3.5" />
             </button>
 
-            {/* Speech bubble arrow tail pointing to circular button */}
-            <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-y-6 border-y-transparent border-l-6 border-l-white" />
+            <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-y-6 border-y-transparent border-l-6 border-l-white pointer-events-none" />
           </motion.div>
         )}
       </AnimatePresence>

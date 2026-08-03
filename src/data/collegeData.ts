@@ -260,7 +260,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f1',
     title: '4K Smart Interactive Classrooms',
-    category: 'Academics',
+    category: 'Smart Classrooms',
     description: 'Equipped with ultra-HD interactive whiteboards, high-speed fiber internet, and acoustic soundproofing for immersive learning.',
     iconName: 'Presentation',
     image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
@@ -269,7 +269,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f2',
     title: 'Advanced Physics Laboratory',
-    category: 'Labs',
+    category: 'Physics Lab',
     description: 'Precision optics tables, digital oscilloscopes, optics benches, and electromagnetic apparatus meeting international standards.',
     iconName: 'Zap',
     image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
@@ -278,7 +278,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f3',
     title: 'Hi-Tech Chemistry Laboratory',
-    category: 'Labs',
+    category: 'Chemistry Lab',
     description: 'Fume hoods, digital analytical balances, spectrophotometers, and fully stocked reagent stations for qualitative analysis.',
     iconName: 'FlaskConical',
     image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80',
@@ -287,7 +287,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f4',
     title: 'Advanced Biology & Specimen Lab',
-    category: 'Labs',
+    category: 'Biology Lab',
     description: 'High-magnification binocular microscopes, human anatomical models, preserved specimen gallery, and plant physiology setups.',
     iconName: 'Microscope',
     image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=800&q=80',
@@ -296,7 +296,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f5',
     title: 'Computer Science & AI Lab',
-    category: 'Labs',
+    category: 'Computer Lab',
     description: '200+ high-performance desktop systems with Gigabit ethernet, Python, C++, and online mock testing software simulating NTA JEE/NEET.',
     iconName: 'Laptop',
     image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80',
@@ -305,7 +305,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f6',
     title: 'Digital Library & Reading Lounge',
-    category: 'Academics',
+    category: 'Library',
     description: 'Stocked with 25,000+ physical reference books, research journals, foreign university papers, and 50 digital e-reader stations.',
     iconName: 'BookOpen',
     image: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80',
@@ -314,7 +314,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f7',
     title: 'Executive AC Hostel & Residential Blocks',
-    category: 'Campus',
+    category: 'Residential',
     description: 'Separate, highly secure hostel blocks for boys and girls with climate-controlled 2/3 sharing rooms and attached study desks.',
     iconName: 'Home',
     image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80',
@@ -323,7 +323,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f8',
     title: 'AC Bus Transport Network',
-    category: 'Campus',
+    category: 'Transport',
     description: 'Fleet of 45+ air-conditioned buses covering all major suburbs with real-time GPS tracking and dedicated attendant on board.',
     iconName: 'Bus',
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
@@ -332,7 +332,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f9',
     title: 'Sports Arena & Fitness Gym',
-    category: 'Sports',
+    category: 'Sports & Fitness',
     description: 'Basketball court, badminton courts, cricket nets, table tennis hall, yoga studio, and modern fitness center.',
     iconName: 'Activity',
     image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80',
@@ -341,7 +341,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f10',
     title: '24/7 Medical Care & Ambulance',
-    category: 'Safety',
+    category: 'Medical Care',
     description: 'In-campus 4-bed infirmary with full-time qualified nurses, visiting doctors, and dedicated emergency response vehicle.',
     iconName: 'HeartPulse',
     image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80',
@@ -350,7 +350,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f11',
     title: 'Multi-Cuisine Hygienic Cafeteria',
-    category: 'Campus',
+    category: 'Dining',
     description: 'FSSAI-certified kitchen serving nutritious, balanced South & North Indian meals prepared under dietitian supervision.',
     iconName: 'Utensils',
     image: 'https://images.unsplash.com/photo-1567521464027-f127ff144326?auto=format&fit=crop&w=800&q=80',
@@ -359,7 +359,7 @@ export const FACILITIES: Facility[] = [
   {
     id: 'f12',
     title: '360° High-Def CCTV & AI Security',
-    category: 'Safety',
+    category: 'Security',
     description: 'Over 300 HD cameras monitored in central security room, visitor management kiosk, and zero-tolerance ragging policy.',
     iconName: 'Eye',
     image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=800&q=80',

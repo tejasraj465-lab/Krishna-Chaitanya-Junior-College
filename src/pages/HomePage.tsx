@@ -45,8 +45,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       />
 
       <WhyChooseUs
-        variant="home"
-        onExploreFullPage={() => onNavigateToPath('/why-choose-kcjc')}
+        onOpenApplyModal={() => onOpenApplyModal()}
+        onOpenCampusVisit={onOpenCampusVisit}
       />
 
       <FacilitiesSection
@@ -60,6 +60,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         onOpenApplyModal={onOpenApplyModal}
         onViewAllCampuses={() => onNavigateToPath('/campuses')}
         onNavigateToCampus={onNavigateToCampus}
+        onBrowseByCategory={(category) => onNavigateToPath(`/campuses?category=${category}`)}
       />
 
       <ResultsSection />

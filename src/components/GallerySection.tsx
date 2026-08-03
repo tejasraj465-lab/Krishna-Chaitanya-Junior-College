@@ -23,7 +23,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({
     : GALLERY_ITEMS.filter(item => item.category === selectedCategory);
 
   return (
-    <section id="gallery" className={variant === 'home' ? 'py-16 md:py-24 bg-[#EFF6FF] text-[#1E293B] scroll-mt-20' : 'py-8 md:py-12 bg-white text-[#1E293B]'}>
+    <section id="gallery" className={variant === 'home' ? 'py-16 md:py-24 bg-[#EFF6FF] text-[#1E293B] scroll-mt-24' : 'py-8 md:py-12 bg-white text-[#1E293B]'}>
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
         {variant === 'home' && (
           <div className="text-center max-w-3xl mx-auto mb-10">

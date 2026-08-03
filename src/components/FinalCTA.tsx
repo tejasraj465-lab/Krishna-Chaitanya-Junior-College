@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { 
   Phone, 
   MessageCircle, 
   Sparkles, 
   Send, 
   MapPin, 
-  Clock, 
   ShieldCheck, 
   ChevronRight 
 } from 'lucide-react';
@@ -20,21 +19,6 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
   onOpenApplyModal,
   onOpenCampusVisit
 }) => {
-  // Simple countdown timer simulation for Admission Deadline
-  const [timeLeft, setTimeLeft] = useState({ days: 12, hours: 8, minutes: 42, seconds: 15 });
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-        if (prev.minutes > 0) return { ...prev, minutes: 59, seconds: 59 };
-        if (prev.hours > 0) return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        return prev;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <section className="py-16 md:py-20 bg-gradient-to-br from-[#0B3C91] via-[#072B6B] to-[#031333] text-white relative overflow-hidden">
       {/* Background patterns */}
@@ -56,31 +40,6 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
           <p className="text-body-sm sm:text-lg text-blue-100 font-normal">
             Limited seats per campus. Secure early batch preference, preferred stream selection, and hostel allocation.
           </p>
-        </div>
-
-        {/* Countdown Timer Widget */}
-        <div className="max-w-md mx-auto p-4 glass-card-dark rounded-2xl shadow-xl">
-          <p className="text-xs font-bold text-[#FBBF24] uppercase tracking-wider mb-2 flex items-center justify-center gap-1.5">
-            <Clock className="w-4 h-4" /> Phase 1 Admission Seat Booking Deadline:
-          </p>
-          <div className="grid grid-cols-4 gap-2 text-center">
-            <div className="bg-blue-900/90 p-2 rounded-xl">
-              <span className="text-xl font-extrabold text-white font-serif">{timeLeft.days}</span>
-              <p className="text-[10px] text-blue-300">Days</p>
-            </div>
-            <div className="bg-blue-900/90 p-2 rounded-xl">
-              <span className="text-xl font-extrabold text-white font-serif">{timeLeft.hours}</span>
-              <p className="text-[10px] text-blue-300">Hours</p>
-            </div>
-            <div className="bg-blue-900/90 p-2 rounded-xl">
-              <span className="text-xl font-extrabold text-white font-serif">{timeLeft.minutes}</span>
-              <p className="text-[10px] text-blue-300">Mins</p>
-            </div>
-            <div className="bg-blue-900/90 p-2 rounded-xl">
-              <span className="text-xl font-extrabold text-white font-serif">{timeLeft.seconds}</span>
-              <p className="text-[10px] text-blue-300">Secs</p>
-            </div>
-          </div>
         </div>
 
         {/* Action Buttons Row */}

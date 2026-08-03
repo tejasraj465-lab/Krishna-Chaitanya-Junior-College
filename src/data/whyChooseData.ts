@@ -15,15 +15,79 @@ export interface WhyChooseHighlight {
   description: string;
   icon: string;
   badge?: string;
+  subtitle?: string;
   source: string;
 }
+
+export interface WhyChooseHomeFeatureCard {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+export const WHY_CHOOSE_HOME_EYEBROW = 'WHY CHOOSE KRISHNA CHAITANYA';
+
+export const WHY_CHOOSE_HOME_TITLE = 'Why Thousands of Parents Choose KCJC';
+
+export const WHY_CHOOSE_HOME_INTRO =
+  'For over 28 years, Krishna Chaitanya Junior College has earned the trust of students and parents through academic excellence, experienced faculty, integrated competitive coaching, and a disciplined learning environment. Every student is guided with personalized mentoring, continuous academic support, and the right opportunities to achieve success in Board examinations, competitive exams, and future careers.';
+
+export const WHY_CHOOSE_HOME_FEATURE_CARDS: WhyChooseHomeFeatureCard[] = [
+  {
+    id: 'academic-excellence',
+    title: '🎓 Academic Excellence',
+    subtitle: '28+ Years of Building Strong Academic Foundations',
+    description:
+      'Experienced faculty, concept-based teaching, disciplined academics, and consistent student success have made KCJC a trusted name in quality education.',
+  },
+  {
+    id: 'integrated-coaching',
+    title: '🎯 Integrated Competitive Coaching',
+    subtitle: 'One Curriculum. Multiple Career Opportunities.',
+    description:
+      'Intermediate education integrated with coaching for IIT-JEE, NEET, EAPCET, CA Foundation, CMA Foundation, and Long-Term programmes under one structured academic system.',
+  },
+  {
+    id: 'personalized-mentoring',
+    title: '👨‍🏫 Personalized Mentoring',
+    subtitle: 'Every Student Receives Individual Attention',
+    description:
+      'Regular performance tracking, doubt clarification, parent interaction, academic counselling, and continuous mentoring ensure every student reaches their full potential.',
+  },
+  {
+    id: 'modern-learning',
+    title: '🏫 Modern Learning Environment',
+    subtitle: 'Designed for Better Learning',
+    description:
+      'Smart digital classrooms, advanced laboratories, library, technology-enabled learning resources, transportation, and separate hostel facilities provide an ideal environment for academic growth.',
+  },
+  {
+    id: 'safe-campus',
+    title: '🛡 Safe & Disciplined Campus',
+    subtitle: 'A Secure Environment That Supports Learning',
+    description:
+      'A disciplined academic atmosphere, student-friendly campus, dedicated faculty supervision, and a culture that encourages focus, responsibility, and personal growth.',
+  },
+  {
+    id: 'holistic-development',
+    title: '🌟 Holistic Student Development',
+    subtitle: 'Preparing Students for Success Beyond Academics',
+    description:
+      'Leadership development, NCC, communication skills, personality development, cultural activities, sports, teamwork, and community engagement help students grow into confident individuals.',
+  },
+];
+
+export const WHY_CHOOSE_HOME_TRUST_STATEMENT =
+  "At Krishna Chaitanya, we don't just prepare students for examinations—we prepare them for higher education, meaningful careers, and lifelong success.";
+
+export const WHY_CHOOSE_HOME_CTA_SUBTEXT =
+  'Explore our academic philosophy, teaching methodology, facilities, student support system, and discover what makes Krishna Chaitanya one of the trusted choices for Intermediate education in Nellore.';
 
 export interface VerifiedWhyChooseItem extends WhyChooseHighlight {
   category: WhyChooseCategoryId;
 }
 
-export const WHY_CHOOSE_HOME_INTRO =
-  'Krishna Chaitanya Junior College offers Intermediate programmes with integrated competitive coaching, multiple campuses in Nellore, and dedicated admissions support.';
 
 export const WHY_CHOOSE_PAGE_INTRO =
   'The information below is taken only from programme, campus, facility, and contact records currently published on this website. Items appear here only when the underlying source data is complete.';
@@ -254,6 +318,7 @@ export const buildWhyChooseVerifiedItems = (): VerifiedWhyChooseItem[] => {
 };
 
 /** Pre-built lists used by the UI (recomputed from source data) */
+/** @deprecated Home section now uses WHY_CHOOSE_HOME_FEATURE_CARDS */
 export const WHY_CHOOSE_HOME_HIGHLIGHTS = buildWhyChooseHomeHighlights();
 export const WHY_CHOOSE_VERIFIED_ITEMS = buildWhyChooseVerifiedItems();
 
@@ -303,7 +368,7 @@ export const WHY_CHOOSE_DATA_STATUS = {
   campusesComplete: hasCompleteCampuses(),
   contactComplete: hasOfficialContact(),
   facilitiesCount: FACILITIES.length,
-  homeHighlightsCount: WHY_CHOOSE_HOME_HIGHLIGHTS.length,
+  homeHighlightsCount: WHY_CHOOSE_HOME_FEATURE_CARDS.length,
   verifiedItemsCount: WHY_CHOOSE_VERIFIED_ITEMS.length,
   pendingTopics: [
     'Rankings & national achievements',

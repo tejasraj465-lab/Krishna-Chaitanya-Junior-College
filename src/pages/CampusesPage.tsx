@@ -1,23 +1,36 @@
 import React, { useMemo, useState } from 'react';
-import { Search, SlidersHorizontal, X } from 'lucide-react';
+import { Search, SlidersHorizontal, X, Building2, Home } from 'lucide-react';
 import { CAMPUSES } from '../data/collegeData';
+import { CAMPUSES_SECTION, CampusBrowseCategory } from '../data/campusesSectionData';
 import { PageBanner } from '../components/PageBanner';
 import { CampusCard } from '../components/CampusCard';
+
+export type CampusCategoryFilter = 'All' | CampusBrowseCategory;
 
 interface CampusesPageProps {
   onNavigateHome: () => void;
   onNavigateToCampus: (campusSlug: string) => void;
   onOpenApplyModal: (course?: string, campus?: string) => void;
+  categoryFilter: CampusCategoryFilter;
+  onCategoryChange: (category: CampusCategoryFilter) => void;
 }
 
 export const CampusesPage: React.FC<CampusesPageProps> = ({
   onNavigateHome,
   onNavigateToCampus,
   onOpenApplyModal,
+  categoryFilter,
+  onCategoryChange,
 }) => {
   const [query, setQuery] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [selectedLocation, setSelectedLocation] = useState('All');
+
+  const selectedCategory = categoryFilter;
+
+  const setSelectedCategory = (category: CampusCategoryFilter) => {
+    onCategoryChange(category);
+  };
 
   const campusTypes = useMemo(
     () => ['All', ...Array.from(new Set(CAMPUSES.map((campus) => campus.type)))],
@@ -38,26 +51,68 @@ export const CampusesPage: React.FC<CampusesPageProps> = ({
           .join(' ')
           .toLowerCase()
           .includes(search);
+      const matchesCategory = selectedCategory === 'All' || campus.category === selectedCategory;
       const matchesType = selectedType === 'All' || campus.type === selectedType;
       const matchesLocation = selectedLocation === 'All' || campus.city === selectedLocation;
 
-      return matchesSearch && matchesType && matchesLocation;
+      return matchesSearch && matchesCategory && matchesType && matchesLocation;
     });
-  }, [query, selectedType, selectedLocation]);
+  }, [query, selectedCategory, selectedType, selectedLocation]);
+
+  const dayCount = CAMPUSES.filter((c) => c.category === 'Day').length;
+  const residentialCount = CAMPUSES.filter((c) => c.category === 'Residential').length;
 
   return (
     <main className="w-full overflow-hidden">
       <PageBanner
         variant="hero"
-        eyebrow="Campus Network"
-        title="Campuses"
-        description="Explore the existing Krishna Chaitanya campuses using the real data already available in the site."
+        eyebrow={CAMPUSES_SECTION.eyebrow}
+        title={CAMPUSES_SECTION.title}
+        description={CAMPUSES_SECTION.subheading}
         currentLabel="Campuses"
         onHomeClick={onNavigateHome}
       />
 
-      <section className="py-10 md:py-14 bg-white text-[#1E293B]">
+      <section className="py-8 md:py-12 bg-white text-[#1E293B]">
         <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
+          <div className="flex flex-wrap gap-2 mb-6">
+            <button
+              type="button"
+              onClick={() => setSelectedCategory('All')}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer transition-colors ${
+                selectedCategory === 'All'
+                  ? 'bg-[#0B3C91] text-white'
+                  : 'bg-slate-100 text-[#0B3C91] hover:bg-blue-50'
+              }`}
+            >
+              All ({CAMPUSES.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedCategory('Day')}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer transition-colors ${
+                selectedCategory === 'Day'
+                  ? 'bg-[#0B3C91] text-white'
+                  : 'bg-slate-100 text-[#0B3C91] hover:bg-blue-50'
+              }`}
+            >
+              <Building2 className="w-4 h-4" aria-hidden="true" />
+              Day Campuses ({dayCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedCategory('Residential')}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer transition-colors ${
+                selectedCategory === 'Residential'
+                  ? 'bg-[#0B3C91] text-white'
+                  : 'bg-slate-100 text-[#0B3C91] hover:bg-blue-50'
+              }`}
+            >
+              <Home className="w-4 h-4" aria-hidden="true" />
+              Residential Campuses ({residentialCount})
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-5 mb-8">
             <div className="xl:col-span-5">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
@@ -110,12 +165,14 @@ export const CampusesPage: React.FC<CampusesPageProps> = ({
 
             <div className="xl:col-span-1 flex items-end">
               <button
+                type="button"
                 onClick={() => {
                   setQuery('');
+                  setSelectedCategory('All');
                   setSelectedType('All');
                   setSelectedLocation('All');
                 }}
-                className="w-full h-12 rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+                className="w-full h-12 rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <SlidersHorizontal className="w-4 h-4" />
                 <span>Reset</span>
@@ -127,14 +184,16 @@ export const CampusesPage: React.FC<CampusesPageProps> = ({
             <p className="font-medium">
               Showing {filteredCampuses.length} of {CAMPUSES.length} campuses.
             </p>
-            {(query || selectedType !== 'All' || selectedLocation !== 'All') && (
+            {(query || selectedCategory !== 'All' || selectedType !== 'All' || selectedLocation !== 'All') && (
               <button
+                type="button"
                 onClick={() => {
                   setQuery('');
+                  setSelectedCategory('All');
                   setSelectedType('All');
                   setSelectedLocation('All');
                 }}
-                className="inline-flex items-center gap-1 text-[#0B3C91] font-bold hover:text-[#F97316] transition-colors"
+                className="inline-flex items-center gap-1 text-[#0B3C91] font-bold hover:text-[#F97316] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
                 <span>Clear filters</span>

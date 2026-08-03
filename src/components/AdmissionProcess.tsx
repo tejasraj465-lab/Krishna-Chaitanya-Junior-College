@@ -27,7 +27,7 @@ export const AdmissionProcess: React.FC<AdmissionProcessProps> = ({ onOpenApplyM
   };
 
   return (
-    <section id="admissions" className="py-16 md:py-24 bg-white text-[#1E293B] scroll-mt-20">
+    <section id="admissions" className="py-16 md:py-24 bg-white text-[#1E293B] scroll-mt-24">
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
         
         {/* Header */}

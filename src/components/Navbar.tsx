@@ -15,6 +15,7 @@ import {
 import { COLLEGE_INFO } from '../data/collegeData';
 import { COURSE_CATEGORIES } from '../data/courseDetailsData';
 import kcLogo from '../assets/kc_logo.svg';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface NavbarProps {
   activeSection?: string;
@@ -38,6 +39,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [coursesDropdownOpen, setCoursesDropdownOpen] = useState(false);
+
+  useBodyScrollLock(mobileMenuOpen);
   const [mobileCoursesOpen, setMobileCoursesOpen] = useState(false);
   const [internalActiveSection, setInternalActiveSection] = useState<string>('welcome');
   const dropdownRef = useRef<HTMLDivElement>(null);

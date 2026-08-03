@@ -1,40 +1,72 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import {
-  Award,
-  Target,
-  Compass,
-  ChevronRight,
-  BookOpen,
-  X,
-  ShieldCheck,
-} from 'lucide-react';
-import { COLLEGE_INFO } from '../data/collegeData';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { motion } from 'motion/react';
+import { ChevronRight, BookOpen, X } from 'lucide-react';
 import { Container, SectionHeader, GlassCard, Button } from './ui';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+
+const CHOICE_CARDS = [
+  {
+    title: 'Academic Excellence',
+    desc: 'A structured curriculum, experienced faculty, and regular assessments help every student achieve strong academic results.',
+  },
+  {
+    title: 'Personalized Mentoring',
+    desc: 'Individual attention, performance tracking, and continuous guidance ensure every student reaches their full potential.',
+  },
+  {
+    title: 'Integrated Competitive Coaching',
+    desc: 'Intermediate education combined with IIT-JEE, NEET, EAPCET, CA/CMA, and Long-Term coaching under one academic system.',
+  },
+  {
+    title: 'Safe & Student-Centered Campus',
+    desc: 'A disciplined environment, modern infrastructure, transport, hostels, and dedicated student support create the ideal place to learn.',
+  },
+] as const;
+
+const LEGACY_PARAGRAPHS = [
+  'Since 1998, Krishna Chaitanya Junior College has been committed to providing quality Intermediate education with integrated preparation for competitive examinations.',
+  'Over the past 28+ years, we have earned the trust of thousands of students and parents through disciplined academics, experienced faculty, and a student-first approach. Our focus has always been on helping every student build a strong academic foundation while preparing for future careers and higher education.',
+  "Today, Krishna Chaitanya has grown into one of Nellore's well-established educational institutions, offering modern campuses, technology-enabled learning, personalized mentoring, and comprehensive coaching for IIT-JEE, NEET, EAPCET, CA/CMA, and other competitive examinations.",
+  'Beyond academic success, we believe in nurturing confident, responsible, and value-driven individuals through opportunities in NCC, NSS, cultural activities, leadership programs, and community service.',
+  'At Krishna Chaitanya, our greatest achievement is the success and trust of the generations of students and families who have been part of our journey.',
+] as const;
 
 export const WelcomeSection: React.FC = () => {
-  const [showFullModal, setShowFullModal] = useState(false);
+  const [showLegacyModal, setShowLegacyModal] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
-  const pillars = [
-    {
-      icon: Award,
-      title: 'Trusted Legacy',
-      desc: 'Shaping disciplined, confident students since 1998 with consistent academic outcomes.',
-    },
-    {
-      icon: Target,
-      title: 'Focused Mentorship',
-      desc: 'Personal guidance, structured preparation, and close academic monitoring across every stream.',
-    },
-    {
-      icon: Compass,
-      title: 'Integrated Direction',
-      desc: 'A clear path from Intermediate learning to top engineering, medical, commerce, and civil service goals.',
-    },
-  ];
+  useBodyScrollLock(showLegacyModal);
+
+  const handleClose = useCallback(() => {
+    setShowLegacyModal(false);
+  }, []);
+
+  useEffect(() => {
+    if (!showLegacyModal) return;
+
+    previousFocusRef.current = document.activeElement as HTMLElement;
+    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        handleClose();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      window.removeEventListener('keydown', onKeyDown);
+      previousFocusRef.current?.focus();
+    };
+  }, [showLegacyModal, handleClose]);
 
   return (
-    <section id="welcome" className="section-padding bg-white text-[#1E293B] scroll-mt-20 relative overflow-hidden">
+    <section id="welcome" className="section-padding bg-white text-[#1E293B] scroll-mt-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-mesh-light pointer-events-none" />
 
       <Container className="relative z-10">
@@ -43,85 +75,53 @@ export const WelcomeSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
-          className="max-w-5xl mx-auto space-y-10"
+          className="max-w-5xl mx-auto space-y-8 sm:space-y-10"
         >
           <SectionHeader
-            eyebrow={`Welcome to ${COLLEGE_INFO.name}`}
-            title="Empowering Students to Excel in Board Exams & All-India Competitive Ranks"
-            description={`At ${COLLEGE_INFO.name}, we believe the two years of Intermediate education are the true stepping stone to a student's lifelong career. We combine board academics with intensive integrated coaching for IIT-JEE, NEET, EAPCET, CA-Foundation, and Civil Services.`}
-            icon={ShieldCheck}
+            eyebrow="Why Parents Choose Krishna Chaitanya"
+            title="A Trusted Foundation for Your Child's Future"
+            description="For over 28 years, Krishna Chaitanya Junior College has helped thousands of students achieve academic excellence through experienced faculty, disciplined learning, personalized mentoring, and integrated competitive exam coaching. Every student receives the guidance, support, and opportunities needed to build a successful future."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-            {pillars.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <GlassCard key={idx} className="p-5 sm:p-6">
-                  <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] border border-blue-100 flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-[#F97316]" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#0B3C91] font-serif mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.desc}</p>
-                </GlassCard>
-              );
-            })}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <GlassCard className="p-5 sm:p-6 space-y-2" hover={false}>
-              <div className="flex items-center gap-2 text-[#0B3C91] font-bold text-sm">
-                <Target className="w-5 h-5 text-[#F97316]" aria-hidden="true" />
-                <span>Our Vision</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                To provide accessible, high-caliber, character-building education that enables every student to achieve top ranks and moral integrity.
-              </p>
-            </GlassCard>
-
-            <GlassCard className="p-5 sm:p-6 space-y-2" hover={false}>
-              <div className="flex items-center gap-2 text-[#0B3C91] font-bold text-sm">
-                <Compass className="w-5 h-5 text-[#F97316]" aria-hidden="true" />
-                <span>Our Mission</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Combining expert faculty, technology-driven smart classrooms, personal mentorship, and micro-level error analysis for flawless results.
-              </p>
-            </GlassCard>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            {CHOICE_CARDS.map((item) => (
+              <GlassCard key={item.title} className="p-5 sm:p-6">
+                <h3 className="text-sm sm:text-base font-bold text-[#0B3C91] font-serif mb-2">{item.title}</h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+              </GlassCard>
+            ))}
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Button
-              variant="secondary"
-              size="md"
-              icon={BookOpen}
-              onClick={() => setShowFullModal(true)}
-              className="normal-case tracking-normal font-bold"
-            >
-              Read Institutional Message
+            <Button variant="secondary" size="md" icon={BookOpen} onClick={() => setShowLegacyModal(true)}>
+              Our Legacy Since 1998
               <ChevronRight className="w-4 h-4 ml-1" aria-hidden="true" />
             </Button>
           </div>
         </motion.div>
       </Container>
 
-      <AnimatePresence>
-        {showFullModal && (
+      {showLegacyModal &&
+        createPortal(
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="welcome-modal-title"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-hidden overscroll-none"
+            onClick={handleClose}
+            role="presentation"
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="glass-card rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto relative"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="legacy-modal-title"
+              onClick={(e) => e.stopPropagation()}
+              className="glass-card rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[min(90dvh,calc(100dvh-2rem))] overflow-y-auto relative"
             >
               <button
-                onClick={() => setShowFullModal(false)}
+                ref={closeButtonRef}
+                type="button"
+                onClick={handleClose}
                 className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center cursor-pointer transition-colors"
                 aria-label="Close modal"
               >
@@ -129,39 +129,25 @@ export const WelcomeSection: React.FC = () => {
               </button>
 
               <div className="space-y-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#0B3C91] bg-blue-50 px-3 py-1 rounded-full">
-                  Institutional Journey & Ethos
-                </span>
-                <h3 id="welcome-modal-title" className="text-2xl font-bold font-serif text-[#0B3C91]">
-                  About {COLLEGE_INFO.name}
+                <h3 id="legacy-modal-title" className="text-2xl font-bold font-serif text-[#0B3C91]">
+                  Our Legacy Since 1998
                 </h3>
                 <div className="text-slate-700 text-sm leading-relaxed space-y-3">
-                  <p>
-                    Founded in 1998, <strong>{COLLEGE_INFO.name}</strong> was established with a singular focus: bridging the gap between state board academics and rigorous All-India competitive exams.
-                  </p>
-                  <p>
-                    Over 28 years, our institution has expanded to 12 state-of-the-art campuses across Nellore. Our pedagogy is rooted in concept clarity, personal faculty accessibility, and continuous diagnostic testing.
-                  </p>
-                  <p>
-                    Beyond ranks, we believe in nurturing patriotic, empathetic, and disciplined citizens. Our active National Cadet Corps (NCC) battalion and National Service Scheme (NSS) units provide students with life skills that serve them far beyond the college gates.
-                  </p>
+                  {LEGACY_PARAGRAPHS.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
                 </div>
 
                 <div className="pt-4 border-t border-slate-200 flex justify-end">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => setShowFullModal(false)}
-                    className="normal-case tracking-normal"
-                  >
+                  <Button variant="secondary" size="sm" onClick={handleClose}>
                     Close
                   </Button>
                 </div>
               </div>
             </motion.div>
-          </div>
+          </div>,
+          document.body
         )}
-      </AnimatePresence>
     </section>
   );
 };
