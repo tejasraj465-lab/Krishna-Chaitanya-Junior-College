@@ -3,16 +3,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
 import { MessageCircle, ArrowRight } from 'lucide-react';
 
-import bieapLogo from '../assets/bieap-logo.png';
-import nccLogo from '../assets/ncc-logo.png';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
 import { heroSlides } from '../data/heroData';
-import { COLLEGE_INFO } from '../data/collegeData';
+import { AFFILIATION_LOGOS, COLLEGE_INFO } from '../data/collegeData';
 
 interface HeroProps {
   onOpenApplyModal?: () => void;
@@ -32,14 +29,14 @@ const VERIFIED_AFFILIATIONS = [
     id: 'bieap',
     label: 'Board of Intermediate Education, Andhra Pradesh',
     shortLabel: 'BIEAP, Andhra Pradesh',
-    logo: bieapLogo,
+    logo: AFFILIATION_LOGOS.bieap,
     alt: 'Board of Intermediate Education, Andhra Pradesh logo',
   },
   {
     id: 'ncc',
     label: 'NCC Unit',
     shortLabel: 'NCC Unit',
-    logo: nccLogo,
+    logo: AFFILIATION_LOGOS.ncc,
     alt: 'National Cadet Corps (NCC) India logo',
   },
 ] as const;

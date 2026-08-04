@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Flag, Shield } from 'lucide-react';
 import { NCC_HOME } from '../data/nccData';
-import nccLogo from '../assets/ncc-logo.png';
+import { AFFILIATION_LOGOS } from '../data/collegeData';
 import { Container, GlassCard } from './ui';
 import { NccExploreModal } from './NccExploreModal';
 
@@ -42,7 +42,7 @@ export const NccNssSection: React.FC = () => {
               <div className="rounded-2xl sm:rounded-3xl bg-white p-4 sm:p-5 shadow-[0_16px_40px_rgba(0,0,0,0.35)] ring-1 ring-white/30 text-center">
                 <div className="mx-auto w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center rounded-xl bg-slate-50 p-3 mb-3">
                   <img
-                    src={nccLogo}
+                    src={AFFILIATION_LOGOS.ncc}
                     alt="National Cadet Corps (NCC) India official logo"
                     className="max-w-full max-h-full object-contain drop-shadow-sm"
                     loading="lazy"
