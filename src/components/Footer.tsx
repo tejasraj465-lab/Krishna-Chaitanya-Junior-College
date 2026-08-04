@@ -84,7 +84,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSect
                 <span className="text-brand text-white text-xl group-hover:text-[#FBBF24] transition-colors">
                   KRISHNA <span className="text-[#FBBF24]">CHAITANYA</span>
                 </span>
-                <p className="text-brand-sub text-blue-300">Junior College & Integrated Academy</p>
+                <p className="text-brand-sub text-blue-300">Junior College</p>
               </div>
             </a>
 

@@ -1,38 +1,68 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
-import { ChevronRight, BookOpen, X } from 'lucide-react';
+import { ChevronRight, BookOpen, X, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { Container, SectionHeader, GlassCard, Button } from './ui';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { COLLEGE_INFO } from '../data/collegeData';
 
 const CHOICE_CARDS = [
   {
-    title: 'Academic Excellence',
-    desc: 'A structured curriculum, experienced faculty, and regular assessments help every student achieve strong academic results.',
+    title: '👨‍🏫 Experienced Faculty',
+    desc: 'Experienced subject experts, concept-based teaching, and continuous academic monitoring.',
   },
   {
-    title: 'Personalized Mentoring',
-    desc: 'Individual attention, performance tracking, and continuous guidance ensure every student reaches their full potential.',
+    title: '🎯 Personalized Mentoring',
+    desc: 'Regular tests, performance tracking, doubt clarification, and parent updates for every student.',
   },
   {
-    title: 'Integrated Competitive Coaching',
-    desc: 'Intermediate education combined with IIT-JEE, NEET, EAPCET, CA/CMA, and Long-Term coaching under one academic system.',
+    title: '📚 Integrated Competitive Coaching',
+    desc: 'Intermediate + IIT-JEE, NEET, EAPCET, CA/CMA & Long-Term preparation under one system.',
   },
   {
-    title: 'Safe & Student-Centered Campus',
-    desc: 'A disciplined environment, modern infrastructure, transport, hostels, and dedicated student support create the ideal place to learn.',
+    title: '🏫 Safe & Disciplined Campus',
+    desc: "Separate boys' & girls' campuses, CCTV surveillance, transport, hostels, and a focused learning environment.",
   },
 ] as const;
 
-const LEGACY_PARAGRAPHS = [
-  'Since 1998, Krishna Chaitanya Junior College has been committed to providing quality Intermediate education with integrated preparation for competitive examinations.',
-  'Over the past 28+ years, we have earned the trust of thousands of students and parents through disciplined academics, experienced faculty, and a student-first approach. Our focus has always been on helping every student build a strong academic foundation while preparing for future careers and higher education.',
-  "Today, Krishna Chaitanya has grown into one of Nellore's well-established educational institutions, offering modern campuses, technology-enabled learning, personalized mentoring, and comprehensive coaching for IIT-JEE, NEET, EAPCET, CA/CMA, and other competitive examinations.",
-  'Beyond academic success, we believe in nurturing confident, responsible, and value-driven individuals through opportunities in NCC, NSS, cultural activities, leadership programs, and community service.',
-  'At Krishna Chaitanya, our greatest achievement is the success and trust of the generations of students and families who have been part of our journey.',
+const LEGACY_STORY = [
+  'Established in 1998, Krishna Chaitanya Junior College was founded with a vision of providing quality Intermediate education that empowers students with knowledge, discipline, confidence, and strong values.',
+  'For over 28 years, we have earned the trust of thousands of students and parents through experienced faculty, personalized mentoring, integrated competitive exam preparation, and a student-first approach to learning.',
+  'Today, Krishna Chaitanya continues to nurture future engineers, doctors, professionals, entrepreneurs, and leaders by combining academic excellence with character development in a safe and disciplined environment.',
 ] as const;
 
-export const WelcomeSection: React.FC = () => {
+const LEGACY_STATS = [
+  { emoji: '📅', title: 'Established 1998', subtitle: '' },
+  { emoji: '🎓', title: 'Academic Excellence', subtitle: '28+ Years' },
+  { emoji: '🏫', title: 'Campuses', subtitle: '17 Across Nellore' },
+  { emoji: '👨‍🎓', title: 'Students', subtitle: '13,000+' },
+  { emoji: '👩‍🏫', title: 'Faculty & Staff', subtitle: '500+' },
+  { emoji: '🎖', title: 'Special Recognition', subtitle: "Home to Nellore's Only Private Intermediate College NCC Unit" },
+] as const;
+
+const LEGACY_PHILOSOPHY = [
+  'At Krishna Chaitanya, we believe every student has the potential to succeed when provided with the right guidance, quality teaching, and continuous encouragement.',
+  'Our academic approach focuses on concept clarity, disciplined learning, regular assessments, personalized mentoring, and integrated preparation for Board examinations as well as national and state-level competitive examinations.',
+  'Beyond academics, we strive to develop confidence, responsibility, leadership, and lifelong learning skills that prepare students for success in higher education and beyond.',
+] as const;
+
+const LEGACY_VALUES = [
+  'Academic Excellence',
+  'Discipline & Integrity',
+  'Student-First Approach',
+  'Experienced Faculty',
+  'Continuous Improvement',
+  'Parent Trust',
+] as const;
+
+const LEGACY_QUOTE =
+  'For over 28 years, our greatest achievement has been the trust placed in us by generations of students and parents. We remain committed to shaping confident learners, responsible citizens, and successful future leaders.';
+
+interface WelcomeSectionProps {
+  onOpenApplyModal?: () => void;
+}
+
+export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenApplyModal }) => {
   const [showLegacyModal, setShowLegacyModal] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -78,16 +108,16 @@ export const WelcomeSection: React.FC = () => {
           className="max-w-5xl mx-auto space-y-8 sm:space-y-10"
         >
           <SectionHeader
-            eyebrow="Why Parents Choose Krishna Chaitanya"
-            title="A Trusted Foundation for Your Child's Future"
-            description="For over 28 years, Krishna Chaitanya Junior College has helped thousands of students achieve academic excellence through experienced faculty, disciplined learning, personalized mentoring, and integrated competitive exam coaching. Every student receives the guidance, support, and opportunities needed to build a successful future."
+            eyebrow="WHY CHOOSE KRISHNA CHAITANYA?"
+            title="Why Thousands of Parents Trust Krishna Chaitanya"
+            description="For over 28 years, Krishna Chaitanya Junior College has helped students build strong academic foundations through experienced faculty, disciplined learning, personalized mentoring, and integrated competitive exam coaching—all in a safe and student-focused environment."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 items-stretch">
             {CHOICE_CARDS.map((item) => (
-              <GlassCard key={item.title} className="p-5 sm:p-6">
+              <GlassCard key={item.title} className="p-5 sm:p-6 h-full flex flex-col">
                 <h3 className="text-sm sm:text-base font-bold text-[#0B3C91] font-serif mb-2">{item.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">{item.desc}</p>
               </GlassCard>
             ))}
           </div>
@@ -116,32 +146,92 @@ export const WelcomeSection: React.FC = () => {
               aria-modal="true"
               aria-labelledby="legacy-modal-title"
               onClick={(e) => e.stopPropagation()}
-              className="glass-card rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[min(90dvh,calc(100dvh-2rem))] overflow-y-auto relative"
+              className="glass-card rounded-3xl max-w-3xl w-full p-6 sm:p-8 max-h-[min(92dvh,calc(100dvh-2rem))] overflow-y-auto relative"
             >
               <button
                 ref={closeButtonRef}
                 type="button"
                 onClick={handleClose}
-                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center cursor-pointer transition-colors"
+                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center cursor-pointer transition-colors z-10"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="space-y-4">
-                <h3 id="legacy-modal-title" className="text-2xl font-bold font-serif text-[#0B3C91]">
-                  Our Legacy Since 1998
-                </h3>
-                <div className="text-slate-700 text-sm leading-relaxed space-y-3">
-                  {LEGACY_PARAGRAPHS.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
+              <div className="space-y-6 sm:space-y-8 pr-2">
+                <div>
+                  <h3 id="legacy-modal-title" className="text-2xl font-bold font-serif text-[#0B3C91]">
+                    Our Legacy Since 1998
+                  </h3>
+                  <p className="text-sm sm:text-base font-semibold text-[#F97316] mt-1">
+                    28+ Years of Academic Excellence, Trust & Student Success
+                  </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200 flex justify-end">
-                  <Button variant="secondary" size="sm" onClick={handleClose}>
-                    Close
+                <section className="space-y-3">
+                  <h4 className="text-lg font-bold font-serif text-[#0B3C91]">Our Story</h4>
+                  <div className="text-slate-700 text-sm leading-relaxed space-y-3">
+                    {LEGACY_STORY.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="space-y-3">
+                  <h4 className="text-lg font-bold font-serif text-[#0B3C91]">A Legacy of Excellence</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {LEGACY_STATS.map((stat) => (
+                      <GlassCard key={stat.title} className="p-4 text-center h-full" hover={false}>
+                        <span className="text-2xl mb-2 block" aria-hidden="true">
+                          {stat.emoji}
+                        </span>
+                        <p className="text-sm font-bold text-[#0B3C91] font-serif">{stat.title}</p>
+                        {stat.subtitle && (
+                          <p className="text-xs text-slate-600 mt-1 leading-snug">{stat.subtitle}</p>
+                        )}
+                      </GlassCard>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="space-y-3">
+                  <h4 className="text-lg font-bold font-serif text-[#0B3C91]">Our Educational Philosophy</h4>
+                  <div className="text-slate-700 text-sm leading-relaxed space-y-3">
+                    {LEGACY_PHILOSOPHY.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="space-y-3">
+                  <h4 className="text-lg font-bold font-serif text-[#0B3C91]">The Values That Guide Us</h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {LEGACY_VALUES.map((value) => (
+                      <li key={value} className="flex items-center gap-2 text-sm text-slate-700">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" aria-hidden="true" />
+                        <span>{value}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+
+                <div className="rounded-2xl bg-gradient-to-br from-[#0B3C91] via-[#072B6B] to-[#031333] text-white p-5 sm:p-6">
+                  <p className="text-sm sm:text-base leading-relaxed italic">&ldquo;{LEGACY_QUOTE}&rdquo;</p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Button variant="primary" size="md" fullWidth className="sm:flex-1" onClick={() => { handleClose(); onOpenApplyModal?.(); }}>
+                    Apply for Admission
                   </Button>
+                  <a
+                    href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya! I would like to talk to an admission counselor.')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sm:flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[48px] rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all"
+                  >
+                    <MessageCircle className="w-4 h-4 fill-white stroke-none" aria-hidden="true" />
+                    <span>Talk to an Admission Counselor</span>
+                  </a>
                 </div>
               </div>
             </motion.div>

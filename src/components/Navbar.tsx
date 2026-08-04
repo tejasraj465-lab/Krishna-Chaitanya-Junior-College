@@ -262,7 +262,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 KRISHNA <span className="text-[#EA580C]">CHAITANYA</span>
               </span>
               <p className="text-brand-sub text-slate-500 mt-0.5 truncate leading-tight">
-                Junior College & Integrated Academy
+                Junior College
               </p>
             </div>
           </a>

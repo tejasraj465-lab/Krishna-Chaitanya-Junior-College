@@ -47,16 +47,16 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({
                 className="snap-start shrink-0 w-[min(78vw,17rem)] p-3 flex flex-col gap-1"
               >
                 <h3 className="text-[11px] font-bold text-[#0B3C91] leading-snug">{item.title}</h3>
-                <p className="text-[10px] font-semibold text-slate-800 leading-snug line-clamp-2">{item.subtitle}</p>
-                <p className="text-[10px] text-slate-600 leading-snug line-clamp-2">{item.description}</p>
+                <p className="text-[10px] font-semibold text-slate-800 leading-snug">{item.subtitle}</p>
+                <p className="text-[10px] text-slate-600 leading-snug">{item.description}</p>
               </GlassCard>
             ))}
           </div>
 
-          {/* Tablet / desktop: grid */}
-          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 max-w-6xl mx-auto">
+          {/* Tablet / desktop: equal-height grid */}
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 max-w-6xl mx-auto items-stretch auto-rows-fr">
             {WHY_CHOOSE_HOME_FEATURE_CARDS.map((item) => (
-              <GlassCard key={item.id} className="p-4 sm:p-5 h-full flex flex-col">
+              <GlassCard key={item.id} className="p-4 sm:p-5 h-full min-h-[11rem] flex flex-col">
                 <h3 className="text-sm sm:text-base font-bold text-[#0B3C91] leading-snug mb-1.5">{item.title}</h3>
                 <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug mb-2">{item.subtitle}</p>
                 <p className="text-body-sm text-slate-600 leading-relaxed flex-1">{item.description}</p>

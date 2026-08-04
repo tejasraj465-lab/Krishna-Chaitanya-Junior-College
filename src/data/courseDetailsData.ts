@@ -336,7 +336,7 @@ export const COURSE_CATEGORIES = [
     name: 'Mathematics, Economics, Commerce',
     tagline: 'Commerce, CA/CMA & Management Stream',
     tracks: [
-      { id: 'mec-program', label: 'MEC & CA / CMA Foundation', tag: 'CA / CMA / IPMAT / BBA' }
+      { id: 'mec-program', label: 'MEC & CA / CMA Foundation', tag: 'CA / CMA / CS' }
     ]
   },
   {
@@ -344,7 +344,7 @@ export const COURSE_CATEGORIES = [
     name: 'Civics, Economics, Commerce',
     tagline: 'Humanities, CA/CMA & Law Stream',
     tracks: [
-      { id: 'cec-program', label: 'CEC & CA / CMA / Law / IAS Integrated', tag: 'CA / CMA / CLAT / Civils' }
+      { id: 'cec-program', label: 'CEC & CA / CMA / Law / IAS Integrated', tag: 'CA / CMA / Law / UPSC' }
     ]
   },
   {

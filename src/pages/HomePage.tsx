@@ -37,7 +37,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         onOpenAIGuide={onOpenAIGuide}
       />
 
-      <WelcomeSection />
+      <WelcomeSection onOpenApplyModal={() => onOpenApplyModal()} />
 
       <CoursesSection
         onOpenApplyModal={onOpenApplyModal}

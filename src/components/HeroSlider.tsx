@@ -3,13 +3,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
 import { MessageCircle, ArrowRight } from 'lucide-react';
 
+import bieapLogo from '../assets/bieap-logo.png';
+import nccLogo from '../assets/ncc-logo.png';
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
 import { heroSlides } from '../data/heroData';
-import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
+import { COLLEGE_INFO } from '../data/collegeData';
 
 interface HeroProps {
   onOpenApplyModal?: () => void;
@@ -18,11 +21,27 @@ interface HeroProps {
 
 const TRUST_STATS = [
   { id: 'years', value: '28+', label: 'Years of Excellence' },
-  { id: 'campuses', value: String(CAMPUSES.length), label: 'Campuses' },
+  { id: 'campuses', value: '17', label: 'Campuses' },
   { id: 'students', value: '13,000+', label: 'Students' },
   { id: 'faculty', value: '500+', label: 'Faculty & Staff' },
   { id: 'alumni', value: '2,00,000+', label: 'Alumni' },
-  { id: 'pass-rate', value: '99.8%', label: 'Board Pass Rate' },
+] as const;
+
+const VERIFIED_AFFILIATIONS = [
+  {
+    id: 'bieap',
+    label: 'Board of Intermediate Education, Andhra Pradesh',
+    shortLabel: 'BIEAP, Andhra Pradesh',
+    logo: bieapLogo,
+    alt: 'Board of Intermediate Education, Andhra Pradesh logo',
+  },
+  {
+    id: 'ncc',
+    label: 'NCC Unit',
+    shortLabel: 'NCC Unit',
+    logo: nccLogo,
+    alt: 'National Cadet Corps (NCC) India logo',
+  },
 ] as const;
 
 export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
@@ -77,13 +96,12 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
         <div className="max-w-[1500px] mx-auto px-3 sm:px-6 lg:px-10">
           <div className="max-w-4xl space-y-1.5 sm:space-y-5">
             <h1 className="text-display text-white max-sm:text-[1.2rem] max-sm:leading-snug">
-              Nellore&apos;s Most Trusted Junior College for Academic Excellence &amp; Competitive Exam Success
+              Nellore&apos;s Trusted Junior College for Academic Excellence
             </h1>
 
             <p className="text-blue-100 text-body-sm sm:text-lg font-normal leading-relaxed max-w-3xl max-sm:text-[0.8125rem] max-sm:leading-snug">
-              For over 28 years, Krishna Chaitanya Junior College has empowered students to excel in Board
-              Examinations, IIT-JEE, NEET, EAPCET, CA/CMA, and other competitive exams through experienced faculty,
-              disciplined mentoring, and personalized guidance.
+              Krishna Chaitanya Junior College has empowered students for 28+ years through experienced faculty,
+              disciplined mentoring, and integrated competitive-exam coaching.
             </p>
 
             <div className="pt-0.5 sm:pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-1.5 sm:gap-4 max-w-xl sm:max-w-none">
@@ -108,7 +126,7 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
           </div>
 
           {/* Trust statistics — compact on mobile, no horizontal scroll */}
-          <div className="mt-3 sm:mt-10 grid grid-cols-3 lg:grid-cols-6 gap-1.5 sm:gap-4">
+          <div className="mt-3 sm:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-4">
             {TRUST_STATS.map((stat) => (
               <div
                 key={stat.id}
@@ -124,10 +142,32 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
             ))}
           </div>
 
-          <p className="mt-2.5 sm:mt-8 mb-0.5 sm:mb-0 text-center text-blue-100/90 text-[10px] sm:text-base font-medium leading-snug sm:leading-relaxed max-w-3xl mx-auto">
-            Trusted by generations of families across Nellore for quality education, disciplined learning, and
-            consistent academic results.
-          </p>
+          <div className="mt-4 sm:mt-6 border-t border-white/10 pt-4 sm:pt-6">
+            <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-blue-200/80 mb-3 sm:mb-4">
+              Recognised &amp; Affiliated
+            </p>
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-4 max-w-md sm:max-w-2xl mx-auto">
+              {VERIFIED_AFFILIATIONS.map(({ id, label, shortLabel, logo, alt }) => (
+                <div
+                  key={id}
+                  className="group flex flex-col items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl bg-white p-2.5 sm:p-4 shadow-[0_8px_24px_rgba(0,0,0,0.25)] ring-1 ring-white/40 transition-transform duration-200 hover:scale-[1.02]"
+                >
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center shrink-0 rounded-lg bg-slate-50 p-1.5 sm:p-2">
+                    <img
+                      src={logo}
+                      alt={alt}
+                      className="max-w-full max-h-full object-contain drop-shadow-sm"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-[9px] sm:text-xs text-[#0B3C91] font-bold text-center leading-snug">
+                    <span className="sm:hidden">{shortLabel}</span>
+                    <span className="hidden sm:inline">{label}</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

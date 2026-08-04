@@ -27,8 +27,10 @@ export interface Campus {
   email: string;
   image: string;
   googleMapUrl: string;
+  suitableFor: string;
+  coursesOffered: string[];
   facilities: string[];
-  stats: {
+  stats?: {
     students: string;
     faculty: string;
     labs: number;

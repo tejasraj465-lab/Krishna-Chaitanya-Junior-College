@@ -24,11 +24,11 @@ interface CoursesSectionProps {
 }
 
 const COURSE_CARD_SUMMARIES: Record<string, string> = {
-  MPC: 'Best for students aspiring for IIT, NITs, IIITs, Engineering, and other technical careers.',
-  BiPC: 'Ideal for future doctors, pharmacists, dentists, and life science professionals preparing for NEET and related examinations.',
-  MEC: 'Designed for students aiming for CA, CMA, CS, BBA, Economics, and Business careers.',
-  CEC: 'Perfect for students interested in Civil Services, Law, Commerce, Humanities, and Management.',
-  'Long Term': "Specialized repeaters' program focused on IIT-JEE, NEET, and EAPCET with intensive mentoring and performance improvement.",
+  MPC: 'Mathematics, Physics & Chemistry with integrated coaching for Engineering and competitive entrance examinations. Ideal for students aspiring for Engineering, Technology, Architecture, Defence, Research, Data Science, and related careers.',
+  BiPC: 'Biology, Physics & Chemistry with integrated coaching for Medical and Life Science entrance examinations. Ideal for students aspiring for MBBS, BDS, Veterinary, Pharmacy, Nursing, Biotechnology, Agriculture, and Allied Health Sciences.',
+  MEC: 'Mathematics, Economics & Commerce with integrated coaching for Commerce, Management, and Professional courses. Ideal for students aspiring for CA, CMA, CS, BBA, MBA, Finance, Economics, Banking, and Entrepreneurship.',
+  CEC: 'Civics, Economics & Commerce with integrated coaching for Law, Civil Services, and Commerce careers. Ideal for students aspiring for Law, UPSC, APPSC, Public Administration, Journalism, Commerce, Arts, and Humanities.',
+  'Long Term': 'One-year intensive repeater programme with focused preparation for NEET entrance examination.',
 };
 
 export const CoursesSection: React.FC<CoursesSectionProps> = ({

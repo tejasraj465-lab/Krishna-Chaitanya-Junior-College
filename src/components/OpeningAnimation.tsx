@@ -121,7 +121,7 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
                 KRISHNA <span className="text-[#FBBF24]">CHAITANYA</span>
               </h1>
               <p className="text-brand-sub text-blue-200 mt-2">
-                Junior College & Integrated Academy
+                Junior College
               </p>
             </motion.div>
 

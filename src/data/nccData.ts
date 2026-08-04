@@ -2,14 +2,41 @@ import { GALLERY_ITEMS } from './collegeData';
 
 export const NCC_HOME = {
   title: 'NCC at Krishna Chaitanya',
-  subheading: 'Only private Intermediate colleges in Nellore with an accredited NCC Unit.',
+  subheading: 'Only private Intermediate college in Nellore with an accredited NCC Unit.',
   description:
     'Build discipline, leadership, confidence, physical fitness, and prepare for Defence careers while pursuing your Intermediate education.',
+  motto: 'एकता और अनुशासन',
+  mottoEnglish: 'Unity and Discipline',
+  highlightStats: [
+    { id: 'battalion', value: '3 AP BN', label: 'Accredited Battalion Unit' },
+    { id: 'exclusive', value: 'Only One', label: 'Private JC NCC in Nellore' },
+    { id: 'camps', value: 'RDC · ATC', label: 'National Camp Pathways' },
+  ],
   featureCards: [
-    { id: 'leadership', emoji: '🪖', label: 'Leadership & Discipline' },
-    { id: 'fitness', emoji: '🏃', label: 'Physical Fitness & Parade Training' },
-    { id: 'camps', emoji: '🎯', label: 'Camps & Adventure Activities' },
-    { id: 'defence', emoji: '🛡️', label: 'Defence Career Awareness' },
+    {
+      id: 'leadership',
+      emoji: '🪖',
+      label: 'Leadership & Discipline',
+      description: 'Parade drills, command structure, and character-building routines.',
+    },
+    {
+      id: 'fitness',
+      emoji: '🏃',
+      label: 'Physical Fitness & Parade Training',
+      description: 'Regular drill practice, yoga, and stamina-building activities.',
+    },
+    {
+      id: 'camps',
+      emoji: '🎯',
+      label: 'Camps & Adventure Activities',
+      description: 'ATC, trekking, national integration camps, and adventure exposure.',
+    },
+    {
+      id: 'defence',
+      emoji: '🛡️',
+      label: 'Defence Career Awareness',
+      description: 'Guidance for Armed Forces, Police, and uniformed service pathways.',
+    },
   ],
   ctaLabel: 'Explore NCC at KCJC',
 } as const;

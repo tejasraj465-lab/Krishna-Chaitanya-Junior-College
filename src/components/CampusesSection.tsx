@@ -70,7 +70,7 @@ export const CampusesSection: React.FC<CampusesSectionProps> = ({
                         {item.description}
                       </p>
                       <span className="inline-flex items-center gap-1 text-[11px] sm:text-sm font-bold text-[#0B3C91] group-hover:text-[#F97316] transition-colors">
-                        Browse campuses
+                        {item.ctaLabel ?? 'View Campuses'}
                         <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform" />
                       </span>
                     </div>
