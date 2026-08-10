@@ -22,6 +22,7 @@ const TRUST_STATS = [
   { id: 'students', value: '13,000+', label: 'Students' },
   { id: 'faculty', value: '500+', label: 'Faculty & Staff' },
   { id: 'alumni', value: '2,00,000+', label: 'Alumni' },
+  { id: 'legacy', value: '1998', label: 'Legacy' },
 ] as const;
 
 const VERIFIED_AFFILIATIONS = [
@@ -43,7 +44,7 @@ const VERIFIED_AFFILIATIONS = [
 
 export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
   return (
-    <section id="hero" className="relative w-full overflow-hidden select-none bg-slate-900">
+    <section id="hero" className="relative w-full overflow-hidden select-none bg-slate-900 scroll-mt-0">
       {/* Results label — above banner */}
       <div className="bg-[#031333] border-b border-blue-950/50 px-3 sm:px-6 py-1.5 sm:py-2">
         <div className="max-w-[1500px] mx-auto px-3 sm:px-6 lg:px-10">
@@ -123,7 +124,7 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
           </div>
 
           {/* Trust statistics — compact on mobile, no horizontal scroll */}
-          <div className="mt-3 sm:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-4">
+          <div className="mt-3 sm:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 sm:gap-4">
             {TRUST_STATS.map((stat) => (
               <div
                 key={stat.id}

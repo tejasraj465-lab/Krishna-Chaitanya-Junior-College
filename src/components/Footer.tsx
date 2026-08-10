@@ -73,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSect
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="flex items-center gap-3 group cursor-pointer inline-flex"
-              title="Go to Hero Section"
+              title="Go to Home"
             >
               <img
                 src={kcLogo}

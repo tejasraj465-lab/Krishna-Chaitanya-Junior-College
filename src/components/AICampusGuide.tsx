@@ -16,13 +16,15 @@ import { ChatMessage } from '../types';
 import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
 import { generateFallbackReply } from '../data/aiKnowledgeBase';
 import { CuteRobotIcon } from './CuteRobotIcon';
+import { sanitizeInternalPath, sanitizeSectionId } from '../utils/navigationAllowlist';
+import { openExternalUrl, stripControlChars } from '../utils/security';
 
 interface AICampusGuideProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenApplyModal: () => void;
   onNavigateToSection?: (sectionId: string) => void;
-  onNavigateToPath?: (path: string) => void;
+  onNavigateToPath?: (path: string, options?: { fromSection?: string }) => void;
 }
 
 export const AICampusGuide: React.FC<AICampusGuideProps> = ({
@@ -36,7 +38,6 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     '🏛️ About College',
     '📚 Courses & Streams',
     '⭐ Why Choose KCJC',
-    '🏆 Ranks & Results',
     '🎖️ NCC Cadet Wing',
     '🏢 Nellore Campuses',
     '🏠 Hostels & Facilities',
@@ -50,7 +51,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     {
       id: 'm1',
       sender: 'ai',
-      text: `Welcome to ${COLLEGE_INFO.name}, Nellore!\n\nI'm Campus Guide AI — trained on our complete website for mobile and desktop, including courses, all ${CAMPUSES.length} campuses, facilities, admissions, ranks, NCC, gallery, and student life.\n\nLanguages: English • తెలుగు • हिन्दी\n\nTap 📋 Menu or ask anything below.`,
+      text: `Welcome to ${COLLEGE_INFO.name}, Nellore!\n\nI'm Campus Guide AI — trained on our complete website for mobile and desktop, including courses, all ${CAMPUSES.length} campuses, facilities, admissions, NCC, gallery, and student life.\n\nLanguages: English • తెలుగు • हिन्दी\n\nTap 📋 Menu or ask anything below.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       quickReplies: MAIN_MENU_OPTIONS
     }
@@ -94,13 +95,16 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
   };
 
   const navigateToPage = (path: string, autoCloseMobile: boolean = true) => {
+    const safePath = sanitizeInternalPath(path);
+    if (!safePath) return;
+
     if (autoCloseMobile && typeof window !== 'undefined' && window.innerWidth < 768) {
       onClose();
     }
     if (onNavigateToPath) {
-      onNavigateToPath(path);
+      onNavigateToPath(safePath);
     } else {
-      window.history.pushState({}, '', path);
+      window.history.pushState({}, '', safePath);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -108,16 +112,18 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
   const processNavigation = (text: string): string | undefined => {
     const pageMatch = text.match(/\[NAV:page:(.*?)\]/);
     if (pageMatch?.[1]) {
-      const path = pageMatch[1].trim();
-      navigateToPage(path, false);
-      return `page:${path}`;
+      const safePath = sanitizeInternalPath(pageMatch[1].trim());
+      if (!safePath) return undefined;
+      navigateToPage(safePath, false);
+      return `page:${safePath}`;
     }
 
     const navMatch = text.match(/\[NAV:(.*?)\]/);
     if (navMatch?.[1]) {
-      const targetId = navMatch[1].trim();
-      scrollToSection(targetId, false);
-      return targetId;
+      const safeSection = sanitizeSectionId(navMatch[1].trim());
+      if (!safeSection) return undefined;
+      scrollToSection(safeSection, false);
+      return safeSection;
     }
     return undefined;
   };
@@ -151,20 +157,21 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
         return 'Courses & Streams';
       case 'campuses':
         return 'Campuses';
-      case 'results':
-        return 'Ranks & Results';
+      case 'ncc':
       case 'ncc-nss':
         return 'NCC Cadet Wing';
+      case 'why-choose':
       case 'welcome':
         return 'About College';
       case 'hero':
         return 'Homepage';
       case 'leadership':
         return 'Leadership';
+      case 'explore-kcjc':
       case 'life-at-kc':
         return 'Student Life';
-      case 'why-us':
-        return 'Why Choose KCJC';
+      case 'stories':
+        return 'Success Stories';
       case 'gallery':
         return 'Gallery';
       default:
@@ -189,11 +196,11 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       return;
     }
     if (qr === '💬 Talk on WhatsApp' || qr === 'Talk on WhatsApp') {
-      window.open(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya! I am chatting with Campus Guide AI and want to connect with an admission counselor.')}`, '_blank');
+      openExternalUrl(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya! I am chatting with Campus Guide AI and want to connect with an admission counselor.')}`);
       return;
     }
     if (qr === '🏛️ About College') {
-      scrollToSection('welcome');
+      scrollToSection('why-choose');
       handleSend("Tell me about Sri Krishna Chaitanya College overview, legacy, and founders");
       return;
     }
@@ -202,13 +209,8 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       handleSend("What courses and academic streams (MPC, BiPC, MEC, CEC) are offered?");
       return;
     }
-    if (qr === '🏆 Ranks & Results' || qr === 'Top JEE/NEET Ranks') {
-      scrollToSection('results');
-      handleSend("Show me top IIT-JEE and NEET ranks achieved by Krishna Chaitanya students");
-      return;
-    }
     if (qr === '🎖️ NCC Cadet Wing' || qr === 'NCC & NSS Wings') {
-      scrollToSection('ncc-nss');
+      scrollToSection('ncc');
       handleSend("Tell me about the Accredited 3 AP BN NCC Battalion Cadet Wing and Defense benefits");
       return;
     }
@@ -235,18 +237,18 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     }
     if (qr === '🎓 Life at KCJC' || qr === 'Life at KCJC') {
       if (onNavigateToPath) {
-        onNavigateToPath('/life-at-kcjc');
+        onNavigateToPath('/life-at-kcjc', { fromSection: 'explore-kcjc' });
       } else {
-        scrollToSection('life-at-kc');
+        scrollToSection('explore-kcjc');
       }
       handleSend('Tell me about student life, clubs, sports, NCC/NSS, and cultural activities at KCJC');
       return;
     }
     if (qr === '🖼️ Gallery' || qr === 'Gallery') {
       if (onNavigateToPath) {
-        onNavigateToPath('/gallery');
+        onNavigateToPath('/gallery', { fromSection: 'leadership' });
       } else {
-        scrollToSection('gallery');
+        scrollToSection('leadership');
       }
       handleSend('What photos and events are in the KCJC gallery?');
       return;
@@ -269,7 +271,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
   };
 
   const handleSend = async (userText?: string) => {
-    const query = (userText || input).trim();
+    const query = stripControlChars((userText || input).trim()).slice(0, 2000);
     if (!query) return;
 
     const userMsg: ChatMessage = {
@@ -294,7 +296,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
         quickReplies: MAIN_MENU_OPTIONS
       };
       setMessages((prev) => [...prev, waMsg]);
-      window.open(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya! I am chatting with Campus Guide AI and want to connect with a counselor.')}`, '_blank');
+      openExternalUrl(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya! I am chatting with Campus Guide AI and want to connect with a counselor.')}`);
       return;
     }
 
@@ -302,12 +304,17 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       const response = await fetch('/api/ai-guide', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: query, history: messages })
+        body: JSON.stringify({ message: query, history: messages.slice(-6) }),
       });
 
-      const data = await response.json();
+      if (response.status === 429) {
+        appendAiReply('You are sending messages too quickly. Please wait a moment and try again.');
+        return;
+      }
+
+      const data = await response.json().catch(() => ({}));
       const replyText =
-        data.reply ||
+        (response.ok && data.reply) ||
         generateFallbackReply(query) ||
         'Thank you for asking! For personalized guidance, connect on WhatsApp.';
 

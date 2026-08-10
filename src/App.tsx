@@ -20,10 +20,46 @@ import { WhyChooseKcjcPage } from './pages/WhyChooseKcjcPage';
 import { CampusesPage, CampusCategoryFilter } from './pages/CampusesPage';
 import { CampusDetailPage } from './pages/CampusDetailPage';
 import { CAMPUSES } from './data/collegeData';
+import {
+  HOME_SECTION_IDS,
+  clearHomeReturnSection,
+  getHomeReturnSection,
+  normalizeHomeSectionId,
+  scrollToHomeSectionWhenReady,
+  setHomeReturnSection,
+  type HomeSectionId,
+} from './utils/homeSectionNavigation';
 
 type RouteKey = 'home' | 'facilities' | 'gallery' | 'life-at-kcjc' | 'why-choose-kcjc' | 'campuses' | 'campus-detail';
 
+type NavigatePathOptions = {
+  fromSection?: HomeSectionId | string;
+};
+
+type HistoryState = {
+  scrollY?: number;
+  activeSection?: string;
+};
+
 const slugify = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+const readHistoryState = (): HistoryState => {
+  const state = window.history.state;
+  return state && typeof state === 'object' ? (state as HistoryState) : {};
+};
+
+/** Persist current scroll on the active history entry before leaving the page. */
+const persistCurrentScroll = (activeSection?: string) => {
+  window.history.replaceState(
+    {
+      ...readHistoryState(),
+      scrollY: window.scrollY,
+      ...(activeSection ? { activeSection } : {}),
+    },
+    '',
+    window.location.href
+  );
+};
 
 const getCampusFromSlug = (slug: string | null) => {
   if (!slug) return null;
@@ -86,7 +122,7 @@ const getSeoDescription = (routeKey: RouteKey, campusName?: string | null) => {
     case 'life-at-kcjc':
       return 'See how student life at KCJC blends academics, clubs, cultural activities, sports, NCC, NSS, and celebrations.';
     case 'why-choose-kcjc':
-      return 'Explore the college advantages, results, mentorship, infrastructure, and the disciplined learning culture at KCJC.';
+      return 'Explore the college advantages, mentorship, infrastructure, and the disciplined learning culture at KCJC.';
     case 'campuses':
       return 'Browse the existing Krishna Chaitanya campuses with search, type filters, and real campus details from the current website data.';
     case 'campus-detail':
@@ -124,55 +160,91 @@ export default function App() {
     return initialRouteState.routeKey;
   });
   const [pendingSection, setPendingSection] = useState<string | null>(() => window.location.hash.replace('#', '') || null);
+  const [restoreScrollY, setRestoreScrollY] = useState<number | null>(null);
 
   useLayoutEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
 
+    // Fresh entry / reload only — do not treat this as a Back navigation.
     if (initialRouteState.routeKey === 'home') {
       if (window.location.pathname !== '/') {
-        window.history.replaceState({}, '', '/');
+        window.history.replaceState({ scrollY: 0 }, '', '/');
+      } else if (!window.location.hash) {
+        window.history.replaceState({ scrollY: 0 }, '', window.location.href);
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        setActiveSection('hero');
       }
+    } else {
+      window.history.replaceState({ scrollY: 0 }, '', window.location.href);
       window.scrollTo({ top: 0, behavior: 'auto' });
-      setActiveSection('hero');
     }
   }, []);
 
   useEffect(() => {
-    const handlePopState = () => {
+    const handlePopState = (event: PopStateEvent) => {
       const nextRouteState = getRouteState(window.location.pathname);
       const nextSection = window.location.hash.replace('#', '') || null;
+      const state = (event.state && typeof event.state === 'object' ? event.state : {}) as HistoryState;
+      const savedScrollY = typeof state.scrollY === 'number' ? state.scrollY : null;
+      const savedSection =
+        typeof state.activeSection === 'string' && state.activeSection
+          ? state.activeSection
+          : null;
 
       setRouteKey(nextRouteState.routeKey);
       setCampusSlug(nextRouteState.campusSlug);
       setCampusCategory(getCampusCategoryFromSearch());
-      setPendingSection(nextSection);
 
-      if (nextRouteState.routeKey === 'home') {
-        if (!nextSection) {
-          window.scrollTo({ top: 0, behavior: 'auto' });
-        }
-        setActiveSection(nextSection || 'hero');
+      if (savedScrollY !== null) {
+        // Restore exact previous scroll for Home and every other route.
+        setPendingSection(null);
+        setRestoreScrollY(savedScrollY);
+        setActiveSection(
+          nextRouteState.routeKey === 'home'
+            ? savedSection || nextSection || 'hero'
+            : nextRouteState.routeKey
+        );
         return;
       }
 
-      window.scrollTo({ top: 0, behavior: 'auto' });
-      setActiveSection(nextRouteState.routeKey);
+      if (nextRouteState.routeKey === 'home' && nextSection) {
+        setPendingSection(nextSection);
+        setRestoreScrollY(null);
+        setActiveSection(nextSection);
+        return;
+      }
+
+      // Legacy history entries without scrollY — keep natural top for that page.
+      setPendingSection(null);
+      setRestoreScrollY(0);
+      setActiveSection(nextRouteState.routeKey === 'home' ? 'hero' : nextRouteState.routeKey);
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  useLayoutEffect(() => {
+    if (restoreScrollY === null) return;
+
+    const y = restoreScrollY;
+    setRestoreScrollY(null);
+    window.scrollTo({ top: y, left: 0, behavior: 'auto' });
+    // Re-apply after layout settles so tall home sections restore accurately.
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: y, left: 0, behavior: 'auto' });
+    });
+  }, [routeKey, restoreScrollY]);
+
   useEffect(() => {
     if (routeKey !== 'home') {
       setActiveSection(routeKey);
-      setPendingSection(null);
       return;
     }
 
-    const sectionIds = ['hero', 'welcome', 'courses', 'why-us', 'facilities', 'admissions', 'ncc-nss', 'campuses', 'results', 'life-at-kc', 'leadership', 'gallery'];
+    const sectionIds = [...HOME_SECTION_IDS];
 
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       const visibleEntries = entries.filter((entry) => entry.isIntersecting);
@@ -203,7 +275,7 @@ export default function App() {
       if (window.scrollY < 80) {
         setActiveSection('hero');
       } else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60) {
-        setActiveSection('gallery');
+        setActiveSection('leadership');
       }
     };
 
@@ -220,24 +292,43 @@ export default function App() {
       return;
     }
 
+    const target = normalizeHomeSectionId(pendingSection) ?? pendingSection;
+
+    // Wait until Home is mounted and the section exists, then scroll with header offset.
     const timeoutId = window.setTimeout(() => {
-      const element = document.getElementById(pendingSection);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setActiveSection(pendingSection);
-      }
+      scrollToHomeSectionWhenReady(target, { behavior: 'smooth' });
+      setActiveSection(target);
       setPendingSection(null);
-    }, 80);
+    }, 50);
 
     return () => window.clearTimeout(timeoutId);
   }, [routeKey, pendingSection]);
 
-  const navigateToPath = (path: string) => {
-    window.history.pushState({}, '', path);
+  const rememberHomeReturnSection = (fromSection?: string) => {
+    if (routeKey !== 'home') return;
+
+    const section =
+      normalizeHomeSectionId(fromSection) ??
+      normalizeHomeSectionId(activeSection);
+
+    if (section && section !== 'hero') {
+      setHomeReturnSection(section);
+    } else {
+      clearHomeReturnSection();
+    }
+  };
+
+  const navigateToPath = (path: string, options?: NavigatePathOptions) => {
+    rememberHomeReturnSection(options?.fromSection);
+    persistCurrentScroll(activeSection);
 
     const url = new URL(path, window.location.origin);
     const nextRouteState = getRouteState(url.pathname);
-    const nextSection = path.includes('#') ? (path.split('#')[1] || null) : null;
+    const nextSection = path.includes('#')
+      ? normalizeHomeSectionId(path.split('#')[1] || '') || path.split('#')[1] || null
+      : null;
+
+    window.history.pushState({ scrollY: 0, activeSection: nextRouteState.routeKey }, '', path);
 
     setRouteKey(nextRouteState.routeKey);
     setCampusSlug(nextRouteState.campusSlug);
@@ -245,9 +336,13 @@ export default function App() {
       setCampusCategory(getCampusCategoryFromSearch(url.search));
     }
     setPendingSection(nextSection);
-    setActiveSection(nextRouteState.routeKey === 'home' ? (nextSection || 'welcome') : nextRouteState.routeKey);
+    setRestoreScrollY(null);
+    setActiveSection(
+      nextRouteState.routeKey === 'home' ? (nextSection || 'why-choose') : nextRouteState.routeKey
+    );
 
-    if (nextRouteState.routeKey !== 'home') {
+    // Explicit forward navigation to a new page starts at the top.
+    if (nextRouteState.routeKey !== 'home' || !nextSection) {
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
   };
@@ -255,29 +350,55 @@ export default function App() {
   const handleCampusCategoryChange = (category: CampusCategoryFilter) => {
     setCampusCategory(category);
     const nextPath = category === 'All' ? '/campuses' : `/campuses?category=${category}`;
-    window.history.replaceState({}, '', nextPath);
+    window.history.replaceState({ ...readHistoryState(), scrollY: window.scrollY }, '', nextPath);
   };
 
-  const navigateToCampus = (campusSlugValue: string) => {
-    navigateToPath(`/campuses/${campusSlugValue}`);
+  const navigateToCampus = (campusSlugValue: string, options?: NavigatePathOptions) => {
+    navigateToPath(`/campuses/${campusSlugValue}`, options);
   };
 
   const navigateToSection = (sectionId: string) => {
-    if (sectionId === 'hero') {
-      window.history.pushState({}, '', '/');
+    const normalized = normalizeHomeSectionId(sectionId) ?? sectionId;
+    persistCurrentScroll(activeSection);
+
+    if (normalized === 'hero') {
+      clearHomeReturnSection();
+      window.history.pushState({ scrollY: 0, activeSection: 'hero' }, '', '/');
       setRouteKey('home');
       setCampusSlug(null);
       setPendingSection(null);
+      setRestoreScrollY(null);
       setActiveSection('hero');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
-    window.history.pushState({}, '', `/#${sectionId}`);
+    window.history.pushState({ scrollY: 0, activeSection: normalized }, '', `/#${normalized}`);
     setRouteKey('home');
     setCampusSlug(null);
-    setPendingSection(sectionId);
-    setActiveSection(sectionId);
+    setPendingSection(normalized);
+    setRestoreScrollY(null);
+    setActiveSection(normalized);
+  };
+
+  /** Smart Home / logo: return to stored originating section, else Hero. */
+  const navigateHome = () => {
+    if (routeKey === 'home') {
+      // Already on Home — explicit Hero / back-to-top.
+      clearHomeReturnSection();
+      navigateToSection('hero');
+      return;
+    }
+
+    const returnSection = getHomeReturnSection();
+    if (returnSection && returnSection !== 'hero') {
+      clearHomeReturnSection();
+      navigateToSection(returnSection);
+      return;
+    }
+
+    clearHomeReturnSection();
+    navigateToSection('hero');
   };
 
   const handleOpenApplyModal = (course?: string, campus?: string) => {
@@ -301,6 +422,7 @@ export default function App() {
         onSectionChange={setActiveSection}
         onNavigateToPath={navigateToPath}
         onNavigateToSection={navigateToSection}
+        onNavigateHome={navigateHome}
         onOpenApplyModal={handleOpenApplyModal}
         onOpenAIGuide={() => setIsAIGuideOpen(true)}
         onSelectProgram={(programId) => setSelectedProgramId(programId)}
@@ -318,16 +440,16 @@ export default function App() {
       )}
 
       {routeKey === 'facilities' && (
-        <FacilitiesPage onNavigateHome={() => navigateToSection('hero')} />
+        <FacilitiesPage onNavigateHome={navigateHome} />
       )}
 
       {routeKey === 'gallery' && (
-        <GalleryPage onNavigateHome={() => navigateToSection('hero')} />
+        <GalleryPage onNavigateHome={navigateHome} />
       )}
 
       {routeKey === 'life-at-kcjc' && (
         <LifeAtKcjcPage
-          onNavigateHome={() => navigateToSection('hero')}
+          onNavigateHome={navigateHome}
           onOpenApplyModal={() => handleOpenApplyModal()}
           onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
         />
@@ -335,7 +457,7 @@ export default function App() {
 
       {routeKey === 'why-choose-kcjc' && (
         <WhyChooseKcjcPage
-          onNavigateHome={() => navigateToSection('hero')}
+          onNavigateHome={navigateHome}
           onOpenApplyModal={handleOpenApplyModal}
           onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
         />
@@ -343,7 +465,7 @@ export default function App() {
 
       {routeKey === 'campuses' && (
         <CampusesPage
-          onNavigateHome={() => navigateToSection('hero')}
+          onNavigateHome={navigateHome}
           onNavigateToCampus={navigateToCampus}
           onOpenApplyModal={handleOpenApplyModal}
           categoryFilter={campusCategory}
@@ -354,14 +476,14 @@ export default function App() {
       {routeKey === 'campus-detail' && (
         <CampusDetailPage
           campus={currentCampus}
-          onNavigateHome={() => navigateToSection('hero')}
-          onNavigateToCampuses={() => navigateToPath('/campuses')}
+          onNavigateHome={navigateHome}
+          onNavigateToCampuses={() => navigateToPath('/campuses', { fromSection: 'campuses' })}
           onOpenApplyModal={handleOpenApplyModal}
         />
       )}
 
       <Footer
-        onNavigateHome={() => navigateToSection('hero')}
+        onNavigateHome={navigateHome}
         onNavigateToSection={navigateToSection}
       />
 
@@ -379,7 +501,6 @@ export default function App() {
       <MobileBottomNav
         onOpenApplyModal={() => handleOpenApplyModal()}
         onOpenAIGuide={() => setIsAIGuideOpen(true)}
-        onOpenWhyChoose={() => navigateToPath('/why-choose-kcjc')}
       />
 
       <AdmissionModalBottomSheet

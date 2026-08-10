@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, MapPin, Calendar, CheckCircle2, Clock, Phone } from 'lucide-react';
 import { CAMPUSES, COLLEGE_INFO } from '../data/collegeData';
+import {
+  openExternalUrl,
+  normalizePhoneDigits,
+  sanitizeForWhatsAppText,
+  sanitizePersonName,
+  sanitizePhoneInput,
+  validatePersonName,
+  validatePhone,
+} from '../utils/security';
 
 interface CampusVisitModalProps {
   isOpen: boolean;
@@ -19,9 +28,31 @@ export const CampusVisitModal: React.FC<CampusVisitModalProps> = ({ isOpen, onCl
 
   const [booked, setBooked] = useState(false);
   const [visitRefId, setVisitRefId] = useState('');
+  const [formError, setFormError] = useState('');
+  const isSubmittingRef = useRef(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmittingRef.current) return;
+
+    const name = sanitizePersonName(formData.name);
+    const phone = normalizePhoneDigits(formData.phone);
+    const nameError = validatePersonName(name);
+    const phoneError = validatePhone(phone);
+
+    if (nameError || phoneError) {
+      setFormError(nameError || phoneError || 'Please check your details.');
+      return;
+    }
+
+    if (!CAMPUSES.some((campus) => campus.name === formData.campus)) {
+      setFormError('Please select a valid campus.');
+      return;
+    }
+
+    isSubmittingRef.current = true;
+    setFormError('');
+
     const generatedRef = `KCJC-VISIT-${Math.floor(10000 + Math.random() * 90000)}`;
     setVisitRefId(generatedRef);
     setBooked(true);
@@ -29,16 +60,17 @@ export const CampusVisitModal: React.FC<CampusVisitModalProps> = ({ isOpen, onCl
     const waText = `*Guided Campus Visit Request*
 ----------------------------------
 🆔 Ref ID: ${generatedRef}
-👤 Name: ${formData.name}
-📱 Phone: ${formData.phone}
-🏫 Campus: ${formData.campus}
+👤 Name: ${sanitizeForWhatsAppText(name)}
+📱 Phone: ${phone}
+🏫 Campus: ${sanitizeForWhatsAppText(formData.campus, 120)}
 📅 Preferred Date: ${formData.visitDate || 'Tomorrow'}
-⏰ Time Slot: ${formData.timeSlot}
+⏰ Time Slot: ${sanitizeForWhatsAppText(formData.timeSlot, 80)}
 ----------------------------------
 Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would like to schedule a physical campus tour for our family.`;
 
     setTimeout(() => {
-      window.open(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(waText)}`, '_blank');
+      openExternalUrl(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(waText)}`);
+      isSubmittingRef.current = false;
     }, 1000);
   };
 
@@ -83,7 +115,8 @@ Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would 
                     required
                     placeholder="Enter full name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, name: sanitizePersonName(e.target.value) })}
+                    maxLength={80}
                     className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-medium outline-none focus:border-[#0B3C91] bg-slate-50"
                   />
                 </div>
@@ -95,7 +128,11 @@ Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would 
                     required
                     placeholder="10-digit phone number"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, phone: sanitizePhoneInput(e.target.value) })}
+                    maxLength={15}
+                    inputMode="tel"
+                    autoComplete="tel"
+                    pattern="[0-9+\s-]{10,15}"
                     className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-medium outline-none focus:border-[#0B3C91] bg-slate-50"
                   />
                 </div>
@@ -137,6 +174,12 @@ Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would 
                     </select>
                   </div>
                 </div>
+
+                {formError && (
+                  <p className="text-[11px] font-semibold text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+                    {formError}
+                  </p>
+                )}
 
                 <button
                   type="submit"

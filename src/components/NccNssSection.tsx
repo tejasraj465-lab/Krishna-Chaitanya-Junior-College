@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Flag, Shield } from 'lucide-react';
 import { NCC_HOME } from '../data/nccData';
 import { AFFILIATION_LOGOS } from '../data/collegeData';
-import { Container, GlassCard } from './ui';
+import { Container } from './ui';
 import { NccExploreModal } from './NccExploreModal';
 
 export const NccNssSection: React.FC = () => {
@@ -11,8 +11,8 @@ export const NccNssSection: React.FC = () => {
   return (
     <>
       <section
-        id="ncc-nss"
-        className="section-padding-sm bg-gradient-to-b from-[#071D49] via-[#0B3C91] to-[#06245C] text-white scroll-mt-24 relative overflow-hidden"
+        id="ncc"
+        className="section-padding-sm bg-gradient-to-b from-[#071D49] via-[#0B3C91] to-[#06245C] text-white scroll-mt-[5.5rem] sm:scroll-mt-28 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(251,191,36,0.12)_0%,_transparent_55%)] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
@@ -81,28 +81,7 @@ export const NccNssSection: React.FC = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
-            {NCC_HOME.featureCards.map((card) => (
-              <GlassCard
-                key={card.id}
-                variant="dark"
-                hover
-                className="p-4 sm:p-5 h-full border border-white/15 bg-[#031333]/60 text-left group"
-              >
-                <span className="text-2xl sm:text-3xl block mb-2.5 leading-none" aria-hidden="true">
-                  {card.emoji}
-                </span>
-                <p className="text-sm sm:text-[15px] font-bold text-white leading-snug mb-1.5">
-                  {card.label}
-                </p>
-                <p className="text-[11px] sm:text-xs text-blue-100/75 leading-relaxed">
-                  {card.description}
-                </p>
-              </GlassCard>
-            ))}
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <button
               type="button"
               onClick={() => setShowExploreModal(true)}

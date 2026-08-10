@@ -2,24 +2,22 @@ import React from 'react';
 import { HeroSlider } from '../components/HeroSlider';
 import { WelcomeSection } from '../components/WelcomeSection';
 import { CoursesSection } from '../components/CoursesSection';
-import { WhyChooseUs } from '../components/WhyChooseUs';
 import { FacilitiesSection } from '../components/FacilitiesSection';
 import { NccNssSection } from '../components/NccNssSection';
 import { CampusesSection } from '../components/CampusesSection';
-import { ResultsSection } from '../components/ResultsSection';
 import { StudentLifeSection } from '../components/StudentLifeSection';
 import { SuccessStories } from '../components/SuccessStories';
 import { LeadershipSection } from '../components/LeadershipSection';
-import { GallerySection } from '../components/GallerySection';
 import { FinalCTA } from '../components/FinalCTA';
+import type { HomeSectionId } from '../utils/homeSectionNavigation';
 
 interface HomePageProps {
   onOpenApplyModal: (course?: string, campus?: string) => void;
   onOpenAIGuide: () => void;
   onOpenCampusVisit: () => void;
   onSelectProgram: (programId: string) => void;
-  onNavigateToPath: (path: string) => void;
-  onNavigateToCampus: (campusSlug: string) => void;
+  onNavigateToPath: (path: string, options?: { fromSection?: HomeSectionId }) => void;
+  onNavigateToCampus: (campusSlug: string, options?: { fromSection?: HomeSectionId }) => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
@@ -37,49 +35,39 @@ export const HomePage: React.FC<HomePageProps> = ({
         onOpenAIGuide={onOpenAIGuide}
       />
 
-      <WelcomeSection onOpenApplyModal={() => onOpenApplyModal()} />
-
       <CoursesSection
         onOpenApplyModal={onOpenApplyModal}
         onSelectProgram={onSelectProgram}
       />
 
-      <WhyChooseUs
-        onOpenApplyModal={() => onOpenApplyModal()}
-        onOpenCampusVisit={onOpenCampusVisit}
+      <WelcomeSection onOpenApplyModal={() => onOpenApplyModal()} />
+
+      <CampusesSection
+        onOpenApplyModal={onOpenApplyModal}
+        onViewAllCampuses={() => onNavigateToPath('/campuses', { fromSection: 'campuses' })}
+        onNavigateToCampus={(slug) => onNavigateToCampus(slug, { fromSection: 'campuses' })}
+        onBrowseByCategory={(category) =>
+          onNavigateToPath(`/campuses?category=${category}`, { fromSection: 'campuses' })
+        }
       />
 
       <FacilitiesSection
         variant="home"
-        onViewAll={() => onNavigateToPath('/facilities')}
+        onViewAll={() => onNavigateToPath('/facilities', { fromSection: 'facilities' })}
       />
 
       <NccNssSection />
 
-      <CampusesSection
-        onOpenApplyModal={onOpenApplyModal}
-        onViewAllCampuses={() => onNavigateToPath('/campuses')}
-        onNavigateToCampus={onNavigateToCampus}
-        onBrowseByCategory={(category) => onNavigateToPath(`/campuses?category=${category}`)}
-      />
-
-      <ResultsSection />
+      <SuccessStories />
 
       <StudentLifeSection
         variant="home"
         onOpenApplyModal={() => onOpenApplyModal()}
         onOpenCampusVisit={onOpenCampusVisit}
-        onExploreFullPage={() => onNavigateToPath('/life-at-kcjc')}
+        onExploreFullPage={() => onNavigateToPath('/life-at-kcjc', { fromSection: 'explore-kcjc' })}
       />
-
-      <SuccessStories />
 
       <LeadershipSection />
-
-      <GallerySection
-        variant="home"
-        onViewFullGallery={() => onNavigateToPath('/gallery')}
-      />
 
       <FinalCTA
         onOpenApplyModal={() => onOpenApplyModal()}

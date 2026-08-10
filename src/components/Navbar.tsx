@@ -23,8 +23,9 @@ interface NavbarProps {
   onOpenAIGuide: () => void;
   onSelectProgram?: (programId: string) => void;
   onSectionChange?: (sectionId: string) => void;
-  onNavigateToPath?: (path: string) => void;
+  onNavigateToPath?: (path: string, options?: { fromSection?: string }) => void;
   onNavigateToSection?: (sectionId: string) => void;
+  onNavigateHome?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -34,7 +35,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectProgram,
   onSectionChange,
   onNavigateToPath,
-  onNavigateToSection
+  onNavigateToSection,
+  onNavigateHome,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -42,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useBodyScrollLock(mobileMenuOpen);
   const [mobileCoursesOpen, setMobileCoursesOpen] = useState(false);
-  const [internalActiveSection, setInternalActiveSection] = useState<string>('welcome');
+  const [internalActiveSection, setInternalActiveSection] = useState<string>('why-choose');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const currentActiveSection = activeSection || internalActiveSection;
@@ -59,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   useEffect(() => {
     if (activeSection) return; // parent handles state
 
-    const sectionIds = ['welcome', 'courses', 'why-us', 'facilities', 'campuses', 'results', 'gallery'];
+    const sectionIds = ['courses', 'why-choose', 'campuses', 'facilities', 'ncc', 'stories', 'explore-kcjc', 'leadership'];
 
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting);
@@ -86,9 +88,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     const handleScrollTop = () => {
       if (window.scrollY < 80) {
-        setInternalActiveSection('welcome');
+        setInternalActiveSection('why-choose');
       } else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60) {
-        setInternalActiveSection('gallery');
+        setInternalActiveSection('leadership');
       }
     };
 
@@ -111,23 +113,29 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const navLinks = [
-    { label: 'Overview', href: '#welcome', id: 'welcome', type: 'section' as const },
-    { label: 'Why KCJC', href: '/why-choose-kcjc', id: 'why-choose-kcjc', type: 'route' as const },
-    { label: 'Facilities', href: '/facilities', id: 'facilities', type: 'route' as const },
-    { label: 'Campuses', href: '/campuses', id: 'campuses', type: 'route' as const },
-    { label: 'Top Results', href: '#results', id: 'results', type: 'section' as const },
-    { label: 'Life at KCJC', href: '/life-at-kcjc', id: 'life-at-kcjc', type: 'route' as const },
+    { label: 'Overview', href: '#why-choose', id: 'why-choose', type: 'section' as const },
+    { label: 'Why KCJC', href: '/why-choose-kcjc', id: 'why-choose-kcjc', type: 'route' as const, fromSection: 'why-choose' },
+    { label: 'Facilities', href: '/facilities', id: 'facilities', type: 'route' as const, fromSection: 'facilities' },
+    { label: 'Campuses', href: '/campuses', id: 'campuses', type: 'route' as const, fromSection: 'campuses' },
+    { label: 'Life at KCJC', href: '/life-at-kcjc', id: 'life-at-kcjc', type: 'route' as const, fromSection: 'explore-kcjc' },
     { label: 'Leadership', href: '#leadership', id: 'leadership', type: 'section' as const },
-    { label: 'Gallery', href: '/gallery', id: 'gallery', type: 'route' as const },
+    { label: 'Gallery', href: '/gallery', id: 'gallery', type: 'route' as const, fromSection: 'leadership' },
   ];
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, fromSection?: string) => {
     setMobileMenuOpen(false);
     setCoursesDropdownOpen(false);
 
+    if (href === '/' || href === '#home') {
+      if (onNavigateHome) {
+        onNavigateHome();
+        return;
+      }
+    }
+
     if (href.startsWith('/')) {
       if (onNavigateToPath) {
-        onNavigateToPath(href);
+        onNavigateToPath(href, fromSection ? { fromSection } : undefined);
         return;
       }
 
@@ -247,10 +255,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             href="/" 
             onClick={(e) => {
               e.preventDefault();
-              handleNavClick('#hero');
+              if (onNavigateHome) {
+                onNavigateHome();
+              } else {
+                handleNavClick('#hero');
+              }
             }}
             className="flex items-center gap-1.5 sm:gap-2.5 group min-w-0 overflow-hidden cursor-pointer"
-            title="Go to Hero Section"
+            title="Go to Home"
           >
             <img 
               src={kcLogo} 
@@ -270,9 +282,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Desktop Navigation Links */}
           <div className="hidden xl:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-semibold shrink-0 font-sans overflow-visible">
             <button
-              onClick={() => handleNavClick('#welcome')}
+              onClick={() => handleNavClick('#why-choose')}
               className={`transition-all py-1.5 cursor-pointer whitespace-nowrap px-2.5 rounded-lg font-semibold border-b-2 ${
-                currentActiveSection === 'welcome' || currentActiveSection === 'hero'
+                currentActiveSection === 'why-choose' || currentActiveSection === 'hero'
                   ? 'text-[#0B3C91] bg-blue-50 font-bold border-[#EA580C] shadow-2xs'
                   : 'text-slate-700 hover:text-[#0B3C91] hover:bg-slate-100 border-transparent'
               }`}
@@ -367,7 +379,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               return (
                 <button
                   key={link.label}
-                  onClick={() => handleNavClick(link.href)}
+                  onClick={() => handleNavClick(link.href, 'fromSection' in link ? link.fromSection : undefined)}
                   className={`transition-all py-1.5 cursor-pointer whitespace-nowrap px-2.5 rounded-lg font-semibold border-b-2 ${
                     isActive
                       ? 'text-[#0B3C91] bg-blue-50 font-bold border-[#EA580C] shadow-2xs'
@@ -438,15 +450,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <div className="pt-3 space-y-1.5">
             <button
-              onClick={() => handleNavClick('#hero')}
+              onClick={() => handleNavClick('#why-choose')}
               className={`w-full text-left px-3.5 py-3 min-h-[48px] text-sm font-semibold rounded-xl flex items-center justify-between cursor-pointer transition-colors ${
-                currentActiveSection === 'welcome' || currentActiveSection === 'hero'
+                currentActiveSection === 'why-choose' || currentActiveSection === 'hero'
                   ? 'bg-blue-50 text-[#0B3C91] font-bold border-l-4 border-[#F97316]'
                   : 'text-slate-800 hover:bg-slate-100 active:bg-slate-200'
               }`}
             >
               <span>Overview</span>
-              <ChevronRight className={`w-4 h-4 ${currentActiveSection === 'welcome' || currentActiveSection === 'hero' ? 'text-[#0B3C91]' : 'text-slate-400'}`} />
+              <ChevronRight className={`w-4 h-4 ${currentActiveSection === 'why-choose' || currentActiveSection === 'hero' ? 'text-[#0B3C91]' : 'text-slate-400'}`} />
             </button>
 
             <div className={`rounded-2xl border overflow-hidden shadow-inner transition-colors ${
@@ -505,7 +517,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               return (
                 <button
                   key={link.label}
-                  onClick={() => handleNavClick(link.href)}
+                  onClick={() => handleNavClick(link.href, 'fromSection' in link ? link.fromSection : undefined)}
                   className={`w-full text-left px-3.5 py-2.5 text-sm font-semibold rounded-xl flex items-center justify-between cursor-pointer transition-colors ${
                     isActive
                       ? 'bg-blue-50 text-[#0B3C91] font-bold border-l-4 border-[#F97316]'

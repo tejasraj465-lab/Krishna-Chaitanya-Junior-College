@@ -6,25 +6,6 @@ import { Container, SectionHeader, GlassCard, Button } from './ui';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import { COLLEGE_INFO } from '../data/collegeData';
 
-const CHOICE_CARDS = [
-  {
-    title: '👨‍🏫 Experienced Faculty',
-    desc: 'Experienced subject experts, concept-based teaching, and continuous academic monitoring.',
-  },
-  {
-    title: '🎯 Personalized Mentoring',
-    desc: 'Regular tests, performance tracking, doubt clarification, and parent updates for every student.',
-  },
-  {
-    title: '📚 Integrated Competitive Coaching',
-    desc: 'Intermediate + IIT-JEE, NEET, EAPCET, CA/CMA & Long-Term preparation under one system.',
-  },
-  {
-    title: '🏫 Safe & Disciplined Campus',
-    desc: "Separate boys' & girls' campuses, CCTV surveillance, transport, hostels, and a focused learning environment.",
-  },
-] as const;
-
 const LEGACY_STORY = [
   'Established in 1998, Krishna Chaitanya Junior College was founded with a vision of providing quality Intermediate education that empowers students with knowledge, discipline, confidence, and strong values.',
   'For over 28 years, we have earned the trust of thousands of students and parents through experienced faculty, personalized mentoring, integrated competitive exam preparation, and a student-first approach to learning.',
@@ -96,7 +77,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenApplyModal
   }, [showLegacyModal, handleClose]);
 
   return (
-    <section id="welcome" className="section-padding bg-white text-[#1E293B] scroll-mt-24 relative overflow-hidden">
+    <section id="why-choose" className="section-padding bg-white text-[#1E293B] scroll-mt-[5.5rem] sm:scroll-mt-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-mesh-light pointer-events-none" />
 
       <Container className="relative z-10">
@@ -112,15 +93,6 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenApplyModal
             title="Why Thousands of Parents Trust Krishna Chaitanya"
             description="For over 28 years, Krishna Chaitanya Junior College has helped students build strong academic foundations through experienced faculty, disciplined learning, personalized mentoring, and integrated competitive exam coaching—all in a safe and student-focused environment."
           />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 items-stretch">
-            {CHOICE_CARDS.map((item) => (
-              <GlassCard key={item.title} className="p-5 sm:p-6 h-full flex flex-col">
-                <h3 className="text-sm sm:text-base font-bold text-[#0B3C91] font-serif mb-2">{item.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">{item.desc}</p>
-              </GlassCard>
-            ))}
-          </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Button variant="secondary" size="md" icon={BookOpen} onClick={() => setShowLegacyModal(true)}>

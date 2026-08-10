@@ -14,6 +14,15 @@ import {
 } from 'lucide-react';
 import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import {
+  normalizePhoneDigits,
+  openExternalUrl,
+  sanitizeForWhatsAppText,
+  sanitizePersonName,
+  sanitizePhoneInput,
+  validatePersonName,
+  validatePhone,
+} from '../utils/security';
 
 interface AdmissionModalProps {
   isOpen: boolean;
@@ -45,6 +54,8 @@ export const AdmissionModalBottomSheet: React.FC<AdmissionModalProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const [applicationId, setApplicationId] = useState('');
   const [copied, setCopied] = useState(false);
+  const [formError, setFormError] = useState('');
+  const isSubmittingRef = useRef(false);
 
   useBodyScrollLock(isOpen);
 
@@ -96,7 +107,25 @@ export const AdmissionModalBottomSheet: React.FC<AdmissionModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.studentName || !formData.phone) return;
+    if (isSubmittingRef.current) return;
+
+    const studentName = sanitizePersonName(formData.studentName);
+    const parentName = sanitizePersonName(formData.parentName);
+    const phone = normalizePhoneDigits(formData.phone);
+
+    const nameError = validatePersonName(studentName, 'Student name');
+    const phoneError = validatePhone(phone);
+    const parentError = formData.parentName.trim()
+      ? validatePersonName(parentName, 'Parent name')
+      : null;
+
+    if (nameError || phoneError || parentError) {
+      setFormError(nameError || phoneError || parentError || 'Please check your details.');
+      return;
+    }
+
+    isSubmittingRef.current = true;
+    setFormError('');
 
     const randomDigits = Math.floor(10000 + Math.random() * 90000);
     const generatedId = `KCJC-2026-${randomDigits}`;
@@ -117,20 +146,21 @@ export const AdmissionModalBottomSheet: React.FC<AdmissionModalProps> = ({
     const waText = `*Krishna Chaitanya Junior College Online Admission Application 2026-27*
 ---------------------------------------
 🆔 *Application ID:* ${generatedId}
-👤 *Student Name:* ${formData.studentName}
-👨‍👩‍👦 *Parent Name:* ${formData.parentName || 'N/A'}
-📱 *Phone Number:* ${formData.phone}
-🎓 *Course Chosen:* ${formData.course}
-🏫 *Preferred Campus:* ${formData.campus}
-🏠 *Hostel Facility Needed:* ${formData.hostelRequired}
-📊 *10th Board Marks:* ${formData.marks10th}
+👤 *Student Name:* ${sanitizeForWhatsAppText(studentName)}
+👨‍👩‍👦 *Parent Name:* ${parentName ? sanitizeForWhatsAppText(parentName) : 'N/A'}
+📱 *Phone Number:* ${phone}
+🎓 *Course Chosen:* ${sanitizeForWhatsAppText(formData.course, 80)}
+🏫 *Preferred Campus:* ${sanitizeForWhatsAppText(formData.campus, 120)}
+🏠 *Hostel Facility Needed:* ${sanitizeForWhatsAppText(formData.hostelRequired, 20)}
+📊 *10th Board Marks:* ${sanitizeForWhatsAppText(formData.marks10th, 40)}
 ---------------------------------------
 Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted my details on the website. Please guide me regarding seat booking & admission counseling.`;
 
     const waUrl = `https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(waText)}`;
 
     window.setTimeout(() => {
-      window.open(waUrl, '_blank');
+      openExternalUrl(waUrl);
+      isSubmittingRef.current = false;
     }, 1000);
   };
 
@@ -190,7 +220,8 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
                     required
                     placeholder="e.g. K. Sai Siddartha"
                     value={formData.studentName}
-                    onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, studentName: sanitizePersonName(e.target.value) })}
+                    maxLength={80}
                     className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 focus:border-[#0B3C91] focus:ring-1 focus:ring-[#0B3C91] text-xs font-medium outline-none bg-slate-50/50"
                   />
                 </div>
@@ -206,7 +237,11 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
                       required
                       placeholder="10-digit mobile number"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) => setFormData({ ...formData, phone: sanitizePhoneInput(e.target.value) })}
+                      maxLength={15}
+                      inputMode="tel"
+                      autoComplete="tel"
+                      pattern="[0-9+\s-]{10,15}"
                       className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 focus:border-[#0B3C91] focus:ring-1 focus:ring-[#0B3C91] text-xs font-medium outline-none bg-slate-50/50"
                     />
                   </div>
@@ -218,7 +253,8 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
                     type="text"
                     placeholder="Parent's Name"
                     value={formData.parentName}
-                    onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, parentName: sanitizePersonName(e.target.value) })}
+                    maxLength={80}
                     className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-[#0B3C91] focus:ring-1 focus:ring-[#0B3C91] text-xs font-medium outline-none bg-slate-50/50"
                   />
                 </div>
@@ -280,6 +316,12 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
                   </select>
                 </div>
               </div>
+
+              {formError && (
+                <p className="text-[11px] font-semibold text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+                  {formError}
+                </p>
+              )}
 
               <button
                 type="submit"

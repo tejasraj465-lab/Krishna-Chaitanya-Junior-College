@@ -1,4 +1,4 @@
-import { Course, Campus, Ranker, Facility, GalleryItem, Testimonial } from '../types';
+import { Course, Campus, Ranker, Facility, GalleryItem, SuccessReview, Testimonial } from '../types';
 
 export const COLLEGE_INFO = {
   name: "Krishna Chaitanya Junior College",
@@ -411,6 +411,7 @@ export const CAMPUSES: Campus[] = [
     email: 'prabhanjana@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4463576,79.9795588',
+    suitableFor: 'Girls',
     coursesOffered: ['MPC (EAPCET, Mains)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Girls Day Wing', 'Smart Classrooms', 'Integrated Coaching', 'Safe Transport'],
   },
@@ -425,6 +426,7 @@ export const CAMPUSES: Campus[] = [
     email: 'vasista@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4465337,79.9793754',
+    suitableFor: 'Boys',
     coursesOffered: ['MPC (EAPCET, Mains)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Boys Day Wing', 'Digital Study Labs', 'EAPCET Coaching', 'Sports Yard'],
   },
@@ -454,6 +456,7 @@ export const CAMPUSES: Campus[] = [
     email: 'durgahmitta.girls@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4177285,79.9607123',
+    suitableFor: 'Girls',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Girls Special Batch', 'NEET Biology Lab', 'CCTV Security', 'Mentoring Cells'],
   },
@@ -468,6 +471,7 @@ export const CAMPUSES: Campus[] = [
     email: 'durgahmitta.boys@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4170813,79.9609129',
+    suitableFor: 'Boys',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Boys Tech Wing', 'Physics & Chem Labs', 'IIT-JEE Prep', 'Audio-Visual Rooms'],
   },
@@ -482,6 +486,7 @@ export const CAMPUSES: Campus[] = [
     email: 'einstein.girls@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://maps.app.goo.gl/5uy5KBE7FdizgTPG7?g_st=ac',
+    suitableFor: 'Girls',
     coursesOffered: ['MPC (Mains, Elite IIT-JEE)', 'BiPC (Elite NEET, Elite Long Term)'],
     facilities: ['Climate Controlled AC Classrooms', '4K Digital Boards', 'Medical Wing', 'High Security'],
   },
@@ -496,6 +501,7 @@ export const CAMPUSES: Campus[] = [
     email: 'einstein.boys@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://maps.app.goo.gl/haHJSH7WEndy46dJ6?g_st=ac',
+    suitableFor: 'Boys',
     coursesOffered: ['MPC (Mains, Elite IIT-JEE)', 'BiPC (Elite NEET, Elite Long Term)'],
     facilities: ['Fully AC Smart Classrooms', 'JEE Advanced Wing', 'Special Assessment Center'],
   },
@@ -525,6 +531,7 @@ export const CAMPUSES: Campus[] = [
     email: 'res.einstein.girls@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://maps.app.goo.gl/5uy5KBE7FdizgTPG7?g_st=ac',
+    suitableFor: 'Girls (Residential)',
     coursesOffered: ['MPC (Mains, Elite)', 'BiPC (Elite)'],
     facilities: ['24/7 AC Hostel', 'Hygienic Dining Mess', 'Doctor on Call', 'Supervised Study Hours'],
   },
@@ -539,6 +546,7 @@ export const CAMPUSES: Campus[] = [
     email: 'chandrahasa@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1567521464027-f127ff144326?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4330704,79.9800859',
+    suitableFor: 'Boys (Residential)',
     coursesOffered: ['MPC (Mains, Elite)', 'BiPC (Elite)'],
     facilities: ['AC Boys Residence', 'IIT/NEET Intensive Hostel', 'Indoor Sports', 'Mineral RO Water'],
   },
@@ -568,6 +576,7 @@ export const CAMPUSES: Campus[] = [
     email: 'res.dargamitta@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
     googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4170813,79.9609129',
+    suitableFor: 'Boys (Residential)',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Boys Residential Wing', 'Supervised Study Hours', 'Sports Ground', 'Security'],
   },
@@ -747,38 +756,58 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   }
 ];
 
-export const TESTIMONIALS: Testimonial[] = [
+/**
+ * Parent & student success reviews — only entries already published on this website.
+ * Add new items here when the client provides verified content. Do not invent reviews.
+ */
+export const SUCCESS_REVIEWS: SuccessReview[] = [
   {
     id: 't1',
-    name: 'Dr. Ramesh Chandra (F/O AIR 12 Siddartha)',
-    role: 'Parent',
+    type: 'parent',
+    name: 'Dr. Ramesh Chandra',
+    studentName: 'Siddartha',
     course: 'MPC Batch',
-    year: '2025',
     photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
-    quote: 'As a parent, my biggest concern was safety and academic discipline. Krishna Chaitanya College exceeded every expectation. The faculty kept us updated weekly on Siddartha’s progress. Today he is at IIT Bombay!',
-    collegeOrCompany: 'Cardiologist, Apollo Hospitals'
+    review:
+      'As a parent, my biggest concern was safety and academic discipline. Krishna Chaitanya College exceeded every expectation. The faculty kept us updated weekly on Siddartha’s progress. Today he is at IIT Bombay!',
+    achievement: 'AIR 12 · IIT Bombay',
   },
   {
     id: 't2',
+    type: 'student',
     name: 'Dr. Harini Varma',
-    role: 'Alumni',
     course: 'BiPC (Batch of 2021)',
-    year: '2021',
     photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80',
-    quote: 'Krishna Chaitanya didn’t just teach me biology; they instilled unwavering clinical curiosity. The mock test series prepared me so well that NEET felt like just another weekly practice test.',
-    collegeOrCompany: 'Resident Doctor, AIIMS New Delhi'
+    review:
+      'Krishna Chaitanya didn’t just teach me biology; they instilled unwavering clinical curiosity. The mock test series prepared me so well that NEET felt like just another weekly practice test.',
+    achievement: 'Resident Doctor, AIIMS New Delhi',
   },
   {
     id: 't3',
+    type: 'student',
     name: 'Vikramaditya Shah',
-    role: 'Alumni',
     course: 'MPC (Batch of 2020)',
-    year: '2020',
     photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
-    quote: 'The problem-solving techniques taught by Krishna Chaitanya faculty helped me crack JEE Advanced and later land a software role at Google Silicon Valley.',
-    collegeOrCompany: 'Senior Software Engineer, Google USA'
-  }
+    review:
+      'The problem-solving techniques taught by Krishna Chaitanya faculty helped me crack JEE Advanced and later land a software role at Google Silicon Valley.',
+    achievement: 'Senior Software Engineer, Google USA',
+  },
 ];
+
+export const getSuccessReviewsByType = (type: SuccessReview['type']) =>
+  SUCCESS_REVIEWS.filter((review) => review.type === type);
+
+/** @deprecated Use SUCCESS_REVIEWS */
+export const TESTIMONIALS: Testimonial[] = SUCCESS_REVIEWS.map((review) => ({
+  id: review.id,
+  name: review.name,
+  role: review.type === 'parent' ? 'Parent' : 'Alumni',
+  course: review.course ?? '',
+  year: '',
+  photo: review.photo ?? '',
+  quote: review.review,
+  collegeOrCompany: review.achievement,
+}));
 
 export const LEADERSHIP_MEMBERS = [
   {

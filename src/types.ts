@@ -69,6 +69,23 @@ export interface GalleryItem {
   date: string;
 }
 
+export type SuccessReviewType = 'parent' | 'student';
+
+/** Centralized parent/student success review. Use only verified client/website content. */
+export interface SuccessReview {
+  id: string;
+  type: SuccessReviewType;
+  name: string;
+  studentName?: string;
+  course?: string;
+  campus?: string;
+  photo?: string;
+  review: string;
+  rating?: number;
+  achievement?: string;
+}
+
+/** @deprecated Prefer SuccessReview — kept for gradual migration */
 export interface Testimonial {
   id: string;
   name: string;

@@ -28,6 +28,7 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   return (
     <Tag
       onClick={onClick}
+      {...(Tag === 'button' ? { type: 'button' as const } : {})}
       className={`${variantClasses[variant]} ${hover ? 'hover-lift' : ''} ${className}`}
     >
       {children}
