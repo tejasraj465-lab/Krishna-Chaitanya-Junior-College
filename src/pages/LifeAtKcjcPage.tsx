@@ -16,9 +16,10 @@ export const LifeAtKcjcPage: React.FC<LifeAtKcjcPageProps> = ({
   return (
     <main className="w-full overflow-hidden">
       <PageBanner
+        variant="hero"
         eyebrow="Student Experience"
-        title="Life at KCJC"
-        description="Student life here extends beyond the classroom with clubs, cultural events, sports, NCC, NSS, workshops, seminars, and regular celebrations."
+        title="Life at Krishna Chaitanya"
+        description="A complete student experience shaped through academics, clubs, cultural celebrations, sports, NCC, NSS, workshops, and memorable campus events."
         currentLabel="Life at KCJC"
         onHomeClick={onNavigateHome}
       />

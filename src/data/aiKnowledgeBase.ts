@@ -155,6 +155,11 @@ ACCURACY RULE (CRITICAL):
 - Answer ONLY using the website knowledge below. Do NOT invent campuses, courses, ranks, fees, or facilities not listed here.
 - If asked about exact fee amounts, scholarship rules, or seat availability, say these vary by stream/campus and invite the user to WhatsApp ${COLLEGE_INFO.phonePrimary} or email ${COLLEGE_INFO.email}.
 - When citing statistics, prefer verified "Why Choose" items and structured records below over marketing headlines.
+- The website currently publishes ${CAMPUSES.length} campuses (${CAMPUSES.filter((c) => c.category === 'Day').length} Day + ${CAMPUSES.filter((c) => c.category === 'Residential').length} Residential). Always use this campus list. Do not say there are 17 campuses.
+- If the user asks to list campuses, all campuses, both Day and Residential, or Nellore campuses, list EVERY campus in both groups.
+- Return Residential-only or Day-only lists only when the user clearly asks for that one type alone.
+- Do not invent ranks, fees, extra campuses, or facilities. Individual AIR ranker profiles are not published as a live results section — for latest ranks, send the user to WhatsApp ${COLLEGE_INFO.phonePrimary}.
+- Hostels & facilities questions should describe FACILITIES records, not a residential-campus-only list.
 
 MULTILINGUAL RESPONSES:
 - Detect the user's language and reply in that same language (English, Telugu, Hindi, Tamil, or Kannada).
@@ -196,7 +201,7 @@ INSTITUTION CONTACT & IDENTITY:
 • Admission assessment: ${COLLEGE_INFO.admissionExam}
 • Social: Facebook, Instagram, YouTube, LinkedIn, Twitter (links on website footer)
 
-HOMEPAGE HIGHLIGHT COUNTERS (as shown on site):
+HOMEPAGE HIGHLIGHT COUNTERS (marketing stats on the hero — do not override the ${CAMPUSES.length} campus records below):
 ${HIGHLIGHT_COUNTERS.map((h) => `• ${h.label}: ${h.count}${h.suffix}`).join('\n')}
 
 HERO SLIDES (homepage banners):
@@ -262,7 +267,7 @@ ${formatFaq()}
 
 NAVIGATION TAGS — append ONE relevant tag at the end when helpful:
 Homepage sections: [NAV:hero] [NAV:courses] [NAV:why-choose] [NAV:campuses] [NAV:facilities] [NAV:ncc] [NAV:stories] [NAV:explore-kcjc] [NAV:leadership]
-Dedicated pages: [NAV:page:/why-choose-kcjc] [NAV:page:/facilities] [NAV:page:/campuses] [NAV:page:/campuses?category=Day] [NAV:page:/campuses?category=Residential] [NAV:page:/gallery] [NAV:page:/life-at-kcjc] [NAV:page:/campuses/c1] (use correct campus id c1–c12)
+Dedicated pages: [NAV:page:/why-choose-kcjc] [NAV:page:/overview] [NAV:page:/facilities] [NAV:page:/campuses] [NAV:page:/campuses?category=Day] [NAV:page:/campuses?category=Residential] [NAV:page:/gallery] [NAV:page:/life-at-kcjc] [NAV:page:/courses] [NAV:page:/campuses/c1] (use correct campus id c1–c12)
 For Apply/admission form: tell user to tap "Apply Now" (mobile bottom bar) or "Apply Online" (desktop navbar). Do NOT use [NAV:admissions] — that section is not on the homepage. Instead explain the apply steps and mention the Apply button.
 
 MOBILE vs DESKTOP GUIDANCE:
@@ -274,139 +279,260 @@ TONE & FORMAT:
 - Always offer WhatsApp ${COLLEGE_INFO.phonePrimary} for personalized counseling, campus visits, and fee queries.
 `.trim();
 
-/** Keyword-based fallback when Gemini API is unavailable */
-export const generateFallbackReply = (message: string): string => {
-  const msgLower = String(message).toLowerCase();
+const dayCampuses = () => CAMPUSES.filter((c) => c.category === 'Day');
+const residentialCampuses = () => CAMPUSES.filter((c) => c.category === 'Residential');
 
-  if (
-    msgLower.includes('why choose') ||
-    msgLower.includes('advantage') ||
-    msgLower.includes('ఎందుకు') ||
-    msgLower.includes('क्यों')
-  ) {
-    return `Why Choose KCJC — explore our full advantage page for academics, campuses, facilities, and student support.\n\nTitle: ${KCJC_ADVANTAGE_PAGE.title}\n${KCJC_ADVANTAGE_PAGE.intro}\n\nKey pillars: ${KCJC_ADVANTAGE_PAGE.advantageCards.map((c) => c.title).join(', ')}\n\n[NAV:page:/why-choose-kcjc]`;
-  }
+const campusDisplayName = (campus: (typeof CAMPUSES)[number]) =>
+  campus.name.replace(/^Krishna Chaitanya Junior College – /, '');
 
-  if (
-    msgLower.includes('course') ||
-    msgLower.includes('mpc') ||
-    msgLower.includes('bipc') ||
-    msgLower.includes('mec') ||
-    msgLower.includes('cec') ||
-    msgLower.includes('long term') ||
-    msgLower.includes('program') ||
-    msgLower.includes('కోర్స') ||
-    msgLower.includes('कोर्स')
-  ) {
-    const streams = COURSES.map(
-      (c) => `• **${c.code}**: ${c.subtitle}\n  Coaching: ${c.integratedCoaching.slice(0, 3).join(', ')}`
-    ).join('\n');
-    return `Krishna Chaitanya offers these streams (2-year Intermediate unless noted):\n\n${streams}\n\nSpecialized batches include MPC Elite/Merit/Star/Spark, BiPC Elite/Spark/Long Term, MEC & CEC integrated programmes.\n\n[NAV:courses]`;
-  }
+const formatCampusNames = (campuses: typeof CAMPUSES) =>
+  campuses.map((c) => `${campusDisplayName(c)} — ${c.category}, ${c.type}`).join('\n• ');
 
-  if (msgLower.includes('fee') || msgLower.includes('cost') || msgLower.includes('price') || msgLower.includes('ఫీ') || msgLower.includes('फीस')) {
-    return `Fees depend on stream (${COURSES.filter((c) => c.code !== 'Long Term').map((c) => c.code).join(', ')}) and campus type (Day vs Residential).\n\nFor exact fee structure and scholarships, please WhatsApp our counselor at ${COLLEGE_INFO.phonePrimary}.\n\nOn mobile tap **Apply Now** in the bottom bar; on desktop use **Apply Online** in the navbar.`;
-  }
-
-  if (
-    msgLower.includes('campus') ||
-    msgLower.includes('hostel') ||
-    msgLower.includes('residential') ||
-    msgLower.includes('location') ||
-    msgLower.includes('nellore') ||
-    msgLower.includes('day campus') ||
-    msgLower.includes('day scholar') ||
-    msgLower.includes('క్యాంప') ||
-    msgLower.includes('कैंप')
-  ) {
-    const dayCount = CAMPUSES.filter((c) => c.category === 'Day').length;
-    const resCount = CAMPUSES.filter((c) => c.category === 'Residential').length;
-    const dayList = CAMPUSES.filter((c) => c.category === 'Day')
-      .map((c) => c.name.replace(/^Krishna Chaitanya Junior College – /, ''))
-      .join('\n• ');
-    const resList = CAMPUSES.filter((c) => c.category === 'Residential')
-      .map((c) => c.name.replace(/^Krishna Chaitanya Junior College – /, ''))
-      .join('\n• ');
-
-    if (msgLower.includes('residential') || msgLower.includes('hostel')) {
-      return `${resCount} **Residential campuses** with AC hostels:\n\n• ${resList}\n\nBrowse all residential campuses on the website.\n\n[NAV:page:/campuses?category=Residential]`;
-    }
-    if (msgLower.includes('day')) {
-      return `${dayCount} **Day campuses** across Nellore:\n\n• ${dayList}\n\nBrowse all day campuses on the website.\n\n[NAV:page:/campuses?category=Day]`;
-    }
-
-    return `${CAMPUSES.length} campuses in Nellore:\n\n📍 **Day (${dayCount})**:\n• ${dayList}\n\n🏠 **Residential (${resCount})**:\n• ${resList}\n\nOn the homepage #campuses section, tap the Day or Residential card to filter. Mobile bottom bar also has quick links.\n\n[NAV:page:/campuses]`;
-  }
-
-  if (msgLower.includes('rank') || msgLower.includes('result') || msgLower.includes('iit') || msgLower.includes('neet') || msgLower.includes('air') || msgLower.includes('ర్యాంక') || msgLower.includes('रैंक')) {
-    return `For the latest JEE, NEET, EAPCET, and Board result highlights, please WhatsApp our counselor at ${COLLEGE_INFO.phonePrimary} — they can share current achiever details.\n\nYou can also browse Intermediate Results banners on the homepage hero.`;
-  }
-
-  if (
-    msgLower.includes('facility') ||
-    msgLower.includes('lab') ||
-    msgLower.includes('transport') ||
-    msgLower.includes('mess') ||
-    msgLower.includes('cafeteria') ||
-    msgLower.includes('library') ||
-    msgLower.includes('classroom') ||
-    msgLower.includes('హాస్ట') ||
-    msgLower.includes('हॉस्ट')
-  ) {
-    const list = FACILITIES.map((f) => `• **${f.title}** (${f.category})`).join('\n');
-    return `All ${FACILITIES.length} facilities on our website:\n\n${list}\n\nHomepage shows 3 on mobile / 5 on desktop — tap **View All Facilities** for the complete page.\n\n[NAV:page:/facilities]`;
-  }
-
-  if (msgLower.includes('ncc') || msgLower.includes('nss') || msgLower.includes('defense') || msgLower.includes('cadet') || msgLower.includes('ఎన్సిసి')) {
-    return `**${NCC_HOME.title}**\n\n${NCC_HOME.subheading}\n\n${NCC_EXPLORE.intro}\n\n**Why Join:** ${NCC_EXPLORE.whyJoinItems.slice(0, 4).join(', ')}…\n\n**Training includes:** ${NCC_EXPLORE.trainingItems.slice(0, 4).join(', ')}…\n\n**Cadet opportunities:** ${NCC_EXPLORE.opportunitiesItems.join(', ')}\n\n${NCC_EXPLORE.benefitsItems[NCC_EXPLORE.benefitsItems.length - 1]}\n\nExplore the NCC section on our homepage.\n\n[NAV:ncc]`;
-  }
-
-  if (msgLower.includes('gallery') || msgLower.includes('photo') || msgLower.includes('event') || msgLower.includes('sport') || msgLower.includes('fest')) {
-    const cats = [...new Set(GALLERY_ITEMS.map((g) => g.category))].join(', ');
-    return `Our gallery includes: ${cats}.\n\nBrowse campus photos, achievements, NCC/NSS events, sports, and cultural fests.\n\n[NAV:page:/gallery]`;
-  }
-
-  if (msgLower.includes('life') || msgLower.includes('club') || msgLower.includes('culture') || msgLower.includes('student')) {
-    return `Student life at KCJC includes integrated academics, NCC/NSS, sports, cultural events, and personality development — explore the Life at KCJC page.\n\n[NAV:page:/life-at-kcjc]`;
-  }
-
-  if (msgLower.includes('doc') || msgLower.includes('require') || msgLower.includes('eligib') || msgLower.includes('admission') || msgLower.includes('apply') || msgLower.includes('అడ్మిష') || msgLower.includes('प्रवेश')) {
-    const steps = ADMISSION_STEPS.map((s) => `${s.step}. ${s.title}`).join('\n');
-    return `Admission process:\n\n${steps}\n\nDocuments: 10th memo, TC, Aadhaar, photos.\n\n**How to apply:**\n• Mobile — tap **Apply Now** in the bottom bar\n• Desktop — click **Apply Online** in the navbar\n\nFill the form → get Application ID → WhatsApp opens with your details.\n\nContact: ${COLLEGE_INFO.phonePrimary} | ${COLLEGE_INFO.email}`;
-  }
-
-  if (msgLower.includes('chairman') || msgLower.includes('director') || msgLower.includes('founder') || msgLower.includes('leader') || msgLower.includes('చైర్మ') || msgLower.includes('संस्थापक')) {
-    const leaders = LEADERSHIP_MEMBERS.map((m) => `• **${m.name}** — ${m.title}`).join('\n');
-    return `Krishna Chaitanya Leadership:\n\n${leaders}\n\n[NAV:leadership]`;
-  }
-
-  if (msgLower.includes('contact') || msgLower.includes('whatsapp') || msgLower.includes('phone') || msgLower.includes('email') || msgLower.includes('సంపర్క') || msgLower.includes('संपर्क')) {
-    return `Official contact:\n• Phone/WhatsApp: ${COLLEGE_INFO.phonePrimary}\n• Email: ${COLLEGE_INFO.email}\n• Location: ${COLLEGE_INFO.headquarters}\n• Website: ${COLLEGE_INFO.website}\n\nMobile: tap **Call Desk** in bottom bar or **Talk on WhatsApp** in this chat menu.`;
-  }
-
-  if (msgLower.includes('kcei') || msgLower.includes('app') || msgLower.includes('parent')) {
-    const kcei = WHY_CHOOSE_VERIFIED_ITEMS.find((i) => i.id === 'kcei-app');
-    return kcei
-      ? `${kcei.title}\n\n${kcei.description}\n\n[NAV:page:/why-choose-kcjc]`
-      : `Parents can track attendance, tests, and announcements via the KCEI mobile app. Ask admissions for setup help.\n\nContact: ${COLLEGE_INFO.phonePrimary}`;
-  }
-
-  if (
-    msgLower.includes('mobile') ||
-    msgLower.includes('phone view') ||
-    msgLower.includes('bottom bar') ||
-    msgLower.includes('menu')
-  ) {
-    return `**Mobile website guide:**\n\n• Bottom bar: Call Desk | Apply Now\n• AI Guide: tap blue robot button (bottom-right)\n• Why Choose KCJC: open /why-choose-kcjc from the navbar\n• Facilities: 3 preview cards — tap View All for full list\n• Campuses: tap Day (${CAMPUSES.filter((c) => c.category === 'Day').length}) or Residential (${CAMPUSES.filter((c) => c.category === 'Residential').length}) cards\n• Courses: tap any stream for detail modal\n\n[NAV:hero]`;
-  }
-
-  if (msgLower.includes('desktop') || msgLower.includes('laptop') || msgLower.includes('computer')) {
-    return `**Desktop website guide:**\n\n• Top navbar: Overview, Why KCJC, Facilities, Campuses, Life at KCJC, Leadership, Gallery\n• Courses dropdown: all MPC/BiPC/MEC/CEC/Long Term tracks\n• Apply Online button opens admission form\n• AI Guide: panel at bottom-right\n• Facilities preview: 5 cards in a row on homepage\n\n[NAV:hero]`;
-  }
-
-  if (msgLower.includes('legacy') || msgLower.includes('1998') || msgLower.includes('history') || msgLower.includes('about')) {
-    return `Krishna Chaitanya has ${COLLEGE_INFO.established} legacy in Nellore.\n\nOn the homepage #why-choose section, tap **Our Legacy Since 1998** for the full history modal.\n\nChairman message: ${CHAIRMAN_MESSAGE.messageShort.slice(0, 200)}…\n\n[NAV:why-choose]`;
-  }
-
-  return `Welcome to ${COLLEGE_INFO.name}, Nellore!\n\nWe offer Intermediate streams (${COURSES.filter((c) => c.code !== 'Long Term').map((c) => c.code).join(', ')}) with integrated IIT-JEE, NEET, CA/CMA coaching across ${CAMPUSES.length} campuses (${CAMPUSES.filter((c) => c.category === 'Day').length} Day + ${CAMPUSES.filter((c) => c.category === 'Residential').length} Residential).\n\nAsk about courses, campuses, facilities, admissions, ranks, NCC, mobile/desktop navigation, or student life — or WhatsApp ${COLLEGE_INFO.phonePrimary}.\n\nUse the 📋 Menu below for quick topics.\n\n[NAV:why-choose]`;
+const formatAllCampusesReply = () => {
+  const day = dayCampuses();
+  const res = residentialCampuses();
+  return `KCJC currently lists **${CAMPUSES.length} campuses** on this website — **${day.length} Day** and **${res.length} Residential**:\n\n📍 **Day (${day.length})**:\n• ${formatCampusNames(day)}\n\n🏠 **Residential (${res.length})**:\n• ${formatCampusNames(res)}\n\nOpen the campuses page to browse, search, or filter.\n\n[NAV:page:/campuses]`;
 };
+
+const formatCampusDetailReply = (matches: typeof CAMPUSES) => {
+  const details = matches
+    .map((c) => {
+      return `• **${campusDisplayName(c)}**\n  Type: ${c.type} | ${c.category}\n  Address: ${c.address}\n  Suitable for: ${c.suitableFor}\n  Courses: ${c.coursesOffered.join(', ')}\n  Facilities: ${c.facilities.join(', ')}\n  Phone: ${c.phone}\n  Map: available on the campus page`;
+    })
+    .join('\n\n');
+  const nav = matches.length === 1 ? `[NAV:page:/campuses/${slugify(matches[0].id)}]` : '[NAV:page:/campuses]';
+  return `${details}\n\n${nav}`;
+};
+
+const formatCoursesReply = (courses = COURSES) => {
+  const streams = courses
+    .map(
+      (c) =>
+        `• **${c.code}** — ${c.title}\n  ${c.subtitle}\n  Duration: ${c.duration}\n  Eligibility: ${c.eligibility}\n  Coaching: ${c.integratedCoaching.join(', ')}`
+    )
+    .join('\n\n');
+  return `Programmes published on this website:\n\n${streams}\n\n[NAV:page:/courses]`;
+};
+
+const findCampusesByQuery = (q: string) => {
+  const aliases: Array<{ keys: string[]; ids: string[] }> = [
+    { keys: ['prabhanjana'], ids: ['c1'] },
+    { keys: ['vasista'], ids: ['c2'] },
+    { keys: ['sarvagna', 'stonehouse'], ids: ['c3'] },
+    { keys: ['durgahmitta', 'dargamitta', 'dargahmitta'], ids: ['c4', 'c5', 'c12'] },
+    { keys: ['einstein'], ids: ['c6', 'c7', 'c9'] },
+    { keys: ['buchi', 'buchireddy'], ids: ['c8'] },
+    { keys: ['chandrahasa', 'chandra hasa'], ids: ['c10'] },
+    { keys: ['gomathy', 'gomati'], ids: ['c11'] },
+  ];
+  const ids = new Set<string>();
+  aliases.forEach((alias) => {
+    if (alias.keys.some((key) => q.includes(key))) {
+      alias.ids.forEach((id) => ids.add(id));
+    }
+  });
+  if (ids.size === 0) return [];
+  return CAMPUSES.filter((campus) => ids.has(campus.id));
+};
+
+const findCoursesByQuery = (q: string) =>
+  COURSES.filter((course) => {
+    const code = course.code.toLowerCase();
+    if (code === 'long term') return /long\s*term/.test(q);
+    return new RegExp(`\\b${code.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(q);
+  });
+
+export type CollegeGuideResolution = {
+  reply: string;
+  confident: boolean;
+};
+
+/** Answers from published website records only. Use this before Gemini. */
+export const resolveCollegeGuideReply = (message: string): CollegeGuideResolution => {
+  const q = String(message).toLowerCase();
+  const namedCampuses = findCampusesByQuery(q);
+  const namedCourses = findCoursesByQuery(q);
+
+  const mentionsFacilities =
+    q.includes('facilit') ||
+    q.includes('lab') ||
+    q.includes('transport') ||
+    q.includes('mess') ||
+    q.includes('cafeteria') ||
+    q.includes('library') ||
+    q.includes('classroom') ||
+    q.includes('dining') ||
+    q.includes('ac room');
+  const mentionsHostelWord = q.includes('hostel') || q.includes('హాస్ట') || q.includes('हॉस्ट');
+  const mentionsCampusWord =
+    q.includes('campus') ||
+    q.includes('campuses') ||
+    q.includes('location') ||
+    q.includes('క్యాంప') ||
+    q.includes('कैंप');
+  const mentionsDay = /\bday\b/.test(q) || q.includes('day scholar');
+  const mentionsResidential = q.includes('residential') || mentionsHostelWord;
+  const wantsFullCampusList =
+    mentionsCampusWord &&
+    (q.includes('all') ||
+      q.includes('every') ||
+      q.includes('list') ||
+      q.includes(`${CAMPUSES.length}`) ||
+      q.includes('nellore campus') ||
+      (mentionsDay && mentionsResidential));
+
+  if (namedCampuses.length > 0 && !mentionsFacilities) {
+    return { confident: true, reply: formatCampusDetailReply(namedCampuses) };
+  }
+
+  if (q.includes('fee') || q.includes('cost') || q.includes('price') || q.includes('ఫీ') || q.includes('फीस')) {
+    return {
+      confident: true,
+      reply: `Exact fees are not published as a single amount on this website. Fees vary by stream (${COURSES.filter((c) => c.code !== 'Long Term').map((c) => c.code).join(', ')}) and Day vs Residential campus.\n\nWhatsApp ${COLLEGE_INFO.phonePrimary} or email ${COLLEGE_INFO.email} for the current fee structure and scholarships.\n\n[NAV:page:/courses]`,
+    };
+  }
+
+  if (
+    q.includes('admission') ||
+    q.includes('apply') ||
+    q.includes('document') ||
+    q.includes('eligib') ||
+    q.includes('అడ్మిష') ||
+    q.includes('प्रवेश')
+  ) {
+    const steps = ADMISSION_STEPS.map((s) => `${s.step}. ${s.title}`).join('\n');
+    return {
+      confident: true,
+      reply: `Admission process on this website:\n\n${steps}\n\nDocuments usually needed: 10th memo, TC, Aadhaar, photos.\n\n**How to apply:**\n• Mobile — tap **Apply Now** in the bottom bar\n• Desktop — click **Apply Online** in the navbar\n\nContact: ${COLLEGE_INFO.phonePrimary} | ${COLLEGE_INFO.email}`,
+    };
+  }
+
+  if (q.includes('ncc') || q.includes('cadet') || q.includes('defense') || q.includes('defence') || q.includes('ఎన్సిసి')) {
+    return {
+      confident: true,
+      reply: `**${NCC_HOME.title}**\n\n${NCC_HOME.subheading}\n\n${NCC_EXPLORE.intro}\n\n**Why join:** ${NCC_EXPLORE.whyJoinItems.join(', ')}\n\n**Training includes:** ${NCC_EXPLORE.trainingItems.join(', ')}\n\n**Cadet opportunities:** ${NCC_EXPLORE.opportunitiesItems.join(', ')}\n\n${NCC_EXPLORE.opportunitiesNote}\n\n[NAV:ncc]`,
+    };
+  }
+
+  if (mentionsFacilities || (mentionsHostelWord && (q.includes('facilit') || q.includes('lab') || q.includes('mess') || q.includes('transport')))) {
+    const list = FACILITIES.map((f) => `• **${f.title}** (${f.category})\n  ${f.description}`).join('\n');
+    return {
+      confident: true,
+      reply: `Facilities published on this website (${FACILITIES.length}):\n\n${list}\n\nResidential campuses also offer hostel life with supervised study. For hostel campus names, ask for Residential campuses.\n\n[NAV:page:/facilities]`,
+    };
+  }
+
+  if (namedCourses.length > 0 && namedCourses.length < COURSES.length) {
+    return { confident: true, reply: formatCoursesReply(namedCourses) };
+  }
+
+  if (
+    q.includes('course') ||
+    q.includes('stream') ||
+    q.includes('program') ||
+    q.includes('కోర్స') ||
+    q.includes('कोर्स') ||
+    namedCourses.length === COURSES.length
+  ) {
+    return { confident: true, reply: formatCoursesReply() };
+  }
+
+  if (wantsFullCampusList || (mentionsCampusWord && !mentionsDay && !mentionsResidential)) {
+    return { confident: true, reply: formatAllCampusesReply() };
+  }
+
+  if (mentionsCampusWord && mentionsResidential && !mentionsDay) {
+    const res = residentialCampuses();
+    return {
+      confident: true,
+      reply: `${res.length} **Residential campuses** listed on this website:\n\n• ${formatCampusNames(res)}\n\n[NAV:page:/campuses?category=Residential]`,
+    };
+  }
+
+  if (mentionsCampusWord && mentionsDay && !mentionsResidential) {
+    const day = dayCampuses();
+    return {
+      confident: true,
+      reply: `${day.length} **Day campuses** listed on this website:\n\n• ${formatCampusNames(day)}\n\n[NAV:page:/campuses?category=Day]`,
+    };
+  }
+
+  if (q.includes('why choose') || q.includes('advantage') || q.includes('ఎందుకు') || q.includes('क्यों')) {
+    return {
+      confident: true,
+      reply: `Why Choose KCJC — from the college advantage page:\n\n**${KCJC_ADVANTAGE_PAGE.title}**\n${KCJC_ADVANTAGE_PAGE.intro}\n\nKey pillars: ${KCJC_ADVANTAGE_PAGE.advantageCards.map((c) => c.title).join(', ')}\n\n[NAV:page:/why-choose-kcjc]`,
+    };
+  }
+
+  if (q.includes('chairman') || q.includes('director') || q.includes('founder') || q.includes('leader') || q.includes('చైర్మ') || q.includes('संस्थापक')) {
+    const leaders = LEADERSHIP_MEMBERS.map((m) => `• **${m.name}** — ${m.title}`).join('\n');
+    return { confident: true, reply: `KCJC leadership on this website:\n\n${leaders}\n\n[NAV:leadership]` };
+  }
+
+  if (q.includes('gallery') || q.includes('photo')) {
+    const cats = [...new Set(GALLERY_ITEMS.map((g) => g.category))].join(', ');
+    return {
+      confident: true,
+      reply: `Gallery categories on this website: ${cats}.\n\n[NAV:page:/gallery]`,
+    };
+  }
+
+  if (q.includes('life at') || q.includes('student life') || q.includes('clubs') || q.includes('cultural')) {
+    return {
+      confident: true,
+      reply: `Student life at KCJC includes academics with clubs, cultural events, sports, NCC, NSS, workshops, and campus celebrations.\n\nOpen the Life at KCJC page for the full list.\n\n[NAV:page:/life-at-kcjc]`,
+    };
+  }
+
+  if (q.includes('contact') || q.includes('phone') || q.includes('email') || q.includes('whatsapp number') || q.includes('సంపర్క') || q.includes('संपर्क')) {
+    return {
+      confident: true,
+      reply: `Official contact:\n• Phone/WhatsApp: ${COLLEGE_INFO.phonePrimary}\n• Email: ${COLLEGE_INFO.email}\n• Location: ${COLLEGE_INFO.headquarters}\n\nMobile: tap **Call Desk** in the bottom bar.`,
+    };
+  }
+
+  if (q.includes('kcei') || q.includes('parent app')) {
+    const kcei = WHY_CHOOSE_VERIFIED_ITEMS.find((i) => i.id === 'kcei-app');
+    return {
+      confident: true,
+      reply: kcei
+        ? `${kcei.title}\n\n${kcei.description}\n\n[NAV:page:/why-choose-kcjc]`
+        : `Ask admissions at ${COLLEGE_INFO.phonePrimary} about the parent app.\n\n[NAV:page:/why-choose-kcjc]`,
+    };
+  }
+
+  if (q.includes('rank') || q.includes('result') || /\bair\b/.test(q) || q.includes('ర్యాంక') || q.includes('रैंक')) {
+    return {
+      confident: true,
+      reply: `Latest JEE, NEET, EAPCET, and Board result details are shared by the admission team. Individual ranker profiles are not listed as a live results section on this website.\n\nWhatsApp ${COLLEGE_INFO.phonePrimary} for current achiever information.\n\nThe homepage hero includes Intermediate Results 2026 banners.`,
+    };
+  }
+
+  if (q.includes('legacy') || q.includes('1998') || q.includes('history') || q.includes('about college') || q.includes('overview')) {
+    return {
+      confident: true,
+      reply: `${COLLEGE_INFO.name} was established in ${COLLEGE_INFO.established} in Nellore.\n\n${COLLEGE_INFO.taglineSecondary}\n\nThis website lists ${CAMPUSES.length} campuses (${dayCampuses().length} Day + ${residentialCampuses().length} Residential) and programmes in ${COURSES.map((c) => c.code).join(', ')}.\n\nChairman: ${CHAIRMAN_MESSAGE.messageShort.slice(0, 220)}…\n\n[NAV:why-choose]`,
+    };
+  }
+
+  if (q.includes('bottom bar') || q.includes('mobile view') || q.includes('phone view')) {
+    return {
+      confident: true,
+      reply: `**Mobile website guide:**\n\n• Bottom bar: Call Desk | Apply Now | Why KCJC\n• AI Guide: blue robot button at bottom-right\n• Campuses: Day (${dayCampuses().length}) and Residential (${residentialCampuses().length}) cards\n• Courses: tap a stream for details\n\n[NAV:hero]`,
+    };
+  }
+
+  if (q.includes('desktop') || q.includes('laptop')) {
+    return {
+      confident: true,
+      reply: `**Desktop website guide:**\n\n• Navbar: Overview, Why KCJC, Facilities, Campuses, Life at KCJC, Leadership, Gallery\n• Courses dropdown: MPC, BiPC, MEC, CEC, Long Term\n• Apply Online opens the admission form\n\n[NAV:hero]`,
+    };
+  }
+
+  return {
+    confident: false,
+    reply: `${COLLEGE_INFO.name}, Nellore, offers ${COURSES.filter((c) => c.code !== 'Long Term').map((c) => c.code).join(', ')} and Long Term programmes across **${CAMPUSES.length} campuses** (${dayCampuses().length} Day + ${residentialCampuses().length} Residential).\n\nAsk about a course, a campus name, facilities, NCC, admissions, or WhatsApp ${COLLEGE_INFO.phonePrimary}.\n\nUse the 📋 Menu for quick topics.\n\n[NAV:why-choose]`,
+  };
+};
+
+export const generateFallbackReply = (message: string): string => resolveCollegeGuideReply(message).reply;

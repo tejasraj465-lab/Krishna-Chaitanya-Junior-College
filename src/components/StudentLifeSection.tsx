@@ -155,23 +155,8 @@ export const StudentLifeSection: React.FC<StudentLifeSectionProps> = ({
 
   if (variant === 'page') {
     return (
-      <section id="explore-kcjc" className="py-10 md:py-14 bg-white text-[#1E293B] scroll-mt-[5.5rem] sm:scroll-mt-28">
+      <section id="explore-kcjc" className="py-8 md:py-12 bg-white text-[#1E293B] scroll-mt-[5.5rem] sm:scroll-mt-28">
         <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
-          <div className="max-w-4xl mx-auto text-left mb-10">
-            <span className="inline-flex items-center gap-1.5 text-[#0B3C91] bg-[#EFF6FF] px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider border border-blue-200 shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#F97316]" />
-              <span>Campus Atmosphere & Experience</span>
-            </span>
-
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#0B3C91] font-serif mt-3.5 leading-tight">
-              Life at Krishna Chaitanya
-            </h2>
-
-            <p className="text-base sm:text-lg text-slate-600 mt-3 max-w-3xl leading-relaxed">
-              A complete student experience shaped through academics, clubs, cultural celebrations, sports, NCC, NSS, workshops, and memorable campus events.
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 mb-12">
             {FULL_LIFE_HIGHLIGHTS.map((item, index) => {
               const Icon = item.icon;

@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
-import { generateFallbackReply } from '../data/aiKnowledgeBase';
+import { resolveCollegeGuideReply } from '../data/aiKnowledgeBase';
 import { CuteRobotIcon } from './CuteRobotIcon';
 import { sanitizeInternalPath, sanitizeSectionId } from '../utils/navigationAllowlist';
 import { openExternalUrl, stripControlChars } from '../utils/security';
@@ -225,7 +225,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       } else {
         scrollToSection('facilities');
       }
-      handleSend("What hostel, AC rooms, dining mess, labs, and transport facilities are listed on the website?");
+      handleSend("What facilities, labs, dining mess, and transport are listed on the website?");
       return;
     }
     if (qr === '⭐ Why Choose KCJC' || qr === 'Why Choose KCJC') {
@@ -286,7 +286,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     setIsTyping(true);
 
     // Quick direct trigger for WhatsApp option
-    if (query.toLowerCase().includes('whatsapp')) {
+    if (query.toLowerCase().includes('whatsapp') && !query.toLowerCase().includes('whatsapp number')) {
       setIsTyping(false);
       const waMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
@@ -297,6 +297,13 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       };
       setMessages((prev) => [...prev, waMsg]);
       openExternalUrl(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya! I am chatting with Campus Guide AI and want to connect with a counselor.')}`);
+      return;
+    }
+
+    const grounded = resolveCollegeGuideReply(query);
+    if (grounded.confident) {
+      appendAiReply(grounded.reply);
+      setIsTyping(false);
       return;
     }
 
@@ -315,13 +322,13 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
       const data = await response.json().catch(() => ({}));
       const replyText =
         (response.ok && data.reply) ||
-        generateFallbackReply(query) ||
+        grounded.reply ||
         'Thank you for asking! For personalized guidance, connect on WhatsApp.';
 
       appendAiReply(replyText);
     } catch (error) {
       console.error('AI Chat Error:', error);
-      appendAiReply(generateFallbackReply(query));
+      appendAiReply(grounded.reply);
     } finally {
       setIsTyping(false);
     }

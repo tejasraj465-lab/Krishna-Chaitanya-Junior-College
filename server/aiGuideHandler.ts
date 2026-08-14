@@ -1,5 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
-import { buildAiSystemPrompt, generateFallbackReply } from '../src/data/aiKnowledgeBase';
+import { buildAiSystemPrompt, resolveCollegeGuideReply } from '../src/data/aiKnowledgeBase';
 import { validateAiGuideRequest } from './validateAiRequest';
 
 let aiClient: GoogleGenAI | null | undefined;
@@ -33,6 +33,12 @@ export async function handleAiGuideRequest(body: unknown): Promise<{
   }
 
   const { message, history } = validation.data;
+  const grounded = resolveCollegeGuideReply(message);
+
+  if (grounded.confident) {
+    return { status: 200, body: { reply: grounded.reply } };
+  }
+
   const systemPrompt = buildAiSystemPrompt();
   const ai = getAiClient();
 
@@ -56,12 +62,12 @@ export async function handleAiGuideRequest(body: unknown): Promise<{
         ],
       });
 
-      const reply = response.text || generateFallbackReply(message);
+      const reply = response.text || grounded.reply;
       return { status: 200, body: { reply } };
     } catch (error) {
       console.error('Gemini API error:', error);
     }
   }
 
-  return { status: 200, body: { reply: generateFallbackReply(message) } };
+  return { status: 200, body: { reply: grounded.reply } };
 }
