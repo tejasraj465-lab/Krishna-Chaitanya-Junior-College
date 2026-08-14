@@ -16,6 +16,7 @@ import { HomePage } from './pages/HomePage';
 import { FacilitiesPage } from './pages/FacilitiesPage';
 import { GalleryPage } from './pages/GalleryPage';
 import { LifeAtKcjcPage } from './pages/LifeAtKcjcPage';
+import { CoursesPage } from './pages/CoursesPage';
 import { WhyChooseKcjcPage } from './pages/WhyChooseKcjcPage';
 import { CampusesPage, CampusCategoryFilter } from './pages/CampusesPage';
 import { CampusDetailPage } from './pages/CampusDetailPage';
@@ -30,7 +31,7 @@ import {
   type HomeSectionId,
 } from './utils/homeSectionNavigation';
 
-type RouteKey = 'home' | 'facilities' | 'gallery' | 'life-at-kcjc' | 'why-choose-kcjc' | 'campuses' | 'campus-detail';
+type RouteKey = 'home' | 'facilities' | 'gallery' | 'life-at-kcjc' | 'courses' | 'why-choose-kcjc' | 'campuses' | 'campus-detail';
 
 type NavigatePathOptions = {
   fromSection?: HomeSectionId | string;
@@ -87,6 +88,9 @@ const getRouteState = (pathname: string) => {
       return { routeKey: 'gallery' as const, campusSlug: null };
     case '/life-at-kcjc':
       return { routeKey: 'life-at-kcjc' as const, campusSlug: null };
+    case '/courses':
+      return { routeKey: 'courses' as const, campusSlug: null };
+    case '/overview':
     case '/why-choose-kcjc':
       return { routeKey: 'why-choose-kcjc' as const, campusSlug: null };
     default:
@@ -102,8 +106,10 @@ const getSeoTitle = (routeKey: RouteKey, campusName?: string | null) => {
       return 'Gallery | Krishna Chaitanya Junior College';
     case 'life-at-kcjc':
       return 'Life at KCJC | Krishna Chaitanya Junior College';
+    case 'courses':
+      return 'Courses | Krishna Chaitanya Junior College';
     case 'why-choose-kcjc':
-      return 'Why Choose KCJC | Krishna Chaitanya Junior College';
+      return 'College Overview | Krishna Chaitanya Junior College';
     case 'campuses':
       return 'Campuses | Krishna Chaitanya Junior College';
     case 'campus-detail':
@@ -121,8 +127,10 @@ const getSeoDescription = (routeKey: RouteKey, campusName?: string | null) => {
       return 'Browse campus life, achievements, events, sports, NCC, NSS, and academic moments across the college.';
     case 'life-at-kcjc':
       return 'See how student life at KCJC blends academics, clubs, cultural activities, sports, NCC, NSS, and celebrations.';
+    case 'courses':
+      return 'Explore Intermediate MPC, BiPC, MEC, CEC and Long Term programmes with integrated IIT-JEE, NEET, EAPCET, CA and CMA coaching.';
     case 'why-choose-kcjc':
-      return 'Explore the college advantages, mentorship, infrastructure, and the disciplined learning culture at KCJC.';
+      return 'College overview of Krishna Chaitanya Junior College: academics, campuses, facilities, and why families choose KCJC.';
     case 'campuses':
       return 'Browse the existing Krishna Chaitanya campuses with search, type filters, and real campus details from the current website data.';
     case 'campus-detail':
@@ -452,6 +460,14 @@ export default function App() {
           onNavigateHome={navigateHome}
           onOpenApplyModal={() => handleOpenApplyModal()}
           onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
+        />
+      )}
+
+      {routeKey === 'courses' && (
+        <CoursesPage
+          onNavigateHome={navigateHome}
+          onOpenApplyModal={handleOpenApplyModal}
+          onSelectProgram={(programId) => setSelectedProgramId(programId)}
         />
       )}
 

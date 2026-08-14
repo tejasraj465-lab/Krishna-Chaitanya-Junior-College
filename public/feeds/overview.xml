@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KCJC College Overview</title>
+    <link>https://krishna-chaitanya-junior-college.vercel.app/overview</link>
+    <description>Official overview updates from Krishna Chaitanya Junior College, Nellore.</description>
+    <language>en-in</language>
+    <lastBuildDate>Fri, 14 Aug 2026 17:10:37 GMT</lastBuildDate>
+    <atom:link href="https://krishna-chaitanya-junior-college.vercel.app/feeds/overview.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Krishna Chaitanya Junior College</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app</link>
+      <guid isPermaLink="true">https://krishna-chaitanya-junior-college.vercel.app</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Official website of KCJC, Nellore — Intermediate with IIT-JEE, NEET, CA and CMA coaching.</description>
+    </item>
+    <item>
+      <title>College Overview</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/overview</link>
+      <guid isPermaLink="true">https://krishna-chaitanya-junior-college.vercel.app/overview</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Overview of academics, campuses, facilities and the KCJC advantage.</description>
+    </item>
+    <item>
+      <title>Why Choose KCJC</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/why-choose-kcjc</link>
+      <guid isPermaLink="true">https://krishna-chaitanya-junior-college.vercel.app/why-choose-kcjc</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Why families choose Krishna Chaitanya Junior College.</description>
+    </item>
+    <item>
+      <title>Facilities &amp; Infrastructure</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/facilities</link>
+      <guid isPermaLink="true">https://krishna-chaitanya-junior-college.vercel.app/facilities</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Labs, hostels, transport, safety and student-support facilities.</description>
+    </item>
+    <item>
+      <title>Gallery</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/gallery</link>
+      <guid isPermaLink="true">https://krishna-chaitanya-junior-college.vercel.app/gallery</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Campus life, events, sports, NCC and academic moments.</description>
+    </item>
+  </channel>
+</rss>

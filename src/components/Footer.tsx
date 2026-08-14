@@ -243,16 +243,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSect
             © {new Date().getFullYear()} {COLLEGE_INFO.name}. All Rights Reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-4 gap-y-2 text-slate-400">
-            <a href="#" className="hover:text-white transition-colors">
-              Privacy Policy
+            <a href="/overview.xml" className="hover:text-white transition-colors">
+              Overview sitemap
             </a>
             <span className="hidden sm:inline">•</span>
-            <a href="#" className="hover:text-white transition-colors">
-              Terms of Admission
+            <a href="/campuses.xml" className="hover:text-white transition-colors">
+              Campuses sitemap
             </a>
             <span className="hidden sm:inline">•</span>
-            <a href="#" className="hover:text-white transition-colors">
-              Mandatory Disclosures
+            <a href="/life-at-kcjc.xml" className="hover:text-white transition-colors">
+              Life sitemap
+            </a>
+            <span className="hidden sm:inline">•</span>
+            <a href="/courses.xml" className="hover:text-white transition-colors">
+              Courses sitemap
+            </a>
+            <span className="hidden sm:inline">•</span>
+            <a href="/feeds/overview.xml" className="hover:text-white transition-colors">
+              RSS feeds
             </a>
           </div>
         </div>

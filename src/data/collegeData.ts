@@ -399,6 +399,35 @@ export const ADMISSION_STEPS = [
   }
 ];
 
+function googleMapsLinks(
+  embedPb: string,
+  lat: number,
+  lng: number,
+  options?: { cid?: string; placeName?: string }
+) {
+  const query = options?.placeName ? encodeURIComponent(options.placeName) : `${lat},${lng}`;
+  const cid = options?.cid ? `&cid=${options.cid}` : '';
+  return {
+    googleMapUrl: `https://maps.google.com/maps?ll=${lat},${lng}&z=18&q=${query}${cid}`,
+    googleMapEmbedUrl: `https://www.google.com/maps/embed?pb=${embedPb}`,
+  };
+}
+
+const MAP_VASISTA_PRABHANJANA =
+  '!1m18!1m12!1m3!1d687.0708898310592!2d79.97957702346223!3d14.446341992487854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c8ccc93b1073b%3A0x9bac5b2a6ae702fc!2sKrishna%20Chaitanya%20Junior%20College!5e0!3m2!1sen!2sin!4v1786716857778!5m2!1sen!2sin';
+const MAP_SARVAGNA =
+  '!1m18!1m12!1m3!1d15453.97750542334!2d79.9763507457338!3d14.456277926208072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c8cba1c47259b%3A0x2896aa5d9e35c7da!2sKrishna%20Chaitanya%20Junior%20College!5e0!3m2!1sen!2sin!4v1786716955081!5m2!1sen!2sin';
+const MAP_DURGAHMITTA =
+  '!1m18!1m12!1m3!1d7727.669846163829!2d79.9629271030426!3d14.436675115743578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf3eeae81c64d%3A0x1e07483d5481abe3!2sKrishna%20Chaitanya%20junior%20college%20ac%20campus!5e0!3m2!1sen!2sin!4v1786717030464!5m2!1sen!2sin';
+const MAP_EINSTEIN =
+  '!1m18!1m12!1m3!1d3672.656137634467!2d79.96979091451986!3d14.4366419869599!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf3eeae81c64d%3A0x1e07483d5481abe3!2sKrishna%20Chaitanya%20junior%20college%20ac%20campus!5e1!3m2!1sen!2sin!4v1786717339625!5m2!1sen!2sin';
+const MAP_BUCHI =
+  '!1m18!1m12!1m3!1d3670.9789614829688!2d79.8829399!3d14.537930399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c91d5e90b78d5%3A0x6158fee164579b7a!2sKrishna%20Chaitanya%20Junior%20College!5e1!3m2!1sen!2sin!4v1786717780330!5m2!1sen!2sin';
+const MAP_CHANDRAHASA =
+  '!1m18!1m12!1m3!1d7727.793933660585!2d79.97058479357906!3d14.433100900000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf37135e4f627%3A0xbe56081ae2864ba!2sKrishna%20Chaitanya%20junior%20College%20(%20Chandra%20hasa%20campus)%20nellore!5e0!3m2!1sen!2sin!4v1786717842835!5m2!1sen!2sin';
+const MAP_GOMATHY =
+  '!1m17!1m12!1m3!1d588.4057585886683!2d79.9835011946338!3d14.429153805146619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e1!3m2!1sen!2sin!4v1786718520203!5m2!1sen!2sin';
+
 export const CAMPUSES: Campus[] = [
   {
     id: 'c1',
@@ -410,7 +439,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'prabhanjana@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4463576,79.9795588',
+    ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446341992487854, 79.97957702346223, {
+      cid: '11217441009613341436',
+      placeName: 'Krishna Chaitanya Junior College',
+    }),
     suitableFor: 'Girls',
     coursesOffered: ['MPC (EAPCET, Mains)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Girls Day Wing', 'Smart Classrooms', 'Integrated Coaching', 'Safe Transport'],
@@ -425,7 +457,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'vasista@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4465337,79.9793754',
+    ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446341992487854, 79.97957702346223, {
+      cid: '11217441009613341436',
+      placeName: 'Krishna Chaitanya Junior College',
+    }),
     suitableFor: 'Boys',
     coursesOffered: ['MPC (EAPCET, Mains)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Boys Day Wing', 'Digital Study Labs', 'EAPCET Coaching', 'Sports Yard'],
@@ -440,7 +475,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'sarvagna@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4605931,79.9929241',
+    ...googleMapsLinks(MAP_SARVAGNA, 14.456277926208072, 79.9763507457338, {
+      cid: '2924712327086720986',
+      placeName: 'Krishna Chaitanya Junior College',
+    }),
     suitableFor: 'Boys, Girls & Co-Education',
     coursesOffered: ['MPC (EAPCET, Mains)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Concept Learning Wing', 'Interactive Boards', 'CA/CMA Focus Batch', 'Library'],
@@ -455,7 +493,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'durgahmitta.girls@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4177285,79.9607123',
+    ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
+      cid: '2163777574222801891',
+      placeName: 'Krishna Chaitanya junior college ac campus',
+    }),
     suitableFor: 'Girls',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Girls Special Batch', 'NEET Biology Lab', 'CCTV Security', 'Mentoring Cells'],
@@ -470,7 +511,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'durgahmitta.boys@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4170813,79.9609129',
+    ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
+      cid: '2163777574222801891',
+      placeName: 'Krishna Chaitanya junior college ac campus',
+    }),
     suitableFor: 'Boys',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Boys Tech Wing', 'Physics & Chem Labs', 'IIT-JEE Prep', 'Audio-Visual Rooms'],
@@ -485,7 +529,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'einstein.girls@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://maps.app.goo.gl/5uy5KBE7FdizgTPG7?g_st=ac',
+    ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
+      cid: '2163777574222801891',
+      placeName: 'Krishna Chaitanya junior college ac campus',
+    }),
     suitableFor: 'Girls',
     coursesOffered: ['MPC (Mains, Elite IIT-JEE)', 'BiPC (Elite NEET, Elite Long Term)'],
     facilities: ['Climate Controlled AC Classrooms', '4K Digital Boards', 'Medical Wing', 'High Security'],
@@ -500,7 +547,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'einstein.boys@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://maps.app.goo.gl/haHJSH7WEndy46dJ6?g_st=ac',
+    ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
+      cid: '2163777574222801891',
+      placeName: 'Krishna Chaitanya junior college ac campus',
+    }),
     suitableFor: 'Boys',
     coursesOffered: ['MPC (Mains, Elite IIT-JEE)', 'BiPC (Elite NEET, Elite Long Term)'],
     facilities: ['Fully AC Smart Classrooms', 'JEE Advanced Wing', 'Special Assessment Center'],
@@ -515,7 +565,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'buchireddypalem@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://maps.app.goo.gl/8bNS72iPDh7iEfNFA?g_st=ac',
+    ...googleMapsLinks(MAP_BUCHI, 14.5379304, 79.8829399, {
+      cid: '7014636663634107258',
+      placeName: 'Krishna Chaitanya Junior College',
+    }),
     suitableFor: 'Boys, Girls & Co-Education',
     coursesOffered: ['MPC (EAPCET, Mains)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Integrated Batch', 'Digital Classrooms', 'Transport Service', 'Parent Desk'],
@@ -530,7 +583,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'res.einstein.girls@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://maps.app.goo.gl/5uy5KBE7FdizgTPG7?g_st=ac',
+    ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
+      cid: '2163777574222801891',
+      placeName: 'Krishna Chaitanya junior college ac campus',
+    }),
     suitableFor: 'Girls (Residential)',
     coursesOffered: ['MPC (Mains, Elite)', 'BiPC (Elite)'],
     facilities: ['24/7 AC Hostel', 'Hygienic Dining Mess', 'Doctor on Call', 'Supervised Study Hours'],
@@ -545,7 +601,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'chandrahasa@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1567521464027-f127ff144326?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4330704,79.9800859',
+    ...googleMapsLinks(MAP_CHANDRAHASA, 14.4331009, 79.97058479357906, {
+      cid: '857197414172878010',
+      placeName: 'Krishna Chaitanya junior College ( Chandra hasa campus) nellore',
+    }),
     suitableFor: 'Boys (Residential)',
     coursesOffered: ['MPC (Mains, Elite)', 'BiPC (Elite)'],
     facilities: ['AC Boys Residence', 'IIT/NEET Intensive Hostel', 'Indoor Sports', 'Mineral RO Water'],
@@ -560,7 +619,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'gomathy@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4289487,79.9838021',
+    ...googleMapsLinks(MAP_GOMATHY, 14.429153805146619, 79.9835011946338),
     suitableFor: 'Girls (Residential)',
     coursesOffered: ['MPC (EAPCET)'],
     facilities: ['Secure Girls Hostel', 'In-House Faculty Mentors', 'Home-Style Nutritious Food', 'Surveillance'],
@@ -575,7 +634,10 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 63022 75510',
     email: 'res.dargamitta@kcjc.edu.in',
     image: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
-    googleMapUrl: 'https://www.google.com/maps/search/?api=1&query=14.4170813,79.9609129',
+    ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
+      cid: '2163777574222801891',
+      placeName: 'Krishna Chaitanya junior college ac campus',
+    }),
     suitableFor: 'Boys (Residential)',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
     facilities: ['Boys Residential Wing', 'Supervised Study Hours', 'Sports Ground', 'Security'],

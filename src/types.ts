@@ -27,6 +27,7 @@ export interface Campus {
   email: string;
   image: string;
   googleMapUrl: string;
+  googleMapEmbedUrl?: string;
   suitableFor: string;
   coursesOffered: string[];
   facilities: string[];

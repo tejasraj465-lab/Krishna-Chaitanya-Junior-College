@@ -9,6 +9,8 @@ const CSP = [
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: blob: https://ik.imagekit.io https://images.unsplash.com https://ai.google.dev",
   "connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
+  "frame-src https://www.google.com",
+  "worker-src 'none'",
   "upgrade-insecure-requests",
 ].join('; ');
 
@@ -21,7 +23,9 @@ export function applySecurityHeaders(
   setHeader('X-Content-Type-Options', 'nosniff');
   setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   setHeader('X-Frame-Options', 'DENY');
-  setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
+  setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  setHeader('X-Permitted-Cross-Domain-Policies', 'none');
 
   // Strict CSP breaks Vite dev (HMR websockets + inline module scripts).
   if (isProduction && options?.includeCsp !== false) {
@@ -48,7 +52,15 @@ export const VERCEL_SECURITY_HEADERS = [
   },
   {
     key: 'Permissions-Policy',
-    value: 'camera=(), microphone=(), geolocation=()',
+    value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()',
+  },
+  {
+    key: 'Cross-Origin-Opener-Policy',
+    value: 'same-origin-allow-popups',
+  },
+  {
+    key: 'X-Permitted-Cross-Domain-Policies',
+    value: 'none',
   },
   {
     key: 'Strict-Transport-Security',

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Life at KCJC</title>
+    <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+    <description>Student life, clubs, sports, NCC, NSS and campus events at Krishna Chaitanya Junior College.</description>
+    <language>en-in</language>
+    <lastBuildDate>Fri, 14 Aug 2026 17:10:37 GMT</lastBuildDate>
+    <atom:link href="https://krishna-chaitanya-junior-college.vercel.app/feeds/life-at-kcjc.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Student Life</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#student-life</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>A balanced campus culture of academics, friendships and mentorship.</description>
+    </item>
+    <item>
+      <title>Clubs</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#clubs</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Interest-based clubs for creativity, leadership and teamwork.</description>
+    </item>
+    <item>
+      <title>Cultural Activities</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#cultural</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Festivals, performances and annual celebrations on campus.</description>
+    </item>
+    <item>
+      <title>Sports</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#sports</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Structured sports, fitness and competitive games.</description>
+    </item>
+    <item>
+      <title>Campus Events</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#events</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Freshers, annual day, seminars and milestone celebrations.</description>
+    </item>
+    <item>
+      <title>NSS</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#nss</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Service initiatives that build social responsibility.</description>
+    </item>
+    <item>
+      <title>NCC</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#ncc</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Leadership and discipline through NCC cadet training.</description>
+    </item>
+    <item>
+      <title>Workshops &amp; Seminars</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#workshops</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Career awareness and academic enrichment sessions.</description>
+    </item>
+    <item>
+      <title>Student Development</title>
+      <link>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</link>
+      <guid isPermaLink="false">https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc#development</guid>
+      <pubDate>Fri, 14 Aug 2026 17:10:37 GMT</pubDate>
+      <description>Personality, confidence and career-readiness programmes.</description>
+    </item>
+  </channel>
+</rss>

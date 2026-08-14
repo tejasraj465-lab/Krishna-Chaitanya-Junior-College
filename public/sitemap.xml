@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/overview.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/courses.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+</sitemapindex>

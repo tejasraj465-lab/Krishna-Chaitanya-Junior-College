@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /gemini-config.php
+
+Sitemap: https://krishna-chaitanya-junior-college.vercel.app/sitemap.xml
+Sitemap: https://krishna-chaitanya-junior-college.vercel.app/overview.xml
+Sitemap: https://krishna-chaitanya-junior-college.vercel.app/campuses.xml
+Sitemap: https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc.xml
+Sitemap: https://krishna-chaitanya-junior-college.vercel.app/courses.xml

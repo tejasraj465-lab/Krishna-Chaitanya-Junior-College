@@ -16,6 +16,8 @@ export const ALLOWED_PATHS = new Set([
   '/facilities',
   '/gallery',
   '/life-at-kcjc',
+  '/courses',
+  '/overview',
   '/why-choose-kcjc',
   '/campuses',
 ]);

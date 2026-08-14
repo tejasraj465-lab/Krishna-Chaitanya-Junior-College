@@ -1,9 +1,36 @@
 import React, { useEffect } from 'react';
 import { COLLEGE_INFO, FAQ_LIST } from '../data/collegeData';
+import { FEED_LINKS, SITE_NAME, SITE_URL } from '../config/site';
 
 interface SeoHeadProps {
   title?: string;
   description?: string;
+}
+
+function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
+  const selector = `meta[${attr}="${key}"]`;
+  let element = document.head.querySelector(selector) as HTMLMetaElement | null;
+  if (!element) {
+    element = document.createElement('meta');
+    element.setAttribute(attr, key);
+    document.head.appendChild(element);
+  }
+  element.setAttribute('content', content);
+}
+
+function upsertLink(rel: string, href: string, attributes: Record<string, string> = {}) {
+  const extra = Object.entries(attributes)
+    .map(([key, value]) => `[${key}="${value}"]`)
+    .join('');
+  const selector = `link[rel="${rel}"]${extra}`;
+  let element = document.head.querySelector(selector) as HTMLLinkElement | null;
+  if (!element) {
+    element = document.createElement('link');
+    element.setAttribute('rel', rel);
+    Object.entries(attributes).forEach(([key, value]) => element?.setAttribute(key, value));
+    document.head.appendChild(element);
+  }
+  element.setAttribute('href', href);
 }
 
 export const SeoHead: React.FC<SeoHeadProps> = ({
@@ -11,21 +38,39 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
   description,
 }) => {
   useEffect(() => {
-    document.title = title || `${COLLEGE_INFO.name} | India's Rank 1 Junior College for IIT-JEE, NEET & Intermediate`;
-
-    const metaDescription = document.querySelector('meta[name="description"]');
+    const pageTitle = title || `${SITE_NAME} | India's Rank 1 Junior College for IIT-JEE, NEET & Intermediate`;
     const metaContent = description || `${COLLEGE_INFO.name} - Top Junior College offering 2-Year Intermediate (MPC, BiPC, MEC, CEC) with integrated IIT-JEE Main/Adv, NEET, CA-Foundation & Civil Services coaching. 28+ years of excellence.`;
-    if (metaDescription) {
-      metaDescription.setAttribute('content', metaContent);
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = 'description';
-      meta.content = metaContent;
-      document.head.appendChild(meta);
-    }
+    const canonical = `${SITE_URL}${window.location.pathname === '/' ? '/' : window.location.pathname}`;
+    const origin = SITE_URL || window.location.origin;
+
+    document.title = pageTitle;
+
+    upsertMeta('name', 'description', metaContent);
+    upsertMeta('name', 'robots', 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1');
+    upsertMeta('name', 'googlebot', 'index,follow');
+    upsertMeta('name', 'referrer', 'strict-origin-when-cross-origin');
+    upsertMeta('property', 'og:type', 'website');
+    upsertMeta('property', 'og:site_name', SITE_NAME);
+    upsertMeta('property', 'og:title', pageTitle);
+    upsertMeta('property', 'og:description', metaContent);
+    upsertMeta('property', 'og:url', canonical);
+    upsertMeta('property', 'og:image', `${origin}/logo.svg`);
+    upsertMeta('name', 'twitter:card', 'summary');
+    upsertMeta('name', 'twitter:title', pageTitle);
+    upsertMeta('name', 'twitter:description', metaContent);
+
+    upsertLink('canonical', canonical);
+    upsertLink('sitemap', `${origin}/sitemap.xml`, { type: 'application/xml' });
+    FEED_LINKS.forEach((feed) => {
+      upsertLink('alternate', `${origin}${feed.href}`, {
+        type: 'application/rss+xml',
+        title: feed.title,
+      });
+    });
 
     document.getElementById('schema-educational-org')?.remove();
     document.getElementById('schema-faq')?.remove();
+    document.getElementById('schema-website')?.remove();
 
     const orgSchemaScript = document.createElement('script');
     orgSchemaScript.type = 'application/ld+json';
@@ -36,8 +81,8 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       name: COLLEGE_INFO.name,
       alternateName: 'Krishna Chaitanya Junior College (KCJC)',
       description: COLLEGE_INFO.taglineSecondary,
-      url: window.location.origin,
-      logo: `${window.location.origin}/logo.png`,
+      url: origin,
+      logo: `${origin}/logo.svg`,
       telephone: COLLEGE_INFO.phonePrimary,
       email: COLLEGE_INFO.email,
       address: {
@@ -52,7 +97,17 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       foundingDate: '1998'
     });
 
-    // Add FAQ Schema
+    const websiteSchema = document.createElement('script');
+    websiteSchema.type = 'application/ld+json';
+    websiteSchema.id = 'schema-website';
+    websiteSchema.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE_NAME,
+      url: origin,
+      inLanguage: 'en-IN',
+    });
+
     const faqSchemaScript = document.createElement('script');
     faqSchemaScript.type = 'application/ld+json';
     faqSchemaScript.id = 'schema-faq';
@@ -70,10 +125,12 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
     });
 
     document.head.appendChild(orgSchemaScript);
+    document.head.appendChild(websiteSchema);
     document.head.appendChild(faqSchemaScript);
 
     return () => {
       document.getElementById('schema-educational-org')?.remove();
+      document.getElementById('schema-website')?.remove();
       document.getElementById('schema-faq')?.remove();
     };
   }, [title, description]);

@@ -115,20 +115,30 @@ export const CampusDetailPage: React.FC<CampusDetailPageProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <section className="rounded-3xl border border-blue-100 bg-white p-5 sm:p-6 shadow-sm">
-              <h2 className="text-lg font-bold text-[#0B3C91] font-serif mb-4">Get Directions</h2>
-              <a
-                href={campus.googleMapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-[#0B3C91] px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-white shadow-md transition-all hover:bg-[#072B6B]"
-              >
-                <ExternalLink className="w-4 h-4" aria-hidden="true" />
-                <span>Get Directions</span>
-              </a>
-            </section>
-          </div>
+          <section className="rounded-3xl border border-blue-100 bg-white p-5 sm:p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-[#0B3C91] font-serif mb-4">Campus Location</h2>
+            {campus.googleMapEmbedUrl ? (
+              <div className="mb-4 overflow-hidden rounded-2xl border border-blue-100 bg-slate-50 aspect-[16/10]">
+                <iframe
+                  title={`${campus.name} location map`}
+                  src={campus.googleMapEmbedUrl}
+                  className="h-full w-full border-0"
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            ) : null}
+            <a
+              href={campus.googleMapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#0B3C91] px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-white shadow-md transition-all hover:bg-[#072B6B]"
+            >
+              <ExternalLink className="w-4 h-4" aria-hidden="true" />
+              <span>Open in Google Maps</span>
+            </a>
+          </section>
 
           <section className="rounded-3xl bg-gradient-to-r from-[#0B3C91] via-[#072B6B] to-[#041638] p-6 sm:p-8 text-white shadow-xl border border-blue-900">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
