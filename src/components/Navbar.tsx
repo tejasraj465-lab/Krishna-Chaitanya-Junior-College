@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import { COLLEGE_INFO } from '../data/collegeData';
 import { COURSE_CATEGORIES } from '../data/courseDetailsData';
-import kcLogo from '../assets/kc_logo.svg';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface NavbarProps {
@@ -61,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   useEffect(() => {
     if (activeSection) return; // parent handles state
 
-    const sectionIds = ['courses', 'why-choose', 'campuses', 'facilities', 'ncc', 'stories', 'explore-kcjc', 'leadership'];
+    const sectionIds = ['courses', 'why-choose', 'campuses', 'facilities', 'ncc', 'explore-kcjc', 'leadership'];
 
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting);
@@ -225,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 sm:gap-3 font-medium">
             <span className="bg-[#FBBF24] text-[#0B3C91] font-black px-1.5 sm:px-2 py-0.5 rounded text-label shrink-0 flex items-center gap-1 shadow-sm">
               <Sparkles className="w-2.5 h-2.5 shrink-0" />
-              <span>ADMISSIONS 2026-27 OPEN</span>
+              <span>ADMISSIONS 2027-28 OPEN</span>
             </span>
 
             <a 
@@ -265,7 +264,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             title="Go to Home"
           >
             <img 
-              src={kcLogo} 
+              src={COLLEGE_INFO.logo} 
               alt="Sri Krishna Chaitanya Educational Institutions Logo" 
               className="w-9 h-9 sm:w-11 sm:h-11 object-contain transform group-hover:scale-105 transition-transform shrink-0 drop-shadow-sm" 
             />

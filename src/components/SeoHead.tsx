@@ -54,7 +54,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
     upsertMeta('property', 'og:title', pageTitle);
     upsertMeta('property', 'og:description', metaContent);
     upsertMeta('property', 'og:url', canonical);
-    upsertMeta('property', 'og:image', `${origin}/logo.svg`);
+    upsertMeta('property', 'og:image', COLLEGE_INFO.logo);
     upsertMeta('name', 'twitter:card', 'summary');
     upsertMeta('name', 'twitter:title', pageTitle);
     upsertMeta('name', 'twitter:description', metaContent);
@@ -82,7 +82,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       alternateName: 'Krishna Chaitanya Junior College (KCJC)',
       description: COLLEGE_INFO.taglineSecondary,
       url: origin,
-      logo: `${origin}/logo.svg`,
+      logo: COLLEGE_INFO.logo,
       telephone: COLLEGE_INFO.phonePrimary,
       email: COLLEGE_INFO.email,
       address: {

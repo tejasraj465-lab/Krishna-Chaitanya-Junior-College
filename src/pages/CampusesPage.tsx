@@ -4,6 +4,7 @@ import { CAMPUSES } from '../data/collegeData';
 import { CAMPUSES_SECTION, CampusBrowseCategory } from '../data/campusesSectionData';
 import { PageBanner } from '../components/PageBanner';
 import { CampusCard } from '../components/CampusCard';
+import { ThemedSelect } from '../components/ui/ThemedSelect';
 
 export type CampusCategoryFilter = 'All' | CampusBrowseCategory;
 
@@ -133,34 +134,26 @@ export const CampusesPage: React.FC<CampusesPageProps> = ({
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                 Campus Type
               </label>
-              <select
+              <ThemedSelect
+                id="campus-type-filter"
+                size="lg"
                 value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
-                className="w-full h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0B3C91]/20 focus:border-[#0B3C91]"
-              >
-                {campusTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
+                options={campusTypes.map((type) => ({ value: type, label: type }))}
+                onChange={setSelectedType}
+              />
             </div>
 
             <div className="xl:col-span-3">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                 Location
               </label>
-              <select
+              <ThemedSelect
+                id="campus-location-filter"
+                size="lg"
                 value={selectedLocation}
-                onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0B3C91]/20 focus:border-[#0B3C91]"
-              >
-                {locations.map((location) => (
-                  <option key={location} value={location}>
-                    {location}
-                  </option>
-                ))}
-              </select>
+                options={locations.map((location) => ({ value: location, label: location }))}
+                onChange={setSelectedLocation}
+              />
             </div>
 
             <div className="xl:col-span-1 flex items-end">

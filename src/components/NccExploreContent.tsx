@@ -1,6 +1,7 @@
 import React, { memo, useMemo, useState } from 'react';
 import { CheckCircle, ImageIcon, Award } from 'lucide-react';
-import { NCC_EXPLORE, NCC_GALLERY_PHOTOS, NccGalleryCategory } from '../data/nccData';
+import { NCC_EXPLORE, NccGalleryCategory } from '../data/nccData';
+import { NCC_GALLERY_PHOTOS } from '../data/nccGallery';
 import { GlassCard } from './ui';
 
 const CheckList = memo<{ items: readonly string[]; columns?: 1 | 2 }>(function CheckList({

@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, MapPin, Calendar, CheckCircle2, Clock, Phone } from 'lucide-react';
+import { X, MapPin, CheckCircle2, Clock } from 'lucide-react';
 import { CAMPUSES, COLLEGE_INFO } from '../data/collegeData';
+import { ThemedSelect } from './ui/ThemedSelect';
 import {
   openExternalUrl,
   normalizePhoneDigits,
@@ -138,16 +139,14 @@ Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would 
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-800 mb-1">Campus Location *</label>
-                  <select
+                  <label htmlFor="visit-campus" className="block font-bold text-slate-800 mb-1">Campus Location *</label>
+                  <ThemedSelect
+                    id="visit-campus"
+                    icon={MapPin}
                     value={formData.campus}
-                    onChange={(e) => setFormData({ ...formData, campus: e.target.value })}
-                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-medium bg-slate-50"
-                  >
-                    {CAMPUSES.map((c) => (
-                      <option key={c.id} value={c.name}>{c.name}</option>
-                    ))}
-                  </select>
+                    options={CAMPUSES.map((campus) => ({ value: campus.name, label: campus.name }))}
+                    onChange={(campus) => setFormData({ ...formData, campus })}
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
@@ -162,16 +161,18 @@ Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would 
                   </div>
 
                   <div>
-                    <label className="block font-bold text-slate-800 mb-1">Time Slot</label>
-                    <select
+                    <label htmlFor="visit-timeslot" className="block font-bold text-slate-800 mb-1">Time Slot</label>
+                    <ThemedSelect
+                      id="visit-timeslot"
+                      icon={Clock}
                       value={formData.timeSlot}
-                      onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs bg-slate-50"
-                    >
-                      <option value="Morning">Morning (10 AM - 12 PM)</option>
-                      <option value="Afternoon">Afternoon (2 PM - 4 PM)</option>
-                      <option value="Evening">Evening (4 PM - 6 PM)</option>
-                    </select>
+                      options={[
+                        { value: 'Morning (10:00 AM - 12:00 PM)', label: 'Morning (10 AM - 12 PM)' },
+                        { value: 'Afternoon (2:00 PM - 4:00 PM)', label: 'Afternoon (2 PM - 4 PM)' },
+                        { value: 'Evening (4:00 PM - 6:00 PM)', label: 'Evening (4 PM - 6 PM)' },
+                      ]}
+                      onChange={(timeSlot) => setFormData({ ...formData, timeSlot })}
+                    />
                   </div>
                 </div>
 

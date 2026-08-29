@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GraduationCap, Sparkles, Award } from 'lucide-react';
-import kcLogo from '../assets/kc_logo.svg';
+import { COLLEGE_INFO } from '../data/collegeData';
 
 interface OpeningAnimationProps {
   onComplete?: () => void;
@@ -104,7 +104,7 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
                 className="relative w-24 h-24 sm:w-32 sm:h-32 bg-white rounded-3xl p-3 sm:p-4 shadow-2xl flex items-center justify-center border-2 border-[#FBBF24]"
               >
                 <img
-                  src={kcLogo}
+                  src={COLLEGE_INFO.logo}
                   alt="Krishna Chaitanya Educational Institutions"
                   className="w-full h-full object-contain"
                 />

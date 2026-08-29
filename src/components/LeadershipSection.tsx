@@ -48,7 +48,7 @@ export const LeadershipSection: React.FC = () => {
     <>
       <section
         id="leadership"
-        className="section-padding-sm max-sm:py-6 bg-gradient-to-b from-[#F8FAFC] via-white to-[#EFF6FF]/40 text-[#1E293B] scroll-mt-[5.5rem] sm:scroll-mt-28 relative overflow-hidden"
+        className="py-8 sm:py-10 md:py-12 max-sm:py-6 bg-gradient-to-b from-[#F8FAFC] via-white to-[#EFF6FF]/40 text-[#1E293B] scroll-mt-[5.5rem] sm:scroll-mt-28 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-mesh-light pointer-events-none" />
 
@@ -56,21 +56,21 @@ export const LeadershipSection: React.FC = () => {
           <SectionHeader
             eyebrow="Visionary Leadership"
             title="Leadership at Krishna Chaitanya"
-            className="max-sm:mb-4 max-sm:!space-y-1.5 mb-6 sm:mb-8"
+            className="!mb-4 sm:!mb-6 max-sm:!space-y-1.5"
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
             {LEADERSHIP_MEMBERS.map((leader) => (
               <GlassCard
                 key={leader.id}
                 as="button"
                 onClick={() => setSelectedLeader(leader)}
-                className="w-full p-3 sm:p-4 flex items-center gap-3 text-left cursor-pointer group"
+                className="w-full p-4 flex items-center gap-3.5 text-left cursor-pointer group"
               >
                 <img
                   src={leader.photo}
                   alt={leader.name}
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl object-cover object-top shrink-0 ring-2 ring-[#0B3C91]/15 group-hover:ring-[#F97316]/40 transition-all"
+                  className="w-20 h-20 rounded-xl object-cover object-top shrink-0 ring-2 ring-[#0B3C91]/15 group-hover:ring-[#F97316]/40 transition-all"
                   referrerPolicy="no-referrer"
                   loading="lazy"
                 />
@@ -78,12 +78,15 @@ export const LeadershipSection: React.FC = () => {
                   <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-[#F97316] leading-tight">
                     {leader.title}
                   </p>
-                  <p className="text-xs sm:text-sm font-bold text-[#0B3C91] font-serif leading-snug mt-0.5 line-clamp-2">
+                  <p className="text-sm sm:text-base font-bold text-[#0B3C91] font-serif leading-snug mt-0.5">
                     {leader.name}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-snug">
+                    {leader.qualification}
                   </p>
                 </div>
                 <ChevronRight
-                  className="w-4 h-4 text-slate-400 group-hover:text-[#0B3C91] shrink-0 transition-colors"
+                  className="w-5 h-5 text-slate-400 group-hover:text-[#0B3C91] shrink-0 transition-colors"
                   aria-hidden="true"
                 />
               </GlassCard>

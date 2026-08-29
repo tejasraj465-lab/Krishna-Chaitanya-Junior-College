@@ -12,7 +12,6 @@ import {
   GraduationCap,
 } from 'lucide-react';
 import { COLLEGE_INFO, COURSES, CAMPUSES } from '../data/collegeData';
-import kcLogo from '../assets/kc_logo.svg';
 
 interface FooterProps {
   onNavigateHome?: () => void;
@@ -76,7 +75,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSect
               title="Go to Home"
             >
               <img
-                src={kcLogo}
+                src={COLLEGE_INFO.logo}
                 alt="Sri Krishna Chaitanya Educational Institutions"
                 className="w-12 h-12 object-contain shrink-0 group-hover:scale-105 transition-transform"
               />

@@ -10,6 +10,7 @@ export const COLLEGE_INFO = {
   whatsappNumber: "916302275510",
   email: "admissions@kcjc.edu.in",
   website: "https://kcjc-phi.vercel.app",
+  logo: "https://ik.imagekit.io/tejasraju/kcjc%20logo.jpg",
   admissionExam: "KCJC Integrated Counseling & Aptitude Assessment",
   headquarters: "Nellore, Andhra Pradesh",
   socialLinks: {
@@ -438,7 +439,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Near Murali Krishna Hotel, Madras Bus Stand, Nellore.',
     phone: '+91 63022 75510',
     email: 'prabhanjana@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/prabanjana.jpeg?updatedAt=1786795637864',
     ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446341992487854, 79.97957702346223, {
       cid: '11217441009613341436',
       placeName: 'Krishna Chaitanya Junior College',
@@ -456,7 +457,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Near Murali Krishna Hotel, Madras Bus Stand, Nellore.',
     phone: '+91 63022 75510',
     email: 'vasista@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/vasista.jpeg?updatedAt=1786795637958',
     ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446341992487854, 79.97957702346223, {
       cid: '11217441009613341436',
       placeName: 'Krishna Chaitanya Junior College',
@@ -474,7 +475,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Stonehousepeta, Nellore.',
     phone: '+91 63022 75510',
     email: 'sarvagna@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/stonehouse%20pet%20.jpeg?updatedAt=1786795638164',
     ...googleMapsLinks(MAP_SARVAGNA, 14.456277926208072, 79.9763507457338, {
       cid: '2924712327086720986',
       placeName: 'Krishna Chaitanya Junior College',
@@ -492,7 +493,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Current Office Centre, Dargamitta, Nellore.',
     phone: '+91 63022 75510',
     email: 'durgahmitta.girls@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/durghamitta%20girls.jpeg?updatedAt=1786795636835',
     ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
@@ -510,7 +511,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Current Office Centre, Dargamitta, Nellore.',
     phone: '+91 63022 75510',
     email: 'durgahmitta.boys@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120',
     ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
@@ -528,7 +529,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Near KVR Petrol Bunk, Magunta Layout, Nellore.',
     phone: '+91 63022 75510',
     email: 'einstein.girls@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542',
     ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
@@ -546,7 +547,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Near KVR Petrol Bunk, Magunta Layout, Nellore.',
     phone: '+91 63022 75510',
     email: 'einstein.boys@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/ac%20clg%20boys.jpeg',
     ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
@@ -582,7 +583,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Near KVR Petrol Bunk, Magunta Layout, Nellore.',
     phone: '+91 63022 75510',
     email: 'res.einstein.girls@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542',
     ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
@@ -600,7 +601,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Near Varamahalakshmi Shopping Mall, Magunta Layout, Nellore.',
     phone: '+91 63022 75510',
     email: 'chandrahasa@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1567521464027-f127ff144326?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/boys%20hostel.jpeg?updatedAt=1786795637950',
     ...googleMapsLinks(MAP_CHANDRAHASA, 14.4331009, 79.97058479357906, {
       cid: '857197414172878010',
       placeName: 'Krishna Chaitanya junior College ( Chandra hasa campus) nellore',
@@ -618,7 +619,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Beside Gomathy School, Gomathy Nagar, Nellore.',
     phone: '+91 63022 75510',
     email: 'gomathy@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/gomathy%20.jpeg',
     ...googleMapsLinks(MAP_GOMATHY, 14.429153805146619, 79.9835011946338),
     suitableFor: 'Girls (Residential)',
     coursesOffered: ['MPC (EAPCET)'],
@@ -633,7 +634,7 @@ export const CAMPUSES: Campus[] = [
     address: 'Near Current Office Centre, Dargamitta, Nellore.',
     phone: '+91 63022 75510',
     email: 'res.dargamitta@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120',
     ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',

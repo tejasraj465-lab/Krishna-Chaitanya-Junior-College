@@ -102,7 +102,8 @@ MOBILE VIEW (screens under 768px):
 • Homepage #campuses: compact Day (${dayCount}) and Residential (${resCount}) category cards — tap to open filtered campus list
 • Homepage #courses: tap any stream card or programme for detail modals with syllabus, coaching, and features
 • Homepage #ncc: tap "Explore NCC at KCJC" for full NCC modal (training, opportunities, benefits)
-• Why Choose / Overview (#why-choose): "Our Legacy Since 1998" opens legacy history modal
+• Home hero: "1998 Legacy" card opens the same legacy history modal
+• Why Choose / Overview (#why-choose): "Explore more" opens the Why KCJC details modal
 • After AI answers, user may tap "Jump to Section" — chat closes on mobile and scrolls/navigates to the relevant area
 
 DESKTOP VIEW (768px and above):
@@ -113,12 +114,12 @@ DESKTOP VIEW (768px and above):
 • Homepage #facilities preview: 5 facility cards in a row
 
 HOMEPAGE SECTION ORDER (top to bottom):
-  #hero → #courses → #why-choose → #campuses → #facilities → #ncc → #stories → #explore-kcjc → #leadership → Final Admissions CTA
+  #hero → #courses → #why-choose → #campuses → #facilities → #ncc → #explore-kcjc → #leadership → Final Admissions CTA
 
 APPLY / ADMISSION (no #admissions section on homepage — use Apply buttons):
 • Mobile: bottom bar "Apply Now" OR floating CTAs
 • Desktop: navbar "Apply Online" OR hero / final CTA buttons
-• Admission modal collects: student name, parent name, phone, course (MPC/BiPC/MEC/CEC), preferred campus, hostel yes/no, 10th marks bracket
+• Admission modal collects: name, phone, stream (MPC/BiPC/MEC/CEC), preferred campus
 • Submits with auto-generated Application ID (KCJC-2026-XXXXX) and opens WhatsApp to counselor
 • Exact fees, scholarships, and seat availability are NOT on the website — always direct to WhatsApp ${COLLEGE_INFO.phonePrimary}
 
@@ -169,11 +170,10 @@ WEBSITE STRUCTURE & ROUTES:
 Homepage (/) sections (use [NAV:section-id] tags):
   hero — top banner, trust stats, admissions & WhatsApp CTAs
   courses — courses & integrated programmes (MPC, BiPC, MEC, CEC, Long Term); tap cards for detail modals
-  why-choose — about college; "Our Legacy Since 1998" modal
+  why-choose — about college; "Explore more" opens Why KCJC details modal
   campuses — Day (${CAMPUSES.filter((c) => c.category === 'Day').length}) & Residential (${CAMPUSES.filter((c) => c.category === 'Residential').length}) category cards + explore all campuses
   facilities — facilities preview (compact cards); "Explore All Facilities" → /facilities
   ncc — NCC cadet wing; "Explore NCC at KCJC" opens full NCC modal
-  stories — parent & alumni success stories (Parents / Students tabs)
   explore-kcjc — student life preview; "Explore Life at KCJC" → /life-at-kcjc
   leadership — founders & director profiles
 
@@ -266,7 +266,7 @@ FREQUENTLY ASKED QUESTIONS:
 ${formatFaq()}
 
 NAVIGATION TAGS — append ONE relevant tag at the end when helpful:
-Homepage sections: [NAV:hero] [NAV:courses] [NAV:why-choose] [NAV:campuses] [NAV:facilities] [NAV:ncc] [NAV:stories] [NAV:explore-kcjc] [NAV:leadership]
+Homepage sections: [NAV:hero] [NAV:courses] [NAV:why-choose] [NAV:campuses] [NAV:facilities] [NAV:ncc] [NAV:explore-kcjc] [NAV:leadership]
 Dedicated pages: [NAV:page:/why-choose-kcjc] [NAV:page:/overview] [NAV:page:/facilities] [NAV:page:/campuses] [NAV:page:/campuses?category=Day] [NAV:page:/campuses?category=Residential] [NAV:page:/gallery] [NAV:page:/life-at-kcjc] [NAV:page:/courses] [NAV:page:/campuses/c1] (use correct campus id c1–c12)
 For Apply/admission form: tell user to tap "Apply Now" (mobile bottom bar) or "Apply Online" (desktop navbar). Do NOT use [NAV:admissions] — that section is not on the homepage. Instead explain the apply steps and mention the Apply button.
 

@@ -6,7 +6,6 @@ import { FacilitiesSection } from '../components/FacilitiesSection';
 import { NccNssSection } from '../components/NccNssSection';
 import { CampusesSection } from '../components/CampusesSection';
 import { StudentLifeSection } from '../components/StudentLifeSection';
-import { SuccessStories } from '../components/SuccessStories';
 import { LeadershipSection } from '../components/LeadershipSection';
 import { FinalCTA } from '../components/FinalCTA';
 import type { HomeSectionId } from '../utils/homeSectionNavigation';
@@ -40,7 +39,10 @@ export const HomePage: React.FC<HomePageProps> = ({
         onSelectProgram={onSelectProgram}
       />
 
-      <WelcomeSection onOpenApplyModal={() => onOpenApplyModal()} />
+      <WelcomeSection
+        onOpenApplyModal={() => onOpenApplyModal()}
+        onOpenCampusVisit={onOpenCampusVisit}
+      />
 
       <CampusesSection
         onOpenApplyModal={onOpenApplyModal}
@@ -57,8 +59,6 @@ export const HomePage: React.FC<HomePageProps> = ({
       />
 
       <NccNssSection />
-
-      <SuccessStories />
 
       <StudentLifeSection
         variant="home"

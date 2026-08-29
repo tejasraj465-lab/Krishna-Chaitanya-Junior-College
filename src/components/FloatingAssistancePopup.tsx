@@ -52,7 +52,7 @@ export const FloatingAssistancePopup: React.FC<FloatingAssistancePopupProps> = (
                   Need Admissions Help?
                 </h4>
                 <span className="bg-amber-100 text-[#0B3C91] text-[9px] sm:text-[10px] font-extrabold px-1 sm:px-1.5 py-0.5 rounded">
-                  2026-27
+                  2027-28
                 </span>
               </div>
               <p className="text-[9px] sm:text-[11px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">

@@ -7,7 +7,6 @@ export const HOME_SECTION_IDS = [
   'campuses',
   'facilities',
   'ncc',
-  'stories',
   'explore-kcjc',
   'leadership',
 ] as const;
@@ -24,6 +23,8 @@ const SECTION_ALIASES: Record<string, HomeSectionId> = {
   'life-at-kcjc': 'explore-kcjc',
   'why-us': 'why-choose',
   'why-choose-kcjc': 'why-choose',
+  /** Success stories section removed from homepage */
+  stories: 'explore-kcjc',
   /** Gallery is a dedicated page only — return near the previous home block */
   gallery: 'leadership',
 };

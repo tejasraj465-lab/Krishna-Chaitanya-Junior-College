@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
 import { MessageCircle, ArrowRight } from 'lucide-react';
+import { LegacyModal } from './LegacyModal';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -43,6 +44,8 @@ const VERIFIED_AFFILIATIONS = [
 ] as const;
 
 export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
+  const [showLegacyModal, setShowLegacyModal] = useState(false);
+
   return (
     <section id="hero" className="relative w-full overflow-hidden select-none bg-slate-900 scroll-mt-0">
       {/* Results label — above banner */}
@@ -125,19 +128,42 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
 
           {/* Trust statistics — compact on mobile, no horizontal scroll */}
           <div className="mt-3 sm:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 sm:gap-4">
-            {TRUST_STATS.map((stat) => (
-              <div
-                key={stat.id}
-                className="rounded-lg sm:rounded-2xl bg-white/10 border border-white/10 p-1.5 sm:p-4 backdrop-blur-sm shadow-lg text-center"
-              >
-                <p className="text-sm sm:text-2xl lg:text-3xl font-black text-[#FBBF24] font-serif leading-tight">
-                  {stat.value}
-                </p>
-                <p className="text-[10px] sm:text-xs text-blue-100 mt-0.5 font-semibold leading-snug line-clamp-2">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
+            {TRUST_STATS.map((stat) => {
+              const isLegacy = stat.id === 'legacy';
+              const cardClassName =
+                'rounded-lg sm:rounded-2xl bg-white/10 border border-white/10 p-1.5 sm:p-4 backdrop-blur-sm shadow-lg text-center';
+
+              if (isLegacy) {
+                return (
+                  <button
+                    key={stat.id}
+                    type="button"
+                    onClick={() => setShowLegacyModal(true)}
+                    className={`${cardClassName} cursor-pointer hover:bg-white/20 hover:border-[#F97316]/60 hover:shadow-orange-500/20 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316]`}
+                    aria-haspopup="dialog"
+                    aria-label="Open Our Legacy Since 1998"
+                  >
+                    <p className="text-sm sm:text-2xl lg:text-3xl font-black text-[#FBBF24] font-serif leading-tight">
+                      {stat.value}
+                    </p>
+                    <span className="mt-1 inline-flex items-center justify-center rounded-full bg-[#F97316] px-2.5 py-0.5 text-[10px] sm:text-xs font-bold text-white leading-none">
+                      {stat.label}
+                    </span>
+                  </button>
+                );
+              }
+
+              return (
+                <div key={stat.id} className={cardClassName}>
+                  <p className="text-sm sm:text-2xl lg:text-3xl font-black text-[#FBBF24] font-serif leading-tight">
+                    {stat.value}
+                  </p>
+                  <p className="text-[10px] sm:text-xs text-blue-100 mt-0.5 font-semibold leading-snug line-clamp-2">
+                    {stat.label}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           <div className="mt-4 sm:mt-6 border-t border-white/10 pt-4 sm:pt-6">
@@ -218,7 +244,14 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
           width: 24px;
           border-radius: 6px;
         }
-      `}</style>
+      `}      </style>
+
+      <LegacyModal
+        variant="story"
+        open={showLegacyModal}
+        onClose={() => setShowLegacyModal(false)}
+        onOpenApplyModal={onOpenApplyModal}
+      />
     </section>
   );
 };

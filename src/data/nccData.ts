@@ -1,5 +1,3 @@
-import { GALLERY_ITEMS } from './collegeData';
-
 export const NCC_HOME = {
   title: 'NCC at Krishna Chaitanya',
   subheading: 'Only private Intermediate college in Nellore with an accredited NCC Unit.',
@@ -69,17 +67,13 @@ export const NCC_EXPLORE = {
   ],
 
   galleryHeading: 'Gallery',
-  galleryNote: 'Only authentic NCC photographs from Krishna Chaitanya activities are displayed here.',
+  galleryNote: 'Authentic NCC photographs from Krishna Chaitanya camps, training, and cadet activities.',
   galleryCategories: [
-    'Parade',
-    'Uniform',
-    'Training',
-    'Camps',
     'Group Photo',
-    'Certificate Distribution',
-    'Independence Day',
-    'Republic Day',
+    'Camps',
+    'Training',
     'Drill Practice',
+    'Certificate Distribution',
   ] as const,
 
   achievementsHeading: 'Achievements',
@@ -96,17 +90,3 @@ export interface NccGalleryPhoto {
   image: string;
   caption?: string;
 }
-
-const isRealPhotoUrl = (url: string) =>
-  !url.includes('unsplash.com') && !url.includes('placeholder');
-
-/** Real NCC gallery photos only — add entries when management provides images */
-export const NCC_GALLERY_PHOTOS: NccGalleryPhoto[] = GALLERY_ITEMS.filter(
-  (item) => item.category === 'NCC' && isRealPhotoUrl(item.image)
-).map((item) => ({
-  id: item.id,
-  title: item.title,
-  category: 'Parade' as NccGalleryCategory,
-  image: item.image,
-  caption: item.caption,
-}));
