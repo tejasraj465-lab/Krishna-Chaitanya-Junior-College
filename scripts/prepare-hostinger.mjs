@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -18,5 +18,16 @@ mkdirSync(apiDest, { recursive: true });
 cpSync(join(hostingerDir, 'api', 'ai-guide.php'), join(apiDest, 'ai-guide.php'));
 cpSync(join(hostingerDir, 'api', 'gemini-config.example.php'), join(apiDest, 'gemini-config.example.php'));
 
+writeFileSync(
+  join(distDir, 'HOSTINGER-UPLOAD.txt'),
+  `Upload EVERY file in this folder into Hostinger public_html (not the folder itself).
+Turn on "Show hidden files" so .htaccess and .user.ini are uploaded.
+
+Then on the server copy api/gemini-config.example.php to api/gemini-config.php
+and paste your Gemini API key. See HOSTINGER.md in the project.
+`
+);
+
 console.log('Hostinger files copied into dist/');
-console.log('Upload the contents of dist/ to public_html.');
+console.log('Upload the CONTENTS of dist/ to Hostinger public_html.');
+console.log('See HOSTINGER.md for the full checklist.');

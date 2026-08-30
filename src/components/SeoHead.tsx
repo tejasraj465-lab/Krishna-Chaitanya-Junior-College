@@ -60,7 +60,9 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
     upsertMeta('name', 'twitter:description', metaContent);
 
     upsertLink('canonical', canonical);
-    upsertLink('sitemap', `${origin}/sitemap.xml`, { type: 'application/xml' });
+    upsertLink('sitemap', `${origin}/sitemap.xml`, { type: 'application/xml', title: 'Sitemap index' });
+    upsertLink('sitemap', `${origin}/sitemap-pages.xml`, { type: 'application/xml', title: 'Pages' });
+    upsertLink('sitemap', `${origin}/sitemap-images.xml`, { type: 'application/xml', title: 'Images' });
     FEED_LINKS.forEach((feed) => {
       upsertLink('alternate', `${origin}${feed.href}`, {
         type: 'application/rss+xml',

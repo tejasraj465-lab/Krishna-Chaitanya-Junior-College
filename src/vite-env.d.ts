@@ -2,6 +2,8 @@
 
 interface ImportMetaEnv {
   readonly VITE_SITE_URL?: string;
+  readonly VITE_GTM_ID?: string;
+  readonly VITE_GOOGLE_SITE_VERIFICATION?: string;
 }
 
 interface ImportMeta {

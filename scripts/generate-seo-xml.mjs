@@ -1,4 +1,4 @@
-import { writeFileSync, mkdirSync, copyFileSync, existsSync } from 'node:fs';
+import { writeFileSync, mkdirSync, copyFileSync, existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -6,6 +6,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const publicDir = join(root, 'public');
 const feedsDir = join(publicDir, 'feeds');
 const wellKnownDir = join(publicDir, '.well-known');
+const dataFile = join(root, 'src', 'data', 'collegeData.ts');
 
 const SITE_URL = (
   process.env.VITE_SITE_URL ||
@@ -57,6 +58,9 @@ const OVERVIEW_ITEMS = [
   { path: '/why-choose-kcjc', name: 'Why Choose KCJC', summary: 'Why families choose Krishna Chaitanya Junior College.' },
   { path: '/facilities', name: 'Facilities & Infrastructure', summary: 'Labs, hostels, transport, safety and student-support facilities.' },
   { path: '/gallery', name: 'Gallery', summary: 'Campus life, events, sports, NCC and academic moments.' },
+  { path: '/life-at-kcjc', name: 'Life at KCJC', summary: 'Student life, clubs, sports, NCC, NSS and campus events.' },
+  { path: '/courses', name: 'Courses', summary: 'MPC, BiPC, MEC, CEC and Long Term programmes.' },
+  { path: '/campuses', name: 'Campuses', summary: 'Day and residential campuses in Nellore and Buchireddypalem.' },
 ];
 
 function xmlEscape(value) {
@@ -73,20 +77,58 @@ function urlLoc(path) {
   return `${SITE_URL}${path}`;
 }
 
-function urlset(entries) {
-  const body = entries
+function sliceExport(source, exportName) {
+  const start = source.indexOf(`export const ${exportName}`);
+  if (start < 0) return '';
+  const next = source.indexOf('\nexport const ', start + 12);
+  return next < 0 ? source.slice(start) : source.slice(start, next);
+}
+
+function extractPairs(block, titleKey, imageKey) {
+  const items = [];
+  const titleRe = new RegExp(`${titleKey}:\\s*'((?:\\\\'|[^'])*)'`, 'g');
+  const imageRe = new RegExp(`${imageKey}:\\s*'((?:\\\\'|[^'])*)'`, 'g');
+  const titles = [...block.matchAll(titleRe)].map((m) => m[1]);
+  const images = [...block.matchAll(imageRe)].map((m) => m[1]);
+  const count = Math.min(titles.length, images.length);
+  for (let i = 0; i < count; i += 1) {
+    if (images[i]?.startsWith('http')) {
+      items.push({ title: titles[i], image: images[i] });
+    }
+  }
+  return items;
+}
+
+function imageTags(images) {
+  return images
     .map(
-      (entry) => `  <url>
+      (img) => `    <image:image>
+      <image:loc>${xmlEscape(img.image)}</image:loc>
+      <image:title>${xmlEscape(img.title)}</image:title>
+    </image:image>`
+    )
+    .join('\n');
+}
+
+function urlset(entries, { images = false } = {}) {
+  const xmlns = images
+    ? ` xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"`
+    : ` xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"`;
+
+  const body = entries
+    .map((entry) => {
+      const extra = entry.images?.length ? `\n${imageTags(entry.images)}` : '';
+      return `  <url>
     <loc>${xmlEscape(urlLoc(entry.path))}</loc>
     <lastmod>${LASTMOD}</lastmod>
     <changefreq>${entry.changefreq || 'weekly'}</changefreq>
-    <priority>${entry.priority || '0.7'}</priority>
-  </url>`
-    )
+    <priority>${entry.priority || '0.7'}</priority>${extra}
+  </url>`;
+    })
     .join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset${xmlns}>
 ${body}
 </urlset>
 `;
@@ -123,39 +165,29 @@ ${itemXml}
   };
 }
 
+function sitemapIndexEntry(path) {
+  return `  <sitemap>
+    <loc>${xmlEscape(`${SITE_URL}${path}`)}</loc>
+    <lastmod>${LASTMOD}</lastmod>
+  </sitemap>`;
+}
+
 mkdirSync(feedsDir, { recursive: true });
 mkdirSync(wellKnownDir, { recursive: true });
 
-const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${xmlEscape(`${SITE_URL}/overview.xml`)}</loc>
-    <lastmod>${LASTMOD}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${xmlEscape(`${SITE_URL}/campuses.xml`)}</loc>
-    <lastmod>${LASTMOD}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${xmlEscape(`${SITE_URL}/life-at-kcjc.xml`)}</loc>
-    <lastmod>${LASTMOD}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${xmlEscape(`${SITE_URL}/courses.xml`)}</loc>
-    <lastmod>${LASTMOD}</lastmod>
-  </sitemap>
-</sitemapindex>
-`;
+const source = existsSync(dataFile) ? readFileSync(dataFile, 'utf8') : '';
+const galleryImages = extractPairs(sliceExport(source, 'GALLERY_ITEMS'), 'title', 'image');
+const campusImages = extractPairs(sliceExport(source, 'CAMPUSES'), 'name', 'image');
+const facilityImages = extractPairs(sliceExport(source, 'FACILITIES'), 'title', 'image');
 
-const overviewSitemap = urlset([
+const allPageEntries = [
   { path: '/', changefreq: 'daily', priority: '1.0' },
   { path: '/overview', changefreq: 'weekly', priority: '0.9' },
   { path: '/why-choose-kcjc', changefreq: 'weekly', priority: '0.8' },
-  { path: '/facilities', changefreq: 'weekly', priority: '0.7' },
-  { path: '/gallery', changefreq: 'weekly', priority: '0.6' },
-]);
-
-const campusesSitemap = urlset([
+  { path: '/facilities', changefreq: 'weekly', priority: '0.8' },
+  { path: '/gallery', changefreq: 'weekly', priority: '0.8' },
+  { path: '/life-at-kcjc', changefreq: 'weekly', priority: '0.8' },
+  { path: '/courses', changefreq: 'weekly', priority: '0.9' },
   { path: '/campuses', changefreq: 'weekly', priority: '0.9' },
   { path: '/campuses?category=Day', changefreq: 'weekly', priority: '0.6' },
   { path: '/campuses?category=Residential', changefreq: 'weekly', priority: '0.6' },
@@ -164,15 +196,74 @@ const campusesSitemap = urlset([
     changefreq: 'weekly',
     priority: '0.8',
   })),
+];
+
+const overviewSitemap = urlset([
+  { path: '/', changefreq: 'daily', priority: '1.0' },
+  { path: '/overview', changefreq: 'weekly', priority: '0.9' },
+  { path: '/why-choose-kcjc', changefreq: 'weekly', priority: '0.8' },
 ]);
 
-const lifeSitemap = urlset([
-  { path: '/life-at-kcjc', changefreq: 'weekly', priority: '0.9' },
-]);
+const facilitiesSitemap = urlset(
+  [{ path: '/facilities', changefreq: 'weekly', priority: '0.8', images: facilityImages }],
+  { images: true }
+);
 
-const coursesSitemap = urlset([
-  { path: '/courses', changefreq: 'weekly', priority: '0.9' },
-]);
+const gallerySitemap = urlset(
+  [{ path: '/gallery', changefreq: 'weekly', priority: '0.8', images: galleryImages }],
+  { images: true }
+);
+
+const campusesSitemap = urlset(
+  [
+    { path: '/campuses', changefreq: 'weekly', priority: '0.9' },
+    { path: '/campuses?category=Day', changefreq: 'weekly', priority: '0.6' },
+    { path: '/campuses?category=Residential', changefreq: 'weekly', priority: '0.6' },
+    ...CAMPUSES.map((campus, index) => ({
+      path: `/campuses/${campus.id}`,
+      changefreq: 'weekly',
+      priority: '0.8',
+      images: campusImages[index] ? [campusImages[index]] : [],
+    })),
+  ],
+  { images: true }
+);
+
+const lifeSitemap = urlset([{ path: '/life-at-kcjc', changefreq: 'weekly', priority: '0.8' }]);
+const coursesSitemap = urlset([{ path: '/courses', changefreq: 'weekly', priority: '0.9' }]);
+
+const pagesSitemap = urlset(allPageEntries);
+
+const imagesSitemap = urlset(
+  [
+    { path: '/gallery', changefreq: 'weekly', priority: '0.8', images: galleryImages },
+    { path: '/facilities', changefreq: 'weekly', priority: '0.7', images: facilityImages },
+    ...CAMPUSES.map((campus, index) => ({
+      path: `/campuses/${campus.id}`,
+      changefreq: 'weekly',
+      priority: '0.7',
+      images: campusImages[index] ? [campusImages[index]] : [],
+    })),
+  ].filter((entry) => entry.images?.length),
+  { images: true }
+);
+
+const childSitemaps = [
+  '/sitemap-pages.xml',
+  '/sitemap-images.xml',
+  '/overview.xml',
+  '/facilities.xml',
+  '/gallery.xml',
+  '/campuses.xml',
+  '/life-at-kcjc.xml',
+  '/courses.xml',
+];
+
+const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${childSitemaps.map(sitemapIndexEntry).join('\n')}
+</sitemapindex>
+`;
 
 const overviewFeed = rss({
   file: 'overview.xml',
@@ -236,7 +327,11 @@ const coursesFeed = rss({
 });
 
 writeFileSync(join(publicDir, 'sitemap.xml'), sitemapIndex);
+writeFileSync(join(publicDir, 'sitemap-pages.xml'), pagesSitemap);
+writeFileSync(join(publicDir, 'sitemap-images.xml'), imagesSitemap);
 writeFileSync(join(publicDir, 'overview.xml'), overviewSitemap);
+writeFileSync(join(publicDir, 'facilities.xml'), facilitiesSitemap);
+writeFileSync(join(publicDir, 'gallery.xml'), gallerySitemap);
 writeFileSync(join(publicDir, 'campuses.xml'), campusesSitemap);
 writeFileSync(join(publicDir, 'life-at-kcjc.xml'), lifeSitemap);
 writeFileSync(join(publicDir, 'courses.xml'), coursesSitemap);
@@ -250,14 +345,19 @@ writeFileSync(
   `User-agent: *
 Allow: /
 
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
 Disallow: /api/
 Disallow: /gemini-config.php
 
+# Submit this URL in Google Search Console → Sitemaps
 Sitemap: ${SITE_URL}/sitemap.xml
-Sitemap: ${SITE_URL}/overview.xml
-Sitemap: ${SITE_URL}/campuses.xml
-Sitemap: ${SITE_URL}/life-at-kcjc.xml
-Sitemap: ${SITE_URL}/courses.xml
+Sitemap: ${SITE_URL}/sitemap-pages.xml
+Sitemap: ${SITE_URL}/sitemap-images.xml
 `
 );
 
@@ -276,3 +376,5 @@ if (existsSync(logoSrc)) {
 }
 
 console.log(`SEO XML generated for ${SITE_URL}`);
+console.log(`Pages: ${allPageEntries.length} | Gallery images: ${galleryImages.length} | Campus images: ${campusImages.length} | Facility images: ${facilityImages.length}`);
+console.log(`Google Search Console: submit ${SITE_URL}/sitemap.xml`);

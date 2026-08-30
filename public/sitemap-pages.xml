@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/overview</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/why-choose-kcjc</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/facilities</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/gallery</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/life-at-kcjc</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/courses</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses</loc>
     <lastmod>2026-08-30</lastmod>
@@ -24,119 +65,71 @@
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/prabanjana.jpeg?updatedAt=1786795637864</image:loc>
-      <image:title>Prabhanjana Campus (Girls)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c2</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/vasista.jpeg?updatedAt=1786795637958</image:loc>
-      <image:title>Vasista Campus (Boys)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c3</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/stonehouse%20pet%20.jpeg?updatedAt=1786795638164</image:loc>
-      <image:title>Sarvagna Campus, Stonehousepeta</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c4</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/durghamitta%20girls.jpeg?updatedAt=1786795636835</image:loc>
-      <image:title>Durgahmitta Campus (Girls)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c5</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120</image:loc>
-      <image:title>Durgahmitta Campus (Boys)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c6</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542</image:loc>
-      <image:title>Einstein Campus (Girls AC)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c7</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/ac%20clg%20boys.jpeg?updatedAt=1787981614290</image:loc>
-      <image:title>Einstein Campus (Boys AC)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c8</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/DSC_0284.JPG.jpeg</image:loc>
-      <image:title>Buchireddy Palem Campus</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c9</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542</image:loc>
-      <image:title>Einstein Campus (Girls AC)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c10</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/boys%20hostel.jpeg?updatedAt=1786795637950</image:loc>
-      <image:title>Chandrahasa Campus (Boys AC)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c11</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/gomathy%20.jpeg?updatedAt=1787982294308</image:loc>
-      <image:title>Gomathy Campus (Girls)</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://krishna-chaitanya-junior-college.vercel.app/campuses/c12</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120</image:loc>
-      <image:title>Durgahmitta Campus (Boys)</image:title>
-    </image:image>
   </url>
 </urlset>

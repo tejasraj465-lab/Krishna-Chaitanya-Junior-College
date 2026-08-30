@@ -1,4 +1,5 @@
 import { Course, Campus, Ranker, Facility, GalleryItem, SuccessReview, Testimonial } from '../types';
+import { SITE_URL } from '../config/site';
 
 export const COLLEGE_INFO = {
   name: "Krishna Chaitanya Junior College",
@@ -9,7 +10,7 @@ export const COLLEGE_INFO = {
   phoneSecondary: "+91 92470 33334",
   whatsappNumber: "919247033334",
   email: "admissions@kcjc.edu.in",
-  website: "https://krishna-chaitanya-junior-college.vercel.app",
+  website: SITE_URL,
   logo: "https://ik.imagekit.io/tejasraju/kcjc%20logo.jpg",
   admissionExam: "KCJC Integrated Counseling & Aptitude Assessment",
   headquarters: "Nellore, Andhra Pradesh",

@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect, useLayoutEffect, useState } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { SeoHead } from './components/SeoHead';
+import { GoogleManager } from './components/GoogleManager';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { OpeningAnimation } from './components/OpeningAnimation';
 import { Navbar } from './components/Navbar';
@@ -417,6 +418,7 @@ export default function App() {
       <OpeningAnimation />
       <ScrollProgressBar />
       <SeoHead title={seoTitle} description={seoDescription} />
+      <GoogleManager />
 
       <Navbar
         activeSection={activeSection}

@@ -38,7 +38,7 @@ FileETag None
   Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
   Header always set X-Permitted-Cross-Domain-Policies "none"
   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
-  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://wa.me; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://ik.imagekit.io https://images.unsplash.com https://ai.google.dev; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://generativelanguage.googleapis.com; frame-src https://www.google.com; worker-src 'none'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://wa.me; script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://ik.imagekit.io https://images.unsplash.com https://ai.google.dev https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.google.co.in; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.google.com https://generativelanguage.googleapis.com; frame-src https://www.google.com https://www.googletagmanager.com; worker-src 'none'; upgrade-insecure-requests"
   Header unset X-Powered-By
   Header unset Server
 </IfModule>
@@ -51,6 +51,7 @@ FileETag None
 <FilesMatch "\.(xml)$">
   <IfModule mod_headers.c>
     Header set Cache-Control "public, max-age=3600"
+    Header set Content-Type "application/xml; charset=UTF-8"
   </IfModule>
 </FilesMatch>
 

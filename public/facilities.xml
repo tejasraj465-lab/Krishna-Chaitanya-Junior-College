@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://krishna-chaitanya-junior-college.vercel.app/facilities</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://ik.imagekit.io/tejasraju/4k%20class%20room.jpeg?updatedAt=1786795637415</image:loc>
+      <image:title>4K Smart Interactive Classrooms</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Advanced Physics Laboratory</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Hi-Tech Chemistry Laboratory</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Advanced Biology &amp; Specimen Lab</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Computer Science &amp; AI Lab</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Digital Library &amp; Reading Lounge</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Executive AC Hostel &amp; Residential Blocks</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>AC Bus Transport Network</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Sports Arena &amp; Fitness Gym</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>24/7 Medical Care &amp; Ambulance</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1567521464027-f127ff144326?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Multi-Cuisine Hygienic Cafeteria</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>360° High-Def CCTV &amp; AI Security</image:title>
+    </image:image>
+  </url>
+</urlset>
