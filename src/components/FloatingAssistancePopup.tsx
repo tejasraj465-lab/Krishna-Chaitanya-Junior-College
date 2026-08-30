@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Bot, MessageCircle, Phone, X, Sparkles, ChevronRight } from 'lucide-react';
+import { MessageCircle, X, Sparkles, ChevronRight } from 'lucide-react';
 import { ADMISSION_YEAR, COLLEGE_INFO } from '../data/collegeData';
+import { CuteRobotIcon } from './CuteRobotIcon';
 
 interface FloatingAssistancePopupProps {
   onOpenAIGuide: () => void;
@@ -41,8 +42,8 @@ export const FloatingAssistancePopup: React.FC<FloatingAssistancePopupProps> = (
         <div className="flex items-start justify-between gap-1.5 sm:gap-2 pb-1.5 sm:pb-2 border-b border-slate-100">
           <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
             <div className="relative shrink-0">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#0B3C91] to-indigo-900 text-white flex items-center justify-center font-bold shadow-md">
-                <Bot className="w-4 h-4 sm:w-6 sm:h-6 text-[#FBBF24]" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#0866FF] to-[#0052CC] flex items-center justify-center shadow-md">
+                <CuteRobotIcon className="w-5 h-5 sm:w-7 sm:h-7" />
               </div>
               <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 rounded-full bg-emerald-500 border-2 border-white animate-pulse" />
             </div>

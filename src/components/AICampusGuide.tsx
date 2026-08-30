@@ -1,16 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Bot, 
-  X, 
-  Send, 
-  Sparkles, 
-  MessageCircle, 
-  ArrowDown, 
-  Compass, 
-  User, 
-  Minimize2,
-  RefreshCw
+import {
+  X,
+  Send,
+  MessageCircle,
+  ArrowDown,
 } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
@@ -53,7 +47,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
     {
       id: 'm1',
       sender: 'ai',
-      text: `Welcome to ${COLLEGE_INFO.name}, Nellore!\n\nI'm Campus Guide AI — trained on our complete website for mobile and desktop, including courses, all ${CAMPUSES.length} campuses, facilities, admissions, NCC, gallery, and student life.\n\nLanguages: English • తెలుగు • हिन्दी\n\nTap 📋 Menu or ask anything below.`,
+      text: `Welcome to ${COLLEGE_INFO.name}, Nellore!\n\nI'm Campus Guide AI — trained on the live website: all ${CAMPUSES.length} campuses, courses, facilities, NCC, gallery photos (sports, annual day, achievements), admissions, and student life.\n\nFooter campus names open that campus overview. Directions stay on the campus page.\n\nLanguages: English • తెలుగు • हिन्दी\n\nTap 📋 Menu or ask anything below.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       quickReplies: MAIN_MENU_OPTIONS
     }
@@ -358,8 +352,8 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
             {/* Header with Meta AI Blue Gradient */}
             <div className="bg-gradient-to-r from-[#0866FF] via-[#0064E0] to-[#0052CC] text-white p-3.5 sm:p-4 flex items-center justify-between shadow-md">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-white/15 p-1 flex items-center justify-center shadow-md shrink-0 border border-white/30 backdrop-blur-md">
-                  <CuteRobotIcon className="w-8 h-8" />
+                <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center shadow-md shrink-0 border border-white/25">
+                  <CuteRobotIcon className="w-7 h-7" />
                 </div>
                 <div>
                   <h3 className="font-serif font-bold text-xs sm:text-sm text-white flex items-center gap-1.5">

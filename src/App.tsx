@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useLayoutEffect, useState } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { SeoHead } from './components/SeoHead';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
@@ -7,29 +7,36 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { AdmissionModalBottomSheet } from './components/AdmissionModalBottomSheet';
-import { AICampusGuide } from './components/AICampusGuide';
-import { CampusVisitModal } from './components/CampusVisitModal';
-import { CourseDetailModal } from './components/CourseDetailModal';
 import { FloatingAssistancePopup } from './components/FloatingAssistancePopup';
 import { AIBotWidgetFloating } from './components/AIBotWidgetFloating';
 import { HomePage } from './pages/HomePage';
-import { FacilitiesPage } from './pages/FacilitiesPage';
-import { GalleryPage } from './pages/GalleryPage';
-import { LifeAtKcjcPage } from './pages/LifeAtKcjcPage';
-import { CoursesPage } from './pages/CoursesPage';
-import { WhyChooseKcjcPage } from './pages/WhyChooseKcjcPage';
-import { CampusesPage, CampusCategoryFilter } from './pages/CampusesPage';
-import { CampusDetailPage } from './pages/CampusDetailPage';
 import { CAMPUSES } from './data/collegeData';
+import type { CampusCategoryFilter } from './pages/CampusesPage';
 import {
   HOME_SECTION_IDS,
   clearHomeReturnSection,
-  getHomeReturnSection,
   normalizeHomeSectionId,
   scrollToHomeSectionWhenReady,
   setHomeReturnSection,
   type HomeSectionId,
 } from './utils/homeSectionNavigation';
+
+const FacilitiesPage = lazy(() => import('./pages/FacilitiesPage').then((m) => ({ default: m.FacilitiesPage })));
+const GalleryPage = lazy(() => import('./pages/GalleryPage').then((m) => ({ default: m.GalleryPage })));
+const LifeAtKcjcPage = lazy(() => import('./pages/LifeAtKcjcPage').then((m) => ({ default: m.LifeAtKcjcPage })));
+const CoursesPage = lazy(() => import('./pages/CoursesPage').then((m) => ({ default: m.CoursesPage })));
+const WhyChooseKcjcPage = lazy(() => import('./pages/WhyChooseKcjcPage').then((m) => ({ default: m.WhyChooseKcjcPage })));
+const CampusesPage = lazy(() => import('./pages/CampusesPage').then((m) => ({ default: m.CampusesPage })));
+const CampusDetailPage = lazy(() => import('./pages/CampusDetailPage').then((m) => ({ default: m.CampusDetailPage })));
+const AICampusGuide = lazy(() => import('./components/AICampusGuide').then((m) => ({ default: m.AICampusGuide })));
+const CampusVisitModal = lazy(() => import('./components/CampusVisitModal').then((m) => ({ default: m.CampusVisitModal })));
+const CourseDetailModal = lazy(() => import('./components/CourseDetailModal').then((m) => ({ default: m.CourseDetailModal })));
+
+const PageFallback = () => (
+  <div className="min-h-[50vh] flex items-center justify-center text-sm font-semibold text-slate-400">
+    Loading…
+  </div>
+);
 
 type RouteKey = 'home' | 'facilities' | 'gallery' | 'life-at-kcjc' | 'courses' | 'why-choose-kcjc' | 'campuses' | 'campus-detail';
 
@@ -389,22 +396,8 @@ export default function App() {
     setActiveSection(normalized);
   };
 
-  /** Smart Home / logo: return to stored originating section, else Hero. */
+  /** Logo, breadcrumb Home, and footer Home always return to the homepage top. */
   const navigateHome = () => {
-    if (routeKey === 'home') {
-      // Already on Home — explicit Hero / back-to-top.
-      clearHomeReturnSection();
-      navigateToSection('hero');
-      return;
-    }
-
-    const returnSection = getHomeReturnSection();
-    if (returnSection && returnSection !== 'hero') {
-      clearHomeReturnSection();
-      navigateToSection(returnSection);
-      return;
-    }
-
     clearHomeReturnSection();
     navigateToSection('hero');
   };
@@ -447,60 +440,64 @@ export default function App() {
         />
       )}
 
-      {routeKey === 'facilities' && (
-        <FacilitiesPage onNavigateHome={navigateHome} />
-      )}
+      <Suspense fallback={<PageFallback />}>
+        {routeKey === 'facilities' && (
+          <FacilitiesPage onNavigateHome={navigateHome} />
+        )}
 
-      {routeKey === 'gallery' && (
-        <GalleryPage onNavigateHome={navigateHome} />
-      )}
+        {routeKey === 'gallery' && (
+          <GalleryPage onNavigateHome={navigateHome} />
+        )}
 
-      {routeKey === 'life-at-kcjc' && (
-        <LifeAtKcjcPage
-          onNavigateHome={navigateHome}
-          onOpenApplyModal={() => handleOpenApplyModal()}
-          onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
-        />
-      )}
+        {routeKey === 'life-at-kcjc' && (
+          <LifeAtKcjcPage
+            onNavigateHome={navigateHome}
+            onOpenApplyModal={() => handleOpenApplyModal()}
+            onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
+          />
+        )}
 
-      {routeKey === 'courses' && (
-        <CoursesPage
-          onNavigateHome={navigateHome}
-          onOpenApplyModal={handleOpenApplyModal}
-          onSelectProgram={(programId) => setSelectedProgramId(programId)}
-        />
-      )}
+        {routeKey === 'courses' && (
+          <CoursesPage
+            onNavigateHome={navigateHome}
+            onOpenApplyModal={handleOpenApplyModal}
+            onSelectProgram={(programId) => setSelectedProgramId(programId)}
+          />
+        )}
 
-      {routeKey === 'why-choose-kcjc' && (
-        <WhyChooseKcjcPage
-          onNavigateHome={navigateHome}
-          onOpenApplyModal={handleOpenApplyModal}
-          onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
-        />
-      )}
+        {routeKey === 'why-choose-kcjc' && (
+          <WhyChooseKcjcPage
+            onNavigateHome={navigateHome}
+            onOpenApplyModal={handleOpenApplyModal}
+            onOpenCampusVisit={() => setIsCampusVisitOpen(true)}
+          />
+        )}
 
-      {routeKey === 'campuses' && (
-        <CampusesPage
-          onNavigateHome={navigateHome}
-          onNavigateToCampus={navigateToCampus}
-          onOpenApplyModal={handleOpenApplyModal}
-          categoryFilter={campusCategory}
-          onCategoryChange={handleCampusCategoryChange}
-        />
-      )}
+        {routeKey === 'campuses' && (
+          <CampusesPage
+            onNavigateHome={navigateHome}
+            onNavigateToCampus={navigateToCampus}
+            onOpenApplyModal={handleOpenApplyModal}
+            categoryFilter={campusCategory}
+            onCategoryChange={handleCampusCategoryChange}
+          />
+        )}
 
-      {routeKey === 'campus-detail' && (
-        <CampusDetailPage
-          campus={currentCampus}
-          onNavigateHome={navigateHome}
-          onNavigateToCampuses={() => navigateToPath('/campuses', { fromSection: 'campuses' })}
-          onOpenApplyModal={handleOpenApplyModal}
-        />
-      )}
+        {routeKey === 'campus-detail' && (
+          <CampusDetailPage
+            campus={currentCampus}
+            onNavigateHome={navigateHome}
+            onNavigateToCampuses={() => navigateToPath('/campuses', { fromSection: 'campuses' })}
+            onOpenApplyModal={handleOpenApplyModal}
+          />
+        )}
+      </Suspense>
 
       <Footer
         onNavigateHome={navigateHome}
         onNavigateToSection={navigateToSection}
+        onNavigateToCampus={navigateToCampus}
+        onNavigateToCampuses={() => navigateToPath('/campuses', { fromSection: 'campuses' })}
       />
 
       <FloatingAssistancePopup
@@ -526,30 +523,40 @@ export default function App() {
         preSelectedCampus={applyCampus}
       />
 
-      <AICampusGuide
-        isOpen={isAIGuideOpen}
-        onClose={() => setIsAIGuideOpen(false)}
-        onOpenApplyModal={() => {
-          setIsAIGuideOpen(false);
-          handleOpenApplyModal();
-        }}
-        onNavigateToSection={navigateToSection}
-        onNavigateToPath={navigateToPath}
-      />
+      {isAIGuideOpen && (
+        <Suspense fallback={null}>
+          <AICampusGuide
+            isOpen={isAIGuideOpen}
+            onClose={() => setIsAIGuideOpen(false)}
+            onOpenApplyModal={() => {
+              setIsAIGuideOpen(false);
+              handleOpenApplyModal();
+            }}
+            onNavigateToSection={navigateToSection}
+            onNavigateToPath={navigateToPath}
+          />
+        </Suspense>
+      )}
 
-      <CampusVisitModal
-        isOpen={isCampusVisitOpen}
-        onClose={() => setIsCampusVisitOpen(false)}
-      />
+      {isCampusVisitOpen && (
+        <Suspense fallback={null}>
+          <CampusVisitModal
+            isOpen={isCampusVisitOpen}
+            onClose={() => setIsCampusVisitOpen(false)}
+          />
+        </Suspense>
+      )}
 
       <AnimatePresence mode="wait">
         {selectedProgramId && (
-          <CourseDetailModal
-            key={selectedProgramId}
-            programId={selectedProgramId}
-            onClose={() => setSelectedProgramId(null)}
-            onApplyForProgram={(stream) => handleOpenApplyModal(stream)}
-          />
+          <Suspense fallback={null}>
+            <CourseDetailModal
+              key={selectedProgramId}
+              programId={selectedProgramId}
+              onClose={() => setSelectedProgramId(null)}
+              onApplyForProgram={(stream) => handleOpenApplyModal(stream)}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
     </div>

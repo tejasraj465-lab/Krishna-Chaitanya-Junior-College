@@ -25,6 +25,7 @@ import { FACILITIES } from '../data/collegeData';
 import { Facility } from '../types';
 import { Container, SectionHeader, GlassCard, Button } from './ui';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { imageKitSrc } from '../utils/images';
 
 interface FacilitiesSectionProps {
   variant?: 'home' | 'page';
@@ -118,10 +119,11 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
                 >
                   <div className="relative h-60 overflow-hidden">
                     <img
-                      src={facility.image}
+                      src={imageKitSrc(facility.image, 720)}
                       alt={facility.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading={idx === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
                       referrerPolicy="no-referrer"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -295,10 +297,11 @@ const FacilityDetailModal: React.FC<FacilityDetailModalProps> = ({
 
           <div className="relative h-44 sm:h-56">
             <img
-              src={facility.image}
+              src={imageKitSrc(facility.image, 1200)}
               alt={facility.title}
               className="w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B3C91] via-[#0B3C91]/40 to-transparent" />

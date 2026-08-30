@@ -2,19 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Phone, 
   MessageCircle, 
-  GraduationCap, 
   Menu, 
   X, 
   Sparkles, 
   MapPin,
   ChevronRight,
   ChevronDown,
-  ShieldCheck,
   BookOpen
 } from 'lucide-react';
 import { ADMISSION_YEAR, COLLEGE_INFO, toTelHref } from '../data/collegeData';
 import { COURSE_CATEGORIES } from '../data/courseDetailsData';
-import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { imageKitSrc } from '../utils/images';
 
 interface NavbarProps {
   activeSection?: string;
@@ -41,12 +39,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [coursesDropdownOpen, setCoursesDropdownOpen] = useState(false);
 
-  useBodyScrollLock(mobileMenuOpen);
   const [mobileCoursesOpen, setMobileCoursesOpen] = useState(false);
-  const [internalActiveSection, setInternalActiveSection] = useState<string>('why-choose');
+  const [internalActiveSection, setInternalActiveSection] = useState<string>('hero');
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const coursesCloseTimer = useRef<number | null>(null);
 
   const currentActiveSection = activeSection || internalActiveSection;
+
+  useEffect(() => {
+    return () => {
+      if (coursesCloseTimer.current) window.clearTimeout(coursesCloseTimer.current);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -121,9 +125,20 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'Gallery', href: '/gallery', id: 'gallery', type: 'route' as const, fromSection: 'leadership' },
   ];
 
+  const openCoursesMenu = () => {
+    if (coursesCloseTimer.current) window.clearTimeout(coursesCloseTimer.current);
+    setCoursesDropdownOpen(true);
+  };
+
+  const closeCoursesMenuSoon = () => {
+    if (coursesCloseTimer.current) window.clearTimeout(coursesCloseTimer.current);
+    coursesCloseTimer.current = window.setTimeout(() => setCoursesDropdownOpen(false), 180);
+  };
+
   const handleNavClick = (href: string, fromSection?: string) => {
     setMobileMenuOpen(false);
     setCoursesDropdownOpen(false);
+    setMobileCoursesOpen(false);
 
     if (href === '/' || href === '#home') {
       if (onNavigateHome) {
@@ -248,7 +263,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             : 'bg-white/95 backdrop-blur-sm py-2 sm:py-2.5 text-slate-900 border-slate-100'
         }`}
       >
-        <div className="max-w-[1500px] mx-auto px-3 sm:px-6 lg:px-10 grid grid-cols-[minmax(0,1fr)_auto] xl:flex xl:items-center xl:justify-between gap-2 items-center overflow-visible">
+        <div className="max-w-[1500px] mx-auto px-3 sm:px-6 lg:px-10 grid grid-cols-[minmax(0,1fr)_auto] lg:flex lg:items-center lg:justify-between gap-2 items-center overflow-visible">
           {/* Logo & Brand Info */}
           <a 
             href="/" 
@@ -264,8 +279,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             title="Go to Home"
           >
             <img 
-              src={COLLEGE_INFO.logo} 
-              alt="Sri Krishna Chaitanya Educational Institutions Logo" 
+              src={imageKitSrc(COLLEGE_INFO.logo, 96)} 
+              alt="Sri Krishna Chaitanya Educational Institutions Logo"
+              width={44}
+              height={44}
+              decoding="async"
+              fetchPriority="high"
               className="w-9 h-9 sm:w-11 sm:h-11 object-contain transform group-hover:scale-105 transition-transform shrink-0 drop-shadow-sm" 
             />
             <div className="min-w-0 overflow-hidden">
@@ -279,7 +298,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </a>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden xl:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-semibold shrink-0 font-sans overflow-visible">
+          <div className="hidden lg:flex items-center gap-1 lg:gap-1.5 xl:gap-2 text-xs xl:text-sm font-semibold shrink-0 font-sans overflow-visible">
             <button
               onClick={() => handleNavClick('#why-choose')}
               className={`transition-all py-1.5 cursor-pointer whitespace-nowrap px-2.5 rounded-lg font-semibold border-b-2 ${
@@ -295,8 +314,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div
               className="relative overflow-visible"
               ref={dropdownRef}
-              onMouseEnter={() => setCoursesDropdownOpen(true)}
-              onMouseLeave={() => setCoursesDropdownOpen(false)}
+              onMouseEnter={openCoursesMenu}
+              onMouseLeave={closeCoursesMenuSoon}
             >
               <button
                 type="button"
@@ -372,7 +391,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {navLinks
-              .filter(l => l.label !== 'Overview' && !['Leadership'].includes(l.label))
+              .filter((link) => link.label !== 'Overview')
               .map((link) => {
               const isActive = currentActiveSection === link.id;
               return (
@@ -392,7 +411,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Desktop Right Actions */}
-          <div className="hidden xl:flex items-center gap-2 shrink-0">
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
             <button
               onClick={() => onOpenApplyModal()}
               className="bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold text-xs px-4 py-2 rounded-xl shadow-md hover:shadow-orange-500/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap"
@@ -403,7 +422,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Controls */}
-          <div className="flex xl:hidden items-center gap-1.5 shrink-0">
+          <div className="flex lg:hidden items-center gap-1.5 shrink-0">
             <button
               onClick={() => onOpenApplyModal()}
               className="bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold text-[10px] sm:text-xs px-2.5 sm:px-3.5 py-2 sm:py-2.5 min-h-[40px] sm:min-h-[44px] rounded-lg sm:rounded-xl shadow-sm transition-all flex items-center justify-center gap-0.5 sm:gap-1 cursor-pointer uppercase tracking-wide shrink-0 active:scale-95"
@@ -424,7 +443,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-white border-b-2 border-[#F97316] text-slate-800 px-4 py-4 space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto animate-fadeIn divide-y divide-slate-100">
+        <div className="lg:hidden bg-white border-b-2 border-[#F97316] text-slate-800 px-4 py-4 space-y-4 shadow-2xl max-h-[min(85vh,calc(100dvh-6rem))] overflow-y-auto overscroll-contain animate-fadeIn divide-y divide-slate-100">
           {/* Quick Contact Bar */}
           <div className="pb-1 space-y-2">
             <div className="grid grid-cols-2 gap-2">

@@ -16,6 +16,8 @@ import { COLLEGE_INFO, COURSES, CAMPUSES, toTelHref } from '../data/collegeData'
 interface FooterProps {
   onNavigateHome?: () => void;
   onNavigateToSection?: (sectionId: string) => void;
+  onNavigateToCampus?: (campusId: string) => void;
+  onNavigateToCampuses?: () => void;
 }
 
 const CAMPUS_NAME_PREFIX = /^Krishna Chaitanya Junior College – /;
@@ -28,7 +30,12 @@ const FooterHeading: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   </h3>
 );
 
-export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSection }) => {
+export const Footer: React.FC<FooterProps> = ({
+  onNavigateHome,
+  onNavigateToSection,
+  onNavigateToCampus,
+  onNavigateToCampuses,
+}) => {
   const { dayCampuses, residentialCampuses } = useMemo(() => {
     const day = CAMPUSES.filter((campus) => campus.category === 'Day');
     const residential = CAMPUSES.filter((campus) => campus.category === 'Residential');
@@ -38,12 +45,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSect
   const renderCampusLink = (campus: (typeof CAMPUSES)[number]) => (
     <a
       key={campus.id}
-      href={campus.googleMapUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={`/campuses/${campus.id}`}
+      onClick={(e) => {
+        if (!onNavigateToCampus) return;
+        e.preventDefault();
+        onNavigateToCampus(campus.id);
+      }}
       className="group flex items-start gap-2.5 rounded-xl border border-blue-900/50 bg-blue-950/30 px-3 py-2.5 hover:border-[#FBBF24]/40 hover:bg-blue-900/40 transition-colors"
     >
-      <MapPin className="w-3.5 h-3.5 text-[#F97316] shrink-0 mt-0.5 group-hover:text-[#FBBF24] transition-colors" />
+      <Building2 className="w-3.5 h-3.5 text-[#F97316] shrink-0 mt-0.5 group-hover:text-[#FBBF24] transition-colors" />
       <span className="min-w-0">
         <span className="block text-xs font-semibold text-slate-200 leading-snug group-hover:text-white transition-colors">
           {getCampusDisplayName(campus.name)}
@@ -200,19 +210,33 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSect
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
             <div>
               <FooterHeading>
-                <span className="inline-flex items-center gap-2">
+                <a
+                  href="/campuses"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateToCampuses?.();
+                  }}
+                  className="inline-flex items-center gap-2 hover:text-[#FBBF24] transition-colors"
+                >
                   <Building2 className="w-3.5 h-3.5 text-[#FBBF24]" />
                   Our Campuses
-                </span>
+                </a>
               </FooterHeading>
               <p className="text-xs text-slate-500 max-w-xl -mt-1">
                 Krishna Chaitanya Junior College — {CAMPUSES.length} campuses across Nellore and
                 Buchireddypalem.
               </p>
             </div>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 shrink-0">
+            <a
+              href="/campuses"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateToCampuses?.();
+              }}
+              className="text-[11px] font-bold uppercase tracking-wider text-slate-500 shrink-0 hover:text-[#FBBF24] transition-colors"
+            >
               {dayCampuses.length} Day · {residentialCampuses.length} Residential
-            </p>
+            </a>
           </div>
 
           <div className="space-y-8">

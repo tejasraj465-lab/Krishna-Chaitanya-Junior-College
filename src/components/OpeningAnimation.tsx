@@ -10,7 +10,13 @@ interface OpeningAnimationProps {
 export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [statusIndex, setStatusIndex] = useState(0);
-  const [isDone, setIsDone] = useState(false);
+  const [isDone, setIsDone] = useState(() => {
+    try {
+      return sessionStorage.getItem('kcjc:splashSeen') === '1';
+    } catch {
+      return false;
+    }
+  });
 
   const statusMessages = [
     'Initialising Campus Gateway...',
@@ -20,9 +26,20 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
   ];
 
   useEffect(() => {
-    // Time-based progress counter guaranteed to run for at least 1.5 seconds (1500ms)
+    if (isDone) return;
+
     const startTime = Date.now();
-    const totalDuration = 1500; // 1.5 seconds
+    const totalDuration = 800;
+
+    const finish = () => {
+      try {
+        sessionStorage.setItem('kcjc:splashSeen', '1');
+      } catch {
+        // ignore
+      }
+      setIsDone(true);
+      if (onComplete) onComplete();
+    };
 
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
@@ -36,17 +53,19 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
 
       if (currentProgress >= 100) {
         clearInterval(interval);
-        setTimeout(() => {
-          setIsDone(true);
-          if (onComplete) onComplete();
-        }, 300);
+        window.setTimeout(finish, 120);
       }
-    }, 30);
+    }, 50);
 
     return () => clearInterval(interval);
-  }, [onComplete]);
+  }, [isDone, onComplete]);
 
   const handleSkip = () => {
+    try {
+      sessionStorage.setItem('kcjc:splashSeen', '1');
+    } catch {
+      // ignore
+    }
     setIsDone(true);
     if (onComplete) onComplete();
   };

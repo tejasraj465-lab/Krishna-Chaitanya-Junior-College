@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageSquareMore, Sparkles, X, MessageCircle } from 'lucide-react';
+import { X } from 'lucide-react';
 import { ADMISSION_YEAR, COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
 import { CuteRobotIcon } from './CuteRobotIcon';
 
@@ -91,15 +91,7 @@ export const AIBotWidgetFloating: React.FC<AIBotWidgetFloatingProps> = ({
         {isOpen ? (
           <X className="w-7 h-7 text-white" />
         ) : (
-          <div className="relative flex items-center justify-center">
-            {/* Cute Robot Icon */}
-            <CuteRobotIcon className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-md transition-transform group-hover:scale-110" />
-            
-            {/* Mini AI Badge */}
-            <span className="absolute -top-1 -right-1.5 bg-[#FBBF24] text-[#0B3C91] text-[9px] font-black px-1 rounded-full border border-white shadow-xs">
-              AI
-            </span>
-          </div>
+          <CuteRobotIcon className="w-8 h-8 sm:w-9 sm:h-9" />
         )}
       </motion.button>
     </div>

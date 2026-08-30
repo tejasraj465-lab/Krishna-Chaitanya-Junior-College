@@ -11,6 +11,7 @@ import 'swiper/css/effect-fade';
 
 import { heroSlides } from '../data/heroData';
 import { AFFILIATION_LOGOS, COLLEGE_INFO } from '../data/collegeData';
+import { imageKitSrc } from '../utils/images';
 
 interface HeroProps {
   onOpenApplyModal?: () => void;
@@ -75,13 +76,15 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
           modules={[Autoplay, Navigation, Pagination, EffectFade]}
           className="w-full h-full hero-swiper"
         >
-          {heroSlides.map((slide) => (
+          {heroSlides.map((slide, index) => (
             <SwiperSlide key={slide.id}>
               <div className="relative w-full h-full bg-[#020e28] flex items-center justify-center p-0.5 sm:p-2 overflow-hidden">
                 <img
-                  src={slide.image}
+                  src={imageKitSrc(slide.image, index === 0 ? 1400 : 1100)}
                   alt={slide.title}
-                  loading="eager"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  fetchPriority={index === 0 ? 'high' : 'low'}
                   className="w-full h-full object-contain object-center max-w-full max-h-full rounded-sm sm:rounded-lg"
                   referrerPolicy="no-referrer"
                 />

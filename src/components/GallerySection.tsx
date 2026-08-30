@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Maximize2, X, Calendar, Tag } from 'lucide-react';
 import { GALLERY_ITEMS } from '../data/collegeData';
 import { GalleryItem } from '../types';
+import { imageKitSrc } from '../utils/images';
 
 interface GallerySectionProps {
   variant?: 'home' | 'page';
@@ -93,7 +94,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({
             >
               <div className="relative h-52 overflow-hidden">
                 <img
-                  src={item.image}
+                  src={imageKitSrc(item.image, 720)}
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading={idx === 0 ? 'eager' : 'lazy'}
@@ -150,7 +151,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({
 
                 <div className="relative max-h-[65vh] overflow-hidden bg-black flex items-center justify-center">
                   <img
-                    src={lightboxItem.image}
+                    src={imageKitSrc(lightboxItem.image, 1400)}
                     alt={lightboxItem.title}
                     className="w-full h-auto max-h-[65vh] object-contain"
                     loading="lazy"

@@ -5,9 +5,9 @@ export const COLLEGE_INFO = {
   tagline: "Empowering Minds, Shaping Top Ranks",
   taglineSecondary: "Premier Junior College with Integrated IIT-JEE, NEET, CA/CMA, Long Term & Civil Services Coaching",
   established: 1998,
-  phonePrimary: "+91 63022 75510",
-  phoneSecondary: "+91 63022 75510",
-  whatsappNumber: "916302275510",
+  phonePrimary: "+91 92470 33334",
+  phoneSecondary: "+91 92470 33334",
+  whatsappNumber: "919247033334",
   email: "admissions@kcjc.edu.in",
   website: "https://krishna-chaitanya-junior-college.vercel.app",
   logo: "https://ik.imagekit.io/tejasraju/kcjc%20logo.jpg",
@@ -275,7 +275,7 @@ export const FACILITIES: Facility[] = [
     category: 'Smart Classrooms',
     description: 'Equipped with ultra-HD interactive whiteboards, high-speed fiber internet, and acoustic soundproofing for immersive learning.',
     iconName: 'Presentation',
-    image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/4k%20class%20room.jpeg?updatedAt=1786795637415',
     features: ['3D Animated Science Diagrams', 'Recorded Lecture Playback', 'Air Conditioned Comfort', 'Ergonomic Single Seating']
   },
   {
@@ -443,7 +443,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Day',
     city: 'Nellore',
     address: 'Near Murali Krishna Hotel, Madras Bus Stand, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'prabhanjana@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/prabanjana.jpeg?updatedAt=1786795637864',
     ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446341992487854, 79.97957702346223, {
@@ -461,7 +461,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Day',
     city: 'Nellore',
     address: 'Near Murali Krishna Hotel, Madras Bus Stand, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'vasista@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/vasista.jpeg?updatedAt=1786795637958',
     ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446341992487854, 79.97957702346223, {
@@ -479,7 +479,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Day',
     city: 'Nellore',
     address: 'Stonehousepeta, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'sarvagna@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/stonehouse%20pet%20.jpeg?updatedAt=1786795638164',
     ...googleMapsLinks(MAP_SARVAGNA, 14.456277926208072, 79.9763507457338, {
@@ -497,7 +497,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Day',
     city: 'Nellore',
     address: 'Current Office Centre, Dargamitta, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'durgahmitta.girls@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/durghamitta%20girls.jpeg?updatedAt=1786795636835',
     ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
@@ -515,7 +515,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Day',
     city: 'Nellore',
     address: 'Current Office Centre, Dargamitta, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'durgahmitta.boys@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120',
     ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
@@ -533,7 +533,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Day',
     city: 'Nellore',
     address: 'Near KVR Petrol Bunk, Magunta Layout, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'einstein.girls@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542',
     ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
@@ -551,9 +551,9 @@ export const CAMPUSES: Campus[] = [
     category: 'Day',
     city: 'Nellore',
     address: 'Near KVR Petrol Bunk, Magunta Layout, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'einstein.boys@kcjc.edu.in',
-    image: 'https://ik.imagekit.io/tejasraju/ac%20clg%20boys.jpeg',
+    image: 'https://ik.imagekit.io/tejasraju/ac%20clg%20boys.jpeg?updatedAt=1787981614290',
     ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
@@ -569,9 +569,9 @@ export const CAMPUSES: Campus[] = [
     category: 'Day',
     city: 'Buchireddypalem',
     address: 'Buchireddypalem, Nellore District.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'buchireddypalem@kcjc.edu.in',
-    image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_0284.JPG.jpeg',
     ...googleMapsLinks(MAP_BUCHI, 14.5379304, 79.8829399, {
       cid: '7014636663634107258',
       placeName: 'Krishna Chaitanya Junior College',
@@ -587,7 +587,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Residential',
     city: 'Nellore',
     address: 'Near KVR Petrol Bunk, Magunta Layout, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'res.einstein.girls@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542',
     ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
@@ -605,7 +605,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Residential',
     city: 'Nellore',
     address: 'Near Varamahalakshmi Shopping Mall, Magunta Layout, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'chandrahasa@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/boys%20hostel.jpeg?updatedAt=1786795637950',
     ...googleMapsLinks(MAP_CHANDRAHASA, 14.4331009, 79.97058479357906, {
@@ -623,9 +623,9 @@ export const CAMPUSES: Campus[] = [
     category: 'Residential',
     city: 'Nellore',
     address: 'Beside Gomathy School, Gomathy Nagar, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'gomathy@kcjc.edu.in',
-    image: 'https://ik.imagekit.io/tejasraju/gomathy%20.jpeg',
+    image: 'https://ik.imagekit.io/tejasraju/gomathy%20.jpeg?updatedAt=1787982294308',
     ...googleMapsLinks(MAP_GOMATHY, 14.429153805146619, 79.9835011946338),
     suitableFor: 'Girls (Residential)',
     coursesOffered: ['MPC (EAPCET)'],
@@ -638,7 +638,7 @@ export const CAMPUSES: Campus[] = [
     category: 'Residential',
     city: 'Nellore',
     address: 'Near Current Office Centre, Dargamitta, Nellore.',
-    phone: '+91 63022 75510',
+    phone: '+91 92470 33334',
     email: 'res.dargamitta@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120',
     ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
@@ -760,52 +760,300 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     date: '2026'
   },
   {
+    id: 'gc1',
+    title: 'Durgahmitta Campus (Girls)',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/durghamitta%20girls.jpeg?updatedAt=1786795636835',
+    caption: 'Dargamitta girls day campus in Saraswathi Nagar, Nellore.',
+    date: '2026'
+  },
+  {
+    id: 'gc2',
+    title: 'Einstein Campus (Girls AC), Magunta Layout',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542',
+    caption: 'AC girls campus near KVR Petrol Bunk, Magunta Layout, Nellore.',
+    date: '2026'
+  },
+  {
+    id: 'gc3',
+    title: 'Prabhanjana Campus (Girls)',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/prabanjana.jpeg?updatedAt=1786795637864',
+    caption: 'Prabhanjana girls day campus near Madras Bus Stand, Nellore.',
+    date: '2026'
+  },
+  {
+    id: 'gc4',
+    title: 'Chandrahasa Campus (Boys AC Hostel)',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/boys%20hostel.jpeg?updatedAt=1786795637950',
+    caption: 'Boys AC residential campus near Varamahalakshmi Shopping Mall, Magunta Layout.',
+    date: '2026'
+  },
+  {
+    id: 'gc5',
+    title: 'Vasista Campus (Boys)',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/vasista.jpeg?updatedAt=1786795637958',
+    caption: 'Vasista boys day campus near Madras Bus Stand, Nellore.',
+    date: '2026'
+  },
+  {
+    id: 'gc6',
+    title: 'Durgahmitta Campus (Boys)',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120',
+    caption: 'Dargamitta boys campus at Current Office Centre, Nellore.',
+    date: '2026'
+  },
+  {
+    id: 'gc7',
+    title: 'Sarvagna Campus, Stonehousepeta',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/stonehouse%20pet%20.jpeg?updatedAt=1786795638164',
+    caption: 'Stonehouse Pet campus at Pappula Street, Nellore.',
+    date: '2026'
+  },
+  {
+    id: 'gc8',
+    title: 'Einstein Campus (Boys AC)',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/ac%20clg%20boys.jpeg?updatedAt=1787981614290',
+    caption: 'Boys AC campus near KVR Petrol Bunk, Magunta Layout, Nellore.',
+    date: '2026'
+  },
+  {
+    id: 'gc9',
+    title: 'Gomathy Campus (Girls Residential)',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/gomathy%20.jpeg?updatedAt=1787982294308',
+    caption: 'Gomathy girls residential campus beside Gomathy School, Nellore.',
+    date: '2026'
+  },
+  {
+    id: 'gc10',
+    title: '4K Smart Interactive Classroom',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/4k%20class%20room.jpeg?updatedAt=1786795637415',
+    caption: '4K digital classroom with interactive display, AC comfort, and focused seating.',
+    date: '2026'
+  },
+  {
+    id: 'gc11',
+    title: 'Buchireddy Palem Campus',
+    category: 'Campus',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_0284.JPG.jpeg',
+    caption: 'Guthikonda Sreeramulu Junior College, Gandhi Nagar, Buchireddy Palem — Krishna Chaitanya campus.',
+    date: '2026'
+  },
+  {
+    id: 'gs1',
+    title: 'Track Sprint at Annual Sports Meet',
+    category: 'Sports',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_6200.JPG.jpeg',
+    caption: 'Students racing on the dirt track during the Krishna Chaitanya Games & Sports Meet.',
+    date: '2024'
+  },
+  {
+    id: 'gs2',
+    title: 'Kho Kho Match',
+    category: 'Sports',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_6106.JPG.jpeg',
+    caption: 'Kho Kho in progress on the sports field during the annual games meet.',
+    date: '2024'
+  },
+  {
+    id: 'gs3',
+    title: 'Indoor Carrom at Hostel',
+    category: 'Sports',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_6043.JPG.jpeg',
+    caption: 'Students playing carrom in the campus recreation space.',
+    date: '2024'
+  },
+  {
+    id: 'gs4',
+    title: 'Games & Sports Meet 2024',
+    category: 'Sports',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_6307.JPG.jpeg',
+    caption: 'Musical chairs and field events at the Krishna Chaitanya Annual Sports Day.',
+    date: '2024'
+  },
+  {
+    id: 'gn1',
+    title: 'NCC Cadet Guard of Honour',
+    category: 'NCC',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5810.JPG.jpeg',
+    caption: 'KCJC NCC cadets in ceremonial uniform with rifles on the sports ground.',
+    date: '2024'
+  },
+  {
+    id: 'gn2',
+    title: 'NCC Cadets Leading the Procession',
+    category: 'NCC',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5743.JPG.jpeg',
+    caption: 'NCC cadets escorting guests of honour during the campus sports meet.',
+    date: '2024'
+  },
+  {
+    id: 'gn3',
+    title: 'NCC Guard of Honour Ceremony',
+    category: 'NCC',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5779.JPG.jpeg',
+    caption: 'Cadets presenting a guard of honour at the Games & Sports Meet.',
+    date: '2024'
+  },
+  {
+    id: 'gn4',
+    title: 'Sports Meet Inauguration with NCC',
+    category: 'NCC',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5737.JPG.jpeg',
+    caption: 'NCC cadets standing honour as the sports-meet torch is lit on campus.',
+    date: '2024'
+  },
+  {
+    id: 'gnss1',
+    title: 'Campus Service Contingent',
+    category: 'NSS',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5810.JPG.jpeg',
+    caption: 'Student volunteers in ceremonial formation during a campus event.',
+    date: '2024'
+  },
+  {
+    id: 'gnss2',
+    title: 'NSS & Cadet Procession',
+    category: 'NSS',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5743.JPG.jpeg',
+    caption: 'Students lining the path as the campus procession moves through the grounds.',
+    date: '2024'
+  },
+  {
+    id: 'gnss3',
+    title: 'Campus Honour Ceremony',
+    category: 'NSS',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5779.JPG.jpeg',
+    caption: 'Formal campus ceremony during the Games & Sports Meet.',
+    date: '2024'
+  },
+  {
+    id: 'gnss4',
+    title: 'Torch Lighting at Sports Meet',
+    category: 'NSS',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5737.JPG.jpeg',
+    caption: 'Inauguration torch lighting with students and cadets on the campus field.',
+    date: '2024'
+  },
+  {
+    id: 'ga1',
+    title: 'Freshers Day Group Dance',
+    category: 'Annual Day',
+    image: 'https://ik.imagekit.io/tejasraju/WhatsApp%20Image%202026-08-14%20at%205.56.42%20AM.jpeg',
+    caption: 'Students performing a choreographed dance at Freshers Day.',
+    date: '2026'
+  },
+  {
+    id: 'ga2',
+    title: 'Freshers Day Solo Performance',
+    category: 'Annual Day',
+    image: 'https://ik.imagekit.io/tejasraju/WhatsApp%20Image%202026-08-14%20at%205.56.41%20AM%20(1).jpeg',
+    caption: 'Stage performance during Krishna Chaitanya Freshers Day.',
+    date: '2026'
+  },
+  {
+    id: 'ga3',
+    title: 'Annual Day Boys Dance',
+    category: 'Annual Day',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5935.JPG.jpeg',
+    caption: 'Boys troupe performing on the balloon-decorated annual day stage.',
+    date: '2026'
+  },
+  {
+    id: 'ga4',
+    title: 'Annual Day Classical Dance',
+    category: 'Annual Day',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5999.JPG.jpeg',
+    caption: 'Students performing traditional dance at the annual cultural programme.',
+    date: '2026'
+  },
+  {
+    id: 'ga5',
+    title: 'Annual Day Stage Celebration',
+    category: 'Annual Day',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5872.JPG.jpeg',
+    caption: 'High-energy group dance with confetti and balloons on annual day.',
+    date: '2026'
+  },
+  {
+    id: 'gev1',
+    title: 'Freshers Day Cultural Event',
+    category: 'Events',
+    image: 'https://ik.imagekit.io/tejasraju/WhatsApp%20Image%202026-08-14%20at%205.56.42%20AM.jpeg',
+    caption: 'Cultural dance at the Krishna Chaitanya Freshers Day event.',
+    date: '2026'
+  },
+  {
+    id: 'gev2',
+    title: 'Freshers Day Stage Event',
+    category: 'Events',
+    image: 'https://ik.imagekit.io/tejasraju/WhatsApp%20Image%202026-08-14%20at%205.56.41%20AM%20(1).jpeg',
+    caption: 'Live performance during Freshers Day celebrations.',
+    date: '2026'
+  },
+  {
+    id: 'gev3',
+    title: 'Campus Cultural Evening',
+    category: 'Events',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5935.JPG.jpeg',
+    caption: 'Boys dance performance at a campus cultural event.',
+    date: '2026'
+  },
+  {
+    id: 'gev4',
+    title: 'Cultural Programme on Stage',
+    category: 'Events',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5999.JPG.jpeg',
+    caption: 'Traditional dance during a Krishna Chaitanya cultural event.',
+    date: '2026'
+  },
+  {
+    id: 'gev5',
+    title: 'Festive Stage Performance',
+    category: 'Events',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5872.JPG.jpeg',
+    caption: 'Group dance with balloons and confetti at a campus celebration.',
+    date: '2026'
+  },
+  {
+    id: 'gach1',
+    title: 'Award Presentation on Stage',
+    category: 'Achievements',
+    image: 'https://ik.imagekit.io/tejasraju/WhatsApp%20Image%202026-08-14%20at%209.08.15%20PM%20-%20Copy.jpeg',
+    caption: 'Student receiving an award plaque at the Freshers celebration.',
+    date: '2026'
+  },
+  {
+    id: 'gach2',
+    title: 'MEC Topper Felicitation',
+    category: 'Achievements',
+    image: 'https://ik.imagekit.io/tejasraju/WhatsApp%20Image%202026-08-14%20at%209.08.17%20PM%20-%20Copy.jpeg',
+    caption: 'Neelisetty Gayathri honoured for Group MEC 495 at the college event.',
+    date: '2026'
+  },
+  {
+    id: 'gach3',
+    title: 'Certificate Honour on Annual Stage',
+    category: 'Achievements',
+    image: 'https://ik.imagekit.io/tejasraju/DSC_5981.JPG.jpeg',
+    caption: 'Students and faculty with certificates at Krishna Chaitanya Educational Institutions.',
+    date: '2026'
+  },
+  {
     id: 'g1',
     title: 'Modern Science & Innovation Expo',
     category: 'Labs',
     image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80',
     caption: 'Students demonstrating physics optics experiments during the Annual Science Expo.',
     date: 'Jan 2026'
-  },
-  {
-    id: 'g2',
-    title: 'NCC Cadet Contingent at State Parade',
-    category: 'NCC',
-    image: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
-    caption: 'Krishna Chaitanya 3 AP BN NCC Cadets receiving Governor’s commendation award.',
-    date: 'Jan 2026'
-  },
-  {
-    id: 'g3',
-    title: 'NSS Tree Plantation & Green Campus Drive',
-    category: 'NSS',
-    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80',
-    caption: 'Over 1,000 saplings planted by NSS student volunteers in community drive.',
-    date: 'Dec 2025'
-  },
-  {
-    id: 'g4',
-    title: 'Annual Cultural Fest - Tarang 2025',
-    category: 'Annual Day',
-    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80',
-    caption: 'Grand musical & classical dance performances by junior college talents.',
-    date: 'Nov 2025'
-  },
-  {
-    id: 'g5',
-    title: 'Inter-College Basketball Championship Winners',
-    category: 'Sports',
-    image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80',
-    caption: 'Krishna Chaitanya Boys Basketball Team lifting the State Junior Trophy.',
-    date: 'Oct 2025'
-  },
-  {
-    id: 'g6',
-    title: 'Felicitation of IIT-JEE & NEET All India Rankers',
-    category: 'Achievements',
-    image: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80',
-    caption: 'Hon’ble Education Minister felicitating Top 10 rankers with gold medals.',
-    date: 'Jun 2025'
   },
   {
     id: 'g7',
@@ -815,14 +1063,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: 'Interactive coding & online NTA mock test session in progress.',
     date: 'Feb 2026'
   },
-  {
-    id: 'g8',
-    title: 'Jubilee Hills Main Campus Aerial View',
-    category: 'Campus',
-    image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80',
-    caption: 'Our sprawling 10-acre green residential campus with modern sports facilities.',
-    date: 'Jan 2026'
-  }
 ];
 
 /**

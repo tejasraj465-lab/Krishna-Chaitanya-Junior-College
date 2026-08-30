@@ -1,8 +1,9 @@
 import React from 'react';
 import { MapPin, Phone, Mail, ExternalLink, Building2 } from 'lucide-react';
 import { Campus } from '../types';
-import { toTelHref } from '../data/collegeData';
+import { ADMISSION_YEAR, toTelHref } from '../data/collegeData';
 import { PageBanner } from '../components/PageBanner';
+import { imageKitSrc } from '../utils/images';
 
 interface CampusDetailPageProps {
   campus: Campus | null;
@@ -59,10 +60,11 @@ export const CampusDetailPage: React.FC<CampusDetailPageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-7 overflow-hidden rounded-3xl border border-blue-100 shadow-lg">
               <img
-                src={campus.image}
+                src={imageKitSrc(campus.image, 1200)}
                 alt={campus.name}
                 className="h-[320px] sm:h-[420px] w-full object-cover"
                 loading="eager"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -141,22 +143,32 @@ export const CampusDetailPage: React.FC<CampusDetailPageProps> = ({
             </a>
           </section>
 
+          {false && (
           <section className="rounded-3xl bg-gradient-to-r from-[#0B3C91] via-[#072B6B] to-[#041638] p-6 sm:p-8 text-white shadow-xl border border-blue-900">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-amber-300">Admission CTA</p>
-                <h2 className="mt-2 text-2xl font-extrabold font-serif">Start your admission journey for this campus</h2>
-                <p className="mt-2 text-sm text-blue-100">Use only the existing campus information to connect with the admission process.</p>
+              <div className="min-w-0">
+                <p className="text-xs font-bold uppercase tracking-wider text-amber-300">
+                  Admissions Open {ADMISSION_YEAR}
+                </p>
+                <h2 className="mt-2 text-2xl font-extrabold font-serif text-white leading-snug">
+                  Start your admission journey for {campus.name}
+                </h2>
+                <p className="mt-2 text-sm text-blue-100 leading-relaxed">
+                  Call this campus desk or apply online. Your preferred campus will be pre-selected
+                  in the form.
+                </p>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 shrink-0">
                 <a
                   href={toTelHref(campus.phone)}
-                  className="inline-flex items-center justify-center rounded-xl bg-white/10 px-5 py-3 text-xs font-bold text-white border border-white/15 transition-all hover:bg-white/20"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-xs font-bold text-white border border-white/25 transition-all hover:bg-white/20"
                 >
+                  <Phone className="w-4 h-4 text-[#FBBF24] shrink-0" aria-hidden="true" />
                   Call Campus
                 </a>
                 <button
+                  type="button"
                   onClick={() => onOpenApplyModal(undefined, campus.id)}
                   className="inline-flex items-center justify-center rounded-xl bg-[#F97316] px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-white shadow-md transition-all hover:bg-[#EA580C]"
                 >
@@ -165,6 +177,7 @@ export const CampusDetailPage: React.FC<CampusDetailPageProps> = ({
               </div>
             </div>
           </section>
+          )}
         </div>
       </section>
     </main>

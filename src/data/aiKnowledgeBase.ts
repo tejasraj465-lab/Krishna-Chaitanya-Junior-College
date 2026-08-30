@@ -96,8 +96,8 @@ const formatWebsiteUiGuide = () => {
 
   return `
 MOBILE VIEW (screens under 768px):
-• Fixed bottom navigation bar (always visible): "Call Desk" (phone) | "Apply Now" (orange — opens admission form) | "Why KCJC" (opens /why-choose-kcjc page)
-• Campus Guide AI (this chat): opens as full-width bottom sheet; tap the floating blue robot button at bottom-right (above the bottom nav)
+• Fixed bottom navigation bar (always visible): "Call Desk" (phone) | "Apply Now" (orange — opens admission form)
+• Campus Guide AI (this chat): opens as full-width bottom sheet; tap the floating circular AI robot button at bottom-right (above the bottom nav)
 • Optional "Need help?" assistance popup may appear — offers AI guide, WhatsApp, or Apply
 • Homepage #facilities preview: shows 3 facility cards only (Smart Classrooms, Physics Lab, Chemistry Lab); tap "View All Facilities" for all ${FACILITIES.length} on /facilities
 • Homepage #campuses: compact Day (${dayCount}) and Residential (${resCount}) category cards — tap to open filtered campus list
@@ -120,7 +120,7 @@ HOMEPAGE SECTION ORDER (top to bottom):
 APPLY / ADMISSION (no #admissions section on homepage — use Apply buttons):
 • Mobile: bottom bar "Apply Now" OR floating CTAs
 • Desktop: navbar "Apply Online" OR hero / final CTA buttons
-• Admission modal collects: name, phone, stream (MPC/BiPC/MEC/CEC/Long Term), preferred campus
+• Admission modal collects: name, phone, stream (MPC/BiPC/MEC/CEC/Long Term), preferred campus — only these four fields
 • Submits with auto-generated Application ID (KCJC-${ADMISSION_YEAR.slice(0, 4)}-XXXXX) and opens WhatsApp to counselor
 • Exact fees, scholarships, and seat availability are NOT on the website — always direct to WhatsApp ${COLLEGE_INFO.phonePrimary}
 
@@ -131,6 +131,10 @@ CAMPUS DIRECTORY & FILTERS:
 • Homepage #campuses category cards navigate to these filtered URLs
 • Campuses page supports search by name/city/address/facility, filter by campus type and city
 • Individual campus pages: /campuses/c1 … /campuses/c12 (slug = campus id)
+• Footer "Our Campuses" and each campus name open that campus overview page (/campuses/{id}) — they do NOT open Google Maps
+• Get Directions / Open in Google Maps is on the campus card and on the campus overview page (map embed + directions button)
+• Buchireddy Palem Campus (c8) photo is the Guthikonda Sreeramulu Junior College building, Gandhi Nagar, Buchireddy Palem
+• Campus overview pages currently do not show a bottom admission CTA card; use Apply Now / Apply Online instead
 
 CAMPUS CATEGORIES (homepage cards):
 ${CAMPUSES_SECTION.categories.map((c) => `• ${c.label} (${c.count}): ${c.description}`).join('\n')}
@@ -143,7 +147,7 @@ ${formatCourseTracks()}
 
 INTERACTIVE MODALS ON WEBSITE:
 • Course stream detail modals — per MPC/BiPC/MEC/CEC/Long Term track
-• NCC Explore modal — why join, training, opportunities, benefits, gallery placeholder
+• NCC Explore modal — why join, training, opportunities, benefits, and real cadet/camp photos
 • Campus Visit modal — schedule visit request
 • Facility detail modal — tap any facility card for features list
 • Legacy modal — college history since 1998`.trim();
@@ -162,6 +166,9 @@ ACCURACY RULE (CRITICAL):
 - Return Residential-only or Day-only lists only when the user clearly asks for that one type alone.
 - Do not invent ranks, fees, extra campuses, or facilities. Individual AIR ranker profiles are not published as a live results section — for latest ranks, send the user to WhatsApp ${COLLEGE_INFO.phonePrimary}.
 - Hostels & facilities questions should describe FACILITIES records, not a residential-campus-only list.
+- Footer campus links open campus overview pages. Do not tell users the footer opens Google Maps.
+- Gallery photos are real campus photos (sports meet, NCC, NSS events, annual day, achievements, campus exteriors). Do not describe them as stock or placeholder images except Labs still uses generic lab photos.
+- 4K Smart Interactive Classrooms is a published facility with a real classroom photo.
 
 MULTILINGUAL RESPONSES:
 - Detect the user's language and reply in that same language (English, Telugu, Hindi, Tamil, or Kannada).
@@ -259,9 +266,18 @@ Training: ${NCC_EXPLORE.trainingItems.join(', ')}
 Cadet opportunities: ${NCC_EXPLORE.opportunitiesItems.join(', ')}
 Note: ${NCC_EXPLORE.opportunitiesNote}
 Benefits: ${NCC_EXPLORE.benefitsItems.join(' ')}
+NCC photos: cadet group, annual training camp, camp activities, trophy, ATC closing, outdoor drill, weapon training, plus gallery honour-guard / procession / torch-lighting photos.
 
 GALLERY CATEGORIES & HIGHLIGHTS:
 ${formatGalleryCategories()}
+Gallery notes:
+• Campus: real exteriors including Durgahmitta, Einstein AC, Gomathy, Prabhanjana, Vasista, Stonehouse, Boys Hostel, Buchireddy Palem (Guthikonda Sreeramulu Junior College), and 4K classroom.
+• Sports: track sprint, kho-kho, indoor carrom, Games & Sports Meet 2024 (musical chairs / sports day).
+• NCC: cadet guard of honour, procession, ceremony, sports-meet torch lighting.
+• NSS: campus service contingent, procession, honour ceremony, torch lighting (same event photos).
+• Annual Day and Events: Freshers Day dances and annual-day stage performances.
+• Achievements: Intermediate/JEE/NEET result banners, award presentations, MEC topper felicitation (Neelisetty Gayathri, Group MEC 495), certificate honour on stage.
+• Labs: generic science-lab photos until dedicated lab photos are published.
 
 FREQUENTLY ASKED QUESTIONS:
 ${formatFaq()}
@@ -298,7 +314,7 @@ const formatAllCampusesReply = () => {
 const formatCampusDetailReply = (matches: typeof CAMPUSES) => {
   const details = matches
     .map((c) => {
-      return `• **${campusDisplayName(c)}**\n  Type: ${c.type} | ${c.category}\n  Address: ${c.address}\n  Suitable for: ${c.suitableFor}\n  Courses: ${c.coursesOffered.join(', ')}\n  Facilities: ${c.facilities.join(', ')}\n  Phone: ${c.phone}\n  Map: available on the campus page`;
+      return `• **${campusDisplayName(c)}**\n  Type: ${c.type} | ${c.category}\n  Address: ${c.address}\n  Suitable for: ${c.suitableFor}\n  Courses: ${c.coursesOffered.join(', ')}\n  Facilities: ${c.facilities.join(', ')}\n  Phone: ${c.phone}\n  Overview: /campuses/${c.id}\n  Directions: Get Directions on the campus card or campus overview page (not in the footer)`;
     })
     .join('\n\n');
   const nav = matches.length === 1 ? `[NAV:page:/campuses/${slugify(matches[0].id)}]` : '[NAV:page:/campuses]';
@@ -322,7 +338,7 @@ const findCampusesByQuery = (q: string) => {
     { keys: ['sarvagna', 'stonehouse'], ids: ['c3'] },
     { keys: ['durgahmitta', 'dargamitta', 'dargahmitta'], ids: ['c4', 'c5', 'c12'] },
     { keys: ['einstein'], ids: ['c6', 'c7', 'c9'] },
-    { keys: ['buchi', 'buchireddy'], ids: ['c8'] },
+    { keys: ['buchi', 'buchireddy', 'guthikonda', 'sreeramulu', 'gandhi nagar'], ids: ['c8'] },
     { keys: ['chandrahasa', 'chandra hasa'], ids: ['c10'] },
     { keys: ['gomathy', 'gomati'], ids: ['c11'] },
   ];
@@ -404,14 +420,21 @@ export const resolveCollegeGuideReply = (message: string): CollegeGuideResolutio
     const steps = ADMISSION_STEPS.map((s) => `${s.step}. ${s.title}`).join('\n');
     return {
       confident: true,
-      reply: `Admission process on this website:\n\n${steps}\n\nDocuments usually needed: 10th memo, TC, Aadhaar, photos.\n\n**How to apply:**\n• Mobile — tap **Apply Now** in the bottom bar\n• Desktop — click **Apply Online** in the navbar\n\nContact: ${COLLEGE_INFO.phonePrimary} | ${COLLEGE_INFO.email}`,
+      reply: `Admission process on this website:\n\n${steps}\n\nDocuments usually needed: 10th memo, TC, Aadhaar, photos.\n\n**How to apply** (form fields: Name, Phone, Stream, Preferred Campus):\n• Mobile — tap **Apply Now** in the bottom bar\n• Desktop — click **Apply Online** in the navbar\n\nContact: ${COLLEGE_INFO.phonePrimary} | ${COLLEGE_INFO.email}`,
+    };
+  }
+
+  if (q.includes('life at') || q.includes('student life') || q.includes('clubs') || (q.includes('cultural') && !q.includes('gallery'))) {
+    return {
+      confident: true,
+      reply: `Student life at KCJC includes academics with clubs, cultural events, sports, NCC, NSS, workshops, and campus celebrations.\n\nOpen the Life at KCJC page for the full list. Sports meet and annual-day photos are in Gallery.\n\n[NAV:page:/life-at-kcjc]`,
     };
   }
 
   if (q.includes('ncc') || q.includes('cadet') || q.includes('defense') || q.includes('defence') || q.includes('ఎన్సిసి')) {
     return {
       confident: true,
-      reply: `**${NCC_HOME.title}**\n\n${NCC_HOME.subheading}\n\n${NCC_EXPLORE.intro}\n\n**Why join:** ${NCC_EXPLORE.whyJoinItems.join(', ')}\n\n**Training includes:** ${NCC_EXPLORE.trainingItems.join(', ')}\n\n**Cadet opportunities:** ${NCC_EXPLORE.opportunitiesItems.join(', ')}\n\n${NCC_EXPLORE.opportunitiesNote}\n\n[NAV:ncc]`,
+      reply: `**${NCC_HOME.title}**\n\n${NCC_HOME.subheading}\n\n${NCC_EXPLORE.intro}\n\n**Why join:** ${NCC_EXPLORE.whyJoinItems.join(', ')}\n\n**Training includes:** ${NCC_EXPLORE.trainingItems.join(', ')}\n\n**Cadet opportunities:** ${NCC_EXPLORE.opportunitiesItems.join(', ')}\n\n${NCC_EXPLORE.opportunitiesNote}\n\nPhotos of cadets, camps, drill, and the sports-meet honour guard are in Explore NCC and Gallery → NCC.\n\n[NAV:ncc]`,
     };
   }
 
@@ -470,18 +493,11 @@ export const resolveCollegeGuideReply = (message: string): CollegeGuideResolutio
     return { confident: true, reply: `KCJC leadership on this website:\n\n${leaders}\n\n[NAV:leadership]` };
   }
 
-  if (q.includes('gallery') || q.includes('photo')) {
-    const cats = [...new Set(GALLERY_ITEMS.map((g) => g.category))].join(', ');
+  if (q.includes('gallery') || q.includes('photo') || q.includes('sports meet') || q.includes('annual day') || q.includes('nss') || q.includes('kho kho') || q.includes('carrom')) {
+    const cats = formatGalleryCategories();
     return {
       confident: true,
-      reply: `Gallery categories on this website: ${cats}.\n\n[NAV:page:/gallery]`,
-    };
-  }
-
-  if (q.includes('life at') || q.includes('student life') || q.includes('clubs') || q.includes('cultural')) {
-    return {
-      confident: true,
-      reply: `Student life at KCJC includes academics with clubs, cultural events, sports, NCC, NSS, workshops, and campus celebrations.\n\nOpen the Life at KCJC page for the full list.\n\n[NAV:page:/life-at-kcjc]`,
+      reply: `The Gallery has real campus photos. Categories and highlights:\n\n${cats}\n\nSports: track sprint, kho-kho, carrom, Games & Sports Meet 2024.\nNCC: cadet honour guard, procession, torch lighting, plus camp and drill photos in Explore NCC.\nNSS: campus service and sports-meet event photos.\nAnnual Day / Events: Freshers Day and annual-day stage performances.\nAchievements: result banners, award ceremony, MEC 495 felicitation (Neelisetty Gayathri).\nCampus: exteriors including Buchireddy Palem and 4K classroom.\n\n[NAV:page:/gallery]`,
     };
   }
 
@@ -516,10 +532,17 @@ export const resolveCollegeGuideReply = (message: string): CollegeGuideResolutio
     };
   }
 
+  if (q.includes('direction') || q.includes('google map') || q.includes('google maps') || q.includes('how to reach') || q.includes('map')) {
+    return {
+      confident: true,
+      reply: `Each campus page has a location map and **Get Directions / Open in Google Maps**.\n\nOn campus cards, use **Get Directions**.\nIn the website footer, tapping a campus name opens that campus **overview** — it does not open Maps.\n\n[NAV:page:/campuses]`,
+    };
+  }
+
   if (q.includes('bottom bar') || q.includes('mobile view') || q.includes('phone view')) {
     return {
       confident: true,
-      reply: `**Mobile website guide:**\n\n• Bottom bar: Call Desk | Apply Now | Why KCJC\n• AI Guide: blue robot button at bottom-right\n• Campuses: Day (${dayCampuses().length}) and Residential (${residentialCampuses().length}) cards\n• Courses: tap a stream for details\n\n[NAV:hero]`,
+      reply: `**Mobile website guide:**\n\n• Bottom bar: Call Desk | Apply Now\n• AI Guide: circular robot button at bottom-right\n• Campuses: Day (${dayCampuses().length}) and Residential (${residentialCampuses().length}) cards — tap a footer campus name for that campus overview\n• Courses: tap a stream for details\n\n[NAV:hero]`,
     };
   }
 

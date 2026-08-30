@@ -13,6 +13,7 @@ import {
   MapPin,
   Copy,
   Check,
+  Camera,
 } from 'lucide-react';
 import { ADMISSION_YEAR, CAMPUSES, COLLEGE_INFO, campusFormLabel } from '../data/collegeData';
 import { ThemedSelect } from './ui/ThemedSelect';
@@ -209,7 +210,7 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
         aria-modal="true"
         aria-labelledby="admission-modal-title"
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-md mx-auto flex flex-col overflow-hidden rounded-3xl p-5 sm:p-7 relative shadow-2xl border border-blue-100 font-sans max-h-[calc(100dvh-2rem)]"
+        className="bg-white w-full max-w-md mx-auto flex flex-col overflow-hidden rounded-3xl p-5 sm:p-6 relative shadow-2xl border border-blue-100 font-sans max-h-[calc(100dvh-2rem)]"
       >
         <button
           ref={closeButtonRef}
@@ -322,89 +323,79 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
             </form>
           </div>
         ) : (
-          <div className="text-center space-y-4">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
-              <CheckCircle2 className="w-10 h-10" />
-            </div>
-
-            <div>
-              <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-2.5 py-1 rounded-full inline-block mb-1">
-                Application Submitted Successfully
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold font-serif text-[#0B3C91]">Your Admission Application</h3>
-            </div>
-
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-[#0B3C91]/30 rounded-2xl p-4 text-left space-y-2 shadow-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Unique Application ID</span>
-                <span className="bg-emerald-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">ACTIVE {ADMISSION_YEAR.slice(0, 4)}</span>
+          <div className="flex flex-col min-h-0 flex-1">
+            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain text-center pr-1">
+              <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-7 h-7" />
               </div>
+              <h3 className="mt-3 text-lg sm:text-xl font-bold font-serif text-[#0B3C91]">
+                Application submitted
+              </h3>
 
-              <div className="flex items-center justify-between bg-white rounded-xl p-2.5 border border-blue-200">
-                <span className="font-mono font-black text-lg text-[#0B3C91] tracking-wide">{applicationId}</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    navigator.clipboard.writeText(applicationId);
-                    setCopied(true);
-                    window.setTimeout(() => setCopied(false), 2000);
-                  }}
-                  className="flex items-center gap-1 text-xs font-bold text-[#0070CD] hover:text-[#0B3C91] px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
-                      <span className="text-emerald-600">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
-              </div>
+              <div className="mt-4 bg-blue-50 border border-[#0B3C91]/25 rounded-2xl p-3.5 text-left space-y-2.5">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                  Unique Application ID
+                </span>
+                <div className="flex items-center justify-between gap-2 bg-white rounded-xl p-2.5 border border-blue-200">
+                  <span className="font-mono font-black text-base sm:text-lg text-[#0B3C91] tracking-wide">
+                    {applicationId}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(applicationId);
+                      setCopied(true);
+                      window.setTimeout(() => setCopied(false), 2000);
+                    }}
+                    className="flex items-center gap-1 text-xs font-bold text-[#0070CD] px-2.5 py-1 rounded-lg bg-blue-50 cursor-pointer shrink-0"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-emerald-600">Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
 
-              <div className="text-[11px] text-slate-600 space-y-1 pt-1 border-t border-slate-200/60">
-                <p>
-                  👤 <strong className="text-slate-800">Name:</strong> {formData.studentName}
+                <p className="flex items-start gap-2 text-[11px] text-amber-900 font-semibold leading-snug bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+                  <Camera className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>Take a screenshot and save this Unique ID. You will need it later.</span>
                 </p>
-                <p>
-                  📱 <strong className="text-slate-800">Phone:</strong> {formData.phone}
-                </p>
-                <p>
-                  🎓 <strong className="text-slate-800">Stream:</strong> {formData.course}
-                </p>
-                <p>
-                  🏫 <strong className="text-slate-800">Campus:</strong> {campusDisplayName(formData.campus)}
-                </p>
+
+                <div className="text-[11px] text-slate-600 space-y-1">
+                  <p>
+                    <strong className="text-slate-800">Name:</strong> {formData.studentName}
+                  </p>
+                  <p>
+                    <strong className="text-slate-800">Phone:</strong> {formData.phone}
+                  </p>
+                  <p>
+                    <strong className="text-slate-800">Stream:</strong> {formData.course}
+                  </p>
+                  <p>
+                    <strong className="text-slate-800">Campus:</strong> {campusDisplayName(formData.campus)}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <p className="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
-              Opening WhatsApp with your details and <strong>Application ID ({applicationId})</strong>.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-2 pt-1">
-              <a
-                href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(
-                  `Hello Admission Desk! My Application ID is ${applicationId}. I have submitted my application for ${formData.studentName} for course ${formData.course}.`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-                <span>Open WhatsApp Chat</span>
-              </a>
-              <button
-                type="button"
-                onClick={handleClose}
-                className="w-full sm:w-auto px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
+            <a
+              href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(
+                `Hello Admission Desk! My Application ID is ${applicationId}. I have submitted my application for ${formData.studentName} for course ${formData.course}.`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 w-full min-h-[52px] py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer shrink-0"
+            >
+              <MessageCircle className="w-5 h-5 fill-white stroke-none" />
+              <span>Open WhatsApp Chat</span>
+            </a>
           </div>
         )}
       </motion.div>

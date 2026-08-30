@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { MapPin, Phone, ExternalLink, ChevronRight, Building2, Home } from 'lucide-react';
 import { Campus } from '../types';
 import { toTelHref } from '../data/collegeData';
+import { imageKitSrc } from '../utils/images';
 
 interface CampusCardProps {
   campus: Campus;
@@ -28,10 +29,11 @@ export const CampusCard: React.FC<CampusCardProps> = ({
     >
       <div className={`relative ${compact ? 'h-48' : 'h-56'} overflow-hidden shrink-0`}>
         <img
-          src={campus.image}
+          src={imageKitSrc(campus.image, 800)}
           alt={campus.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0B3C91] via-transparent to-transparent" />

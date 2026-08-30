@@ -5,6 +5,7 @@ import { ChevronRight, Quote, ShieldCheck, X } from 'lucide-react';
 import { LEADERSHIP_MEMBERS, CHAIRMAN_MESSAGE } from '../data/collegeData';
 import { Container, SectionHeader, GlassCard, Button } from './ui';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { imageKitSrc } from '../utils/images';
 
 type Leader = (typeof LEADERSHIP_MEMBERS)[number];
 
@@ -68,7 +69,7 @@ export const LeadershipSection: React.FC = () => {
                 className="w-full p-4 flex items-center gap-3.5 text-left cursor-pointer group"
               >
                 <img
-                  src={leader.photo}
+                  src={imageKitSrc(leader.photo, 240)}
                   alt={leader.name}
                   className="w-20 h-20 rounded-xl object-cover object-top shrink-0 ring-2 ring-[#0B3C91]/15 group-hover:ring-[#F97316]/40 transition-all"
                   referrerPolicy="no-referrer"
@@ -128,7 +129,7 @@ export const LeadershipSection: React.FC = () => {
                   <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 text-center sm:text-left">
                     <div className="relative shrink-0">
                       <img
-                        src={selectedLeader.photo}
+                        src={imageKitSrc(selectedLeader.photo, 480)}
                         alt={selectedLeader.name}
                         className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover object-top border-2 border-[#0B3C91] shadow-md"
                         referrerPolicy="no-referrer"
