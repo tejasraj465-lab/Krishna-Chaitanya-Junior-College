@@ -122,7 +122,7 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
                       src={imageKitSrc(facility.image, 720)}
                       alt={facility.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading={idx === 0 ? 'eager' : 'lazy'}
+                      loading={variant === 'page' && idx === 0 ? 'eager' : 'lazy'}
                       decoding="async"
                       referrerPolicy="no-referrer"
                     />

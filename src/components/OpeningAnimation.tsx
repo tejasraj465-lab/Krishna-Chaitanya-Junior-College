@@ -28,8 +28,30 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
   useEffect(() => {
     if (isDone) return;
 
+    try {
+      const connection = (navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }).connection;
+      const slowNetwork =
+        Boolean(connection?.saveData) ||
+        connection?.effectiveType === 'slow-2g' ||
+        connection?.effectiveType === '2g';
+      if (slowNetwork || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        try {
+          sessionStorage.setItem('kcjc:splashSeen', '1');
+        } catch {
+          // ignore
+        }
+        setIsDone(true);
+        if (onComplete) onComplete();
+        return;
+      }
+    } catch {
+      // ignore
+    }
+
     const startTime = Date.now();
-    const totalDuration = 800;
+    const totalDuration = 280;
 
     const finish = () => {
       try {
@@ -53,7 +75,7 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
 
       if (currentProgress >= 100) {
         clearInterval(interval);
-        window.setTimeout(finish, 120);
+        window.setTimeout(finish, 60);
       }
     }, 50);
 
@@ -77,7 +99,7 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
           key="splash-screen"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[99999] bg-[#04122B] text-white flex flex-col items-center justify-between p-6 overflow-hidden select-none"
         >
           {/* Animated Background Rays & Ambient Glows */}

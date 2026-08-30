@@ -3,12 +3,9 @@ import { AnimatePresence } from 'motion/react';
 import { SeoHead } from './components/SeoHead';
 import { GoogleManager } from './components/GoogleManager';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
-import { OpeningAnimation } from './components/OpeningAnimation';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { MobileBottomNav } from './components/MobileBottomNav';
-import { AdmissionModalBottomSheet } from './components/AdmissionModalBottomSheet';
-import { FloatingAssistancePopup } from './components/FloatingAssistancePopup';
 import { AIBotWidgetFloating } from './components/AIBotWidgetFloating';
 import { HomePage } from './pages/HomePage';
 import { CAMPUSES } from './data/collegeData';
@@ -32,6 +29,34 @@ const CampusDetailPage = lazy(() => import('./pages/CampusDetailPage').then((m) 
 const AICampusGuide = lazy(() => import('./components/AICampusGuide').then((m) => ({ default: m.AICampusGuide })));
 const CampusVisitModal = lazy(() => import('./components/CampusVisitModal').then((m) => ({ default: m.CampusVisitModal })));
 const CourseDetailModal = lazy(() => import('./components/CourseDetailModal').then((m) => ({ default: m.CourseDetailModal })));
+const OpeningAnimation = lazy(() => import('./components/OpeningAnimation').then((m) => ({ default: m.OpeningAnimation })));
+const AdmissionModalBottomSheet = lazy(() =>
+  import('./components/AdmissionModalBottomSheet').then((m) => ({ default: m.AdmissionModalBottomSheet }))
+);
+const FloatingAssistancePopup = lazy(() =>
+  import('./components/FloatingAssistancePopup').then((m) => ({ default: m.FloatingAssistancePopup }))
+);
+
+const shouldShowSplash = () => {
+  try {
+    if (sessionStorage.getItem('kcjc:splashSeen') === '1') return false;
+  } catch {
+    return false;
+  }
+
+  try {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+    const connection = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    if (connection?.saveData) return false;
+    if (connection?.effectiveType === '2g' || connection?.effectiveType === 'slow-2g') return false;
+  } catch {
+    // ignore
+  }
+
+  return true;
+};
 
 const PageFallback = () => (
   <div className="min-h-[50vh] flex items-center justify-center text-sm font-semibold text-slate-400">
@@ -177,6 +202,8 @@ export default function App() {
   });
   const [pendingSection, setPendingSection] = useState<string | null>(() => window.location.hash.replace('#', '') || null);
   const [restoreScrollY, setRestoreScrollY] = useState<number | null>(null);
+  const [showSplash] = useState(shouldShowSplash);
+  const [loadHelpPopup, setLoadHelpPopup] = useState(false);
 
   useLayoutEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -196,6 +223,29 @@ export default function App() {
       window.history.replaceState({ scrollY: 0 }, '', window.location.href);
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
+  }, []);
+
+  useEffect(() => {
+    const helpTimer = window.setTimeout(() => setLoadHelpPopup(true), 4000);
+    const prefetch = () => {
+      void import('./components/AdmissionModalBottomSheet');
+      void import('./components/CampusesSection');
+      void import('./pages/CampusesPage');
+    };
+    let idleId = 0;
+    let timeoutId = 0;
+    if (typeof window.requestIdleCallback === 'function') {
+      idleId = window.requestIdleCallback(prefetch, { timeout: 2500 });
+    } else {
+      timeoutId = window.setTimeout(prefetch, 1500);
+    }
+    return () => {
+      window.clearTimeout(helpTimer);
+      if (idleId && typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
   }, []);
 
   useEffect(() => {
@@ -415,7 +465,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] font-sans antialiased selection:bg-[#FBBF24] selection:text-[#0B3C91] pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:pb-0 bg-mesh-light">
-      <OpeningAnimation />
+      <Suspense fallback={null}>{showSplash ? <OpeningAnimation /> : null}</Suspense>
       <ScrollProgressBar />
       <SeoHead title={seoTitle} description={seoDescription} />
       <GoogleManager />
@@ -502,10 +552,14 @@ export default function App() {
         onNavigateToCampuses={() => navigateToPath('/campuses', { fromSection: 'campuses' })}
       />
 
-      <FloatingAssistancePopup
-        onOpenAIGuide={() => setIsAIGuideOpen(true)}
-        onOpenApplyModal={() => handleOpenApplyModal()}
-      />
+      {loadHelpPopup && (
+        <Suspense fallback={null}>
+          <FloatingAssistancePopup
+            onOpenAIGuide={() => setIsAIGuideOpen(true)}
+            onOpenApplyModal={() => handleOpenApplyModal()}
+          />
+        </Suspense>
+      )}
 
       <AIBotWidgetFloating
         isOpen={isAIGuideOpen}
@@ -518,12 +572,16 @@ export default function App() {
         onOpenAIGuide={() => setIsAIGuideOpen(true)}
       />
 
-      <AdmissionModalBottomSheet
-        isOpen={isApplyModalOpen}
-        onClose={() => setIsApplyModalOpen(false)}
-        preSelectedCourse={applyCourse}
-        preSelectedCampus={applyCampus}
-      />
+      {isApplyModalOpen && (
+        <Suspense fallback={null}>
+          <AdmissionModalBottomSheet
+            isOpen={isApplyModalOpen}
+            onClose={() => setIsApplyModalOpen(false)}
+            preSelectedCourse={applyCourse}
+            preSelectedCampus={applyCampus}
+          />
+        </Suspense>
+      )}
 
       {isAIGuideOpen && (
         <Suspense fallback={null}>

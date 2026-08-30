@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { KCJC_ADVANTAGE_PAGE } from '../data/whyChooseAdvantageData';
 
 export const KcjcAdvantageSectionNav: React.FC = () => {
-  const [activeId, setActiveId] = useState(KCJC_ADVANTAGE_PAGE.pageSections[0].id);
+  const [activeId, setActiveId] = useState<string>(KCJC_ADVANTAGE_PAGE.pageSections[0].id);
   const isScrollingRef = useRef(false);
   const scrollTimerRef = useRef<number | null>(null);
 

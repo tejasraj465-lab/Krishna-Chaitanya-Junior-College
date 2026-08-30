@@ -335,9 +335,9 @@ export const FACILITIES: Facility[] = [
   },
   {
     id: 'f8',
-    title: 'AC Bus Transport Network',
+    title: 'Bus Transport Network',
     category: 'Transport',
-    description: 'Fleet of 45+ air-conditioned buses covering all major suburbs with real-time GPS tracking and dedicated attendant on board.',
+    description: 'Fleet of 45+ buses covering all major suburbs with real-time GPS tracking and dedicated attendant on board.',
     iconName: 'Bus',
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
     features: ['Live Mobile GPS Tracking', 'Speed Governor Safety', 'CCTV Onboard', 'Doorstep Pickup & Drop']
@@ -362,7 +362,7 @@ export const FACILITIES: Facility[] = [
   },
   {
     id: 'f11',
-    title: 'Multi-Cuisine Hygienic Cafeteria',
+    title: 'Hygienic Cafeteria',
     category: 'Dining',
     description: 'FSSAI-certified kitchen serving nutritious, balanced South & North Indian meals prepared under dietitian supervision.',
     iconName: 'Utensils',

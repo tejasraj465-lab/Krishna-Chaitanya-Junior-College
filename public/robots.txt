@@ -10,7 +10,4 @@ Allow: /
 Disallow: /api/
 Disallow: /gemini-config.php
 
-# Submit this URL in Google Search Console → Sitemaps
 Sitemap: https://krishna-chaitanya-junior-college.vercel.app/sitemap.xml
-Sitemap: https://krishna-chaitanya-junior-college.vercel.app/sitemap-pages.xml
-Sitemap: https://krishna-chaitanya-junior-college.vercel.app/sitemap-images.xml

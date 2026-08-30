@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { motion } from 'motion/react';
 import { ChevronRight, BookOpen } from 'lucide-react';
 import { Container, SectionHeader, Button } from './ui';
-import { LegacyModal } from './LegacyModal';
+
+const LegacyModal = lazy(() =>
+  import('./LegacyModal').then((module) => ({ default: module.LegacyModal }))
+);
 
 interface WelcomeSectionProps {
   onOpenApplyModal?: () => void;
@@ -39,13 +42,17 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({ onOpenApplyModal
         </motion.div>
       </Container>
 
-      <LegacyModal
-        variant="whyKcjc"
-        open={showLegacyModal}
-        onClose={() => setShowLegacyModal(false)}
-        onOpenApplyModal={onOpenApplyModal}
-        onOpenCampusVisit={onOpenCampusVisit}
-      />
+      {showLegacyModal && (
+        <Suspense fallback={null}>
+          <LegacyModal
+            variant="whyKcjc"
+            open={showLegacyModal}
+            onClose={() => setShowLegacyModal(false)}
+            onOpenApplyModal={onOpenApplyModal}
+            onOpenCampusVisit={onOpenCampusVisit}
+          />
+        </Suspense>
+      )}
     </section>
   );
 };

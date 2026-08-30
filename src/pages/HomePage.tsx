@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { HeroSlider } from '../components/HeroSlider';
 import { WelcomeSection } from '../components/WelcomeSection';
 import { CoursesSection } from '../components/CoursesSection';
-import { FacilitiesSection } from '../components/FacilitiesSection';
-import { NccNssSection } from '../components/NccNssSection';
-import { CampusesSection } from '../components/CampusesSection';
-import { StudentLifeSection } from '../components/StudentLifeSection';
-import { LeadershipSection } from '../components/LeadershipSection';
-import { FinalCTA } from '../components/FinalCTA';
 import type { HomeSectionId } from '../utils/homeSectionNavigation';
+
+const CampusesSection = lazy(() =>
+  import('../components/CampusesSection').then((module) => ({ default: module.CampusesSection }))
+);
+const FacilitiesSection = lazy(() =>
+  import('../components/FacilitiesSection').then((module) => ({ default: module.FacilitiesSection }))
+);
+const NccNssSection = lazy(() =>
+  import('../components/NccNssSection').then((module) => ({ default: module.NccNssSection }))
+);
+const StudentLifeSection = lazy(() =>
+  import('../components/StudentLifeSection').then((module) => ({ default: module.StudentLifeSection }))
+);
+const LeadershipSection = lazy(() =>
+  import('../components/LeadershipSection').then((module) => ({ default: module.LeadershipSection }))
+);
+const FinalCTA = lazy(() =>
+  import('../components/FinalCTA').then((module) => ({ default: module.FinalCTA }))
+);
+
+const SectionFallback = ({ id }: { id: string }) => (
+  <section id={id} className="min-h-[12rem]" aria-hidden="true" />
+);
 
 interface HomePageProps {
   onOpenApplyModal: (course?: string, campus?: string) => void;
@@ -44,35 +61,47 @@ export const HomePage: React.FC<HomePageProps> = ({
         onOpenCampusVisit={onOpenCampusVisit}
       />
 
-      <CampusesSection
-        onOpenApplyModal={onOpenApplyModal}
-        onViewAllCampuses={() => onNavigateToPath('/campuses', { fromSection: 'campuses' })}
-        onNavigateToCampus={(slug) => onNavigateToCampus(slug, { fromSection: 'campuses' })}
-        onBrowseByCategory={(category) =>
-          onNavigateToPath(`/campuses?category=${category}`, { fromSection: 'campuses' })
-        }
-      />
+      <Suspense fallback={<SectionFallback id="campuses" />}>
+        <CampusesSection
+          onOpenApplyModal={onOpenApplyModal}
+          onViewAllCampuses={() => onNavigateToPath('/campuses', { fromSection: 'campuses' })}
+          onNavigateToCampus={(slug) => onNavigateToCampus(slug, { fromSection: 'campuses' })}
+          onBrowseByCategory={(category) =>
+            onNavigateToPath(`/campuses?category=${category}`, { fromSection: 'campuses' })
+          }
+        />
+      </Suspense>
 
-      <FacilitiesSection
-        variant="home"
-        onViewAll={() => onNavigateToPath('/facilities', { fromSection: 'facilities' })}
-      />
+      <Suspense fallback={<SectionFallback id="facilities" />}>
+        <FacilitiesSection
+          variant="home"
+          onViewAll={() => onNavigateToPath('/facilities', { fromSection: 'facilities' })}
+        />
+      </Suspense>
 
-      <NccNssSection />
+      <Suspense fallback={<SectionFallback id="ncc" />}>
+        <NccNssSection />
+      </Suspense>
 
-      <StudentLifeSection
-        variant="home"
-        onOpenApplyModal={() => onOpenApplyModal()}
-        onOpenCampusVisit={onOpenCampusVisit}
-        onExploreFullPage={() => onNavigateToPath('/life-at-kcjc', { fromSection: 'explore-kcjc' })}
-      />
+      <Suspense fallback={<SectionFallback id="explore-kcjc" />}>
+        <StudentLifeSection
+          variant="home"
+          onOpenApplyModal={() => onOpenApplyModal()}
+          onOpenCampusVisit={onOpenCampusVisit}
+          onExploreFullPage={() => onNavigateToPath('/life-at-kcjc', { fromSection: 'explore-kcjc' })}
+        />
+      </Suspense>
 
-      <LeadershipSection />
+      <Suspense fallback={<SectionFallback id="leadership" />}>
+        <LeadershipSection />
+      </Suspense>
 
-      <FinalCTA
-        onOpenApplyModal={() => onOpenApplyModal()}
-        onOpenCampusVisit={onOpenCampusVisit}
-      />
+      <Suspense fallback={null}>
+        <FinalCTA
+          onOpenApplyModal={() => onOpenApplyModal()}
+          onOpenCampusVisit={onOpenCampusVisit}
+        />
+      </Suspense>
     </main>
   );
 };

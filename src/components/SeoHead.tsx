@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { COLLEGE_INFO, FAQ_LIST } from '../data/collegeData';
-import { FEED_LINKS, SITE_NAME, SITE_URL } from '../config/site';
+import { SITE_NAME, SITE_URL } from '../config/site';
 
 interface SeoHeadProps {
   title?: string;
@@ -60,15 +60,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
     upsertMeta('name', 'twitter:description', metaContent);
 
     upsertLink('canonical', canonical);
-    upsertLink('sitemap', `${origin}/sitemap.xml`, { type: 'application/xml', title: 'Sitemap index' });
-    upsertLink('sitemap', `${origin}/sitemap-pages.xml`, { type: 'application/xml', title: 'Pages' });
-    upsertLink('sitemap', `${origin}/sitemap-images.xml`, { type: 'application/xml', title: 'Images' });
-    FEED_LINKS.forEach((feed) => {
-      upsertLink('alternate', `${origin}${feed.href}`, {
-        type: 'application/rss+xml',
-        title: feed.title,
-      });
-    });
+    upsertLink('sitemap', `${origin}/sitemap.xml`, { type: 'application/xml', title: 'Sitemap' });
 
     document.getElementById('schema-educational-org')?.remove();
     document.getElementById('schema-faq')?.remove();

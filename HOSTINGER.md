@@ -33,7 +33,7 @@ After upload, `public_html` must contain:
 | `.user.ini` | PHP hardening |
 | `api/ai-guide.php` | Campus Guide AI endpoint |
 | `api/gemini-config.example.php` | Template for the API key |
-| `sitemap.xml`, `robots.txt`, `*.xml`, `feeds/` | SEO |
+| `sitemap.xml`, `robots.txt` | SEO |
 
 Do **not** upload `node_modules`, `src`, or `package.json`.
 
@@ -82,7 +82,7 @@ After the site is live, in [Google Search Console](https://search.google.com/sea
 
    `https://www.yourdomain.com/sitemap.xml`
 
-That index covers all pages and images (`sitemap-pages.xml`, `sitemap-images.xml`, campuses, gallery, courses, facilities).
+That single file lists every public page and its images. Do not submit extra XML files.
 
 For [Google Tag Manager](https://tagmanager.google.com):
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, X, Sparkles, ChevronRight } from 'lucide-react';
 import { ADMISSION_YEAR, COLLEGE_INFO } from '../data/collegeData';
@@ -13,19 +13,8 @@ export const FloatingAssistancePopup: React.FC<FloatingAssistancePopupProps> = (
   onOpenAIGuide,
   onOpenApplyModal
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [isDismissed, setIsDismissed] = useState(false);
-
-  useEffect(() => {
-    // Show popup after 3.5 seconds on page load if not dismissed
-    const timer = setTimeout(() => {
-      if (!isDismissed) {
-        setIsVisible(true);
-      }
-    }, 3500);
-
-    return () => clearTimeout(timer);
-  }, [isDismissed]);
 
   if (isDismissed || !isVisible) return null;
 

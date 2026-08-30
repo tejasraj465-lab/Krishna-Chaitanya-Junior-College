@@ -3,6 +3,11 @@ import {createRoot} from 'react-dom/client';
 import App from './App';
 import './index.css';
 
+const fontLink = document.getElementById('kcjc-fonts');
+if (fontLink instanceof HTMLLinkElement) {
+  fontLink.media = 'all';
+}
+
 if ('scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';
 }

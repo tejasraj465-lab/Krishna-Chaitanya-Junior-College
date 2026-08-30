@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
 import { MessageCircle, ArrowRight } from 'lucide-react';
-import { LegacyModal } from './LegacyModal';
+import { imageKitSrc, imageKitSrcSet } from '../utils/images';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -11,7 +11,10 @@ import 'swiper/css/effect-fade';
 
 import { heroSlides } from '../data/heroData';
 import { AFFILIATION_LOGOS, COLLEGE_INFO } from '../data/collegeData';
-import { imageKitSrc } from '../utils/images';
+
+const LegacyModal = lazy(() =>
+  import('./LegacyModal').then((module) => ({ default: module.LegacyModal }))
+);
 
 interface HeroProps {
   onOpenApplyModal?: () => void;
@@ -63,7 +66,7 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
         <Swiper
           effect="fade"
           fadeEffect={{ crossFade: true }}
-          loop={true}
+          rewind={true}
           autoplay={{
             delay: 4500,
             disableOnInteraction: false,
@@ -80,8 +83,12 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
             <SwiperSlide key={slide.id}>
               <div className="relative w-full h-full bg-[#020e28] flex items-center justify-center p-0.5 sm:p-2 overflow-hidden">
                 <img
-                  src={imageKitSrc(slide.image, index === 0 ? 1400 : 1100)}
+                  src={imageKitSrc(slide.image, index === 0 ? 960 : 800)}
+                  srcSet={imageKitSrcSet(slide.image)}
+                  sizes="100vw"
                   alt={slide.title}
+                  width={1400}
+                  height={700}
                   loading={index === 0 ? 'eager' : 'lazy'}
                   decoding="async"
                   fetchPriority={index === 0 ? 'high' : 'low'}
@@ -181,10 +188,13 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
                 >
                   <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center shrink-0 rounded-lg bg-slate-50 p-1.5 sm:p-2">
                     <img
-                      src={logo}
+                      src={imageKitSrc(logo, 160)}
                       alt={alt}
+                      width={80}
+                      height={80}
                       className="max-w-full max-h-full object-contain drop-shadow-sm"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <p className="text-[9px] sm:text-xs text-[#0B3C91] font-bold text-center leading-snug">
@@ -249,12 +259,16 @@ export const HeroSlider: React.FC<HeroProps> = ({ onOpenApplyModal }) => {
         }
       `}      </style>
 
-      <LegacyModal
-        variant="story"
-        open={showLegacyModal}
-        onClose={() => setShowLegacyModal(false)}
-        onOpenApplyModal={onOpenApplyModal}
-      />
+      {showLegacyModal && (
+        <Suspense fallback={null}>
+          <LegacyModal
+            variant="story"
+            open={showLegacyModal}
+            onClose={() => setShowLegacyModal(false)}
+            onOpenApplyModal={onOpenApplyModal}
+          />
+        </Suspense>
+      )}
     </section>
   );
 };
