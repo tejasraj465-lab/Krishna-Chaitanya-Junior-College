@@ -1,0 +1,5 @@
+Upload EVERY file in this folder into Hostinger public_html (not the folder itself).
+Turn on "Show hidden files" so .htaccess and .user.ini are uploaded.
+
+Then on the server copy api/gemini-config.example.php to api/gemini-config.php
+and paste your Gemini API key. See HOSTINGER.md in the project.

@@ -20,5 +20,4 @@ yarn-error.log*
 .vercel
 .env*
 !.env.example
-hostinger-upload/
 kcjcnellore-hostinger-upload.zip

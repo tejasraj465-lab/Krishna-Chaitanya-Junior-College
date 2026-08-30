@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+Disallow: /api/
+Disallow: /gemini-config.php
+
+Sitemap: https://kcjcnellore.com/sitemap.xml
