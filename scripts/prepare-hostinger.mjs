@@ -1,10 +1,11 @@
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = join(root, 'dist');
 const hostingerDir = join(root, 'hostinger');
+const uploadDir = join(root, 'hostinger-upload');
 
 if (!existsSync(distDir)) {
   throw new Error('dist/ is missing. Run vite build first.');
@@ -28,6 +29,9 @@ and paste your Gemini API key. See HOSTINGER.md in the project.
 `
 );
 
-console.log('Hostinger files copied into dist/');
-console.log('Upload the CONTENTS of dist/ to Hostinger public_html.');
+rmSync(uploadDir, { recursive: true, force: true });
+cpSync(distDir, uploadDir, { recursive: true });
+
+console.log('Hostinger files copied into dist/ and hostinger-upload/');
+console.log('Upload the CONTENTS of hostinger-upload/ to Hostinger public_html.');
 console.log('See HOSTINGER.md for the full checklist.');
