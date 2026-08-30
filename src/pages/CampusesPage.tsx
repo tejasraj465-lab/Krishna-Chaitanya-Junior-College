@@ -200,7 +200,7 @@ export const CampusesPage: React.FC<CampusesPageProps> = ({
                 key={campus.id}
                 campus={campus}
                 onViewCampus={() => onNavigateToCampus(campus.id)}
-                onApply={() => onOpenApplyModal(undefined, campus.name)}
+                onApply={() => onOpenApplyModal(undefined, campus.id)}
               />
             ))}
           </div>

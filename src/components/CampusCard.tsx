@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Phone, ExternalLink, ChevronRight, Building2, Home } from 'lucide-react';
 import { Campus } from '../types';
+import { toTelHref } from '../data/collegeData';
 
 interface CampusCardProps {
   campus: Campus;
@@ -82,7 +83,7 @@ export const CampusCard: React.FC<CampusCardProps> = ({
         )}
 
         <a
-          href={`tel:${campus.phone}`}
+          href={toTelHref(campus.phone)}
           className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all"
         >
           <Phone className="w-3.5 h-3.5 text-[#0B3C91]" aria-hidden="true" />

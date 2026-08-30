@@ -64,7 +64,7 @@ const persistCurrentScroll = (activeSection?: string) => {
 
 const getCampusFromSlug = (slug: string | null) => {
   if (!slug) return null;
-  return CAMPUSES.find((campus) => slugify(campus.id) === slugify(slug) || slugify(campus.name) === slugify(slug)) || null;
+  return CAMPUSES.find((campus) => slugify(campus.id) === slugify(slug)) || null;
 };
 
 const getRouteState = (pathname: string) => {
@@ -149,7 +149,7 @@ const getCampusCategoryFromSearch = (search = window.location.search): CampusCat
 export default function App() {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [applyCourse, setApplyCourse] = useState('MPC');
-  const [applyCampus, setApplyCampus] = useState('Nellore Main Residential Campus');
+  const [applyCampus, setApplyCampus] = useState(CAMPUSES[0]?.id ?? '');
 
   const [isAIGuideOpen, setIsAIGuideOpen] = useState(false);
   const [isCampusVisitOpen, setIsCampusVisitOpen] = useState(false);
@@ -346,7 +346,7 @@ export default function App() {
     setPendingSection(nextSection);
     setRestoreScrollY(null);
     setActiveSection(
-      nextRouteState.routeKey === 'home' ? (nextSection || 'why-choose') : nextRouteState.routeKey
+      nextRouteState.routeKey === 'home' ? (nextSection || 'hero') : nextRouteState.routeKey
     );
 
     // Explicit forward navigation to a new page starts at the top.
@@ -548,7 +548,7 @@ export default function App() {
             key={selectedProgramId}
             programId={selectedProgramId}
             onClose={() => setSelectedProgramId(null)}
-            onApplyForProgram={(programName) => handleOpenApplyModal(programName)}
+            onApplyForProgram={(stream) => handleOpenApplyModal(stream)}
           />
         )}
       </AnimatePresence>

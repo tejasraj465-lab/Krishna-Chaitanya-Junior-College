@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, MapPin, CheckCircle2, Clock } from 'lucide-react';
-import { CAMPUSES, COLLEGE_INFO } from '../data/collegeData';
+import { CAMPUSES, COLLEGE_INFO, campusFormLabel } from '../data/collegeData';
 import { ThemedSelect } from './ui/ThemedSelect';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import {
   openExternalUrl,
   normalizePhoneDigits,
@@ -22,7 +23,7 @@ export const CampusVisitModal: React.FC<CampusVisitModalProps> = ({ isOpen, onCl
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    campus: CAMPUSES[0].name,
+    campus: CAMPUSES[0].id,
     visitDate: '',
     timeSlot: 'Morning (10:00 AM - 12:00 PM)'
   });
@@ -31,6 +32,8 @@ export const CampusVisitModal: React.FC<CampusVisitModalProps> = ({ isOpen, onCl
   const [visitRefId, setVisitRefId] = useState('');
   const [formError, setFormError] = useState('');
   const isSubmittingRef = useRef(false);
+
+  useBodyScrollLock(isOpen);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +49,7 @@ export const CampusVisitModal: React.FC<CampusVisitModalProps> = ({ isOpen, onCl
       return;
     }
 
-    if (!CAMPUSES.some((campus) => campus.name === formData.campus)) {
+    if (!CAMPUSES.some((campus) => campus.id === formData.campus)) {
       setFormError('Please select a valid campus.');
       return;
     }
@@ -58,21 +61,22 @@ export const CampusVisitModal: React.FC<CampusVisitModalProps> = ({ isOpen, onCl
     setVisitRefId(generatedRef);
     setBooked(true);
 
+    const selectedCampus = CAMPUSES.find((campus) => campus.id === formData.campus);
+    const campusLabel = selectedCampus ? campusFormLabel(selectedCampus) : formData.campus;
+
     const waText = `*Guided Campus Visit Request*
 ----------------------------------
 🆔 Ref ID: ${generatedRef}
 👤 Name: ${sanitizeForWhatsAppText(name)}
 📱 Phone: ${phone}
-🏫 Campus: ${sanitizeForWhatsAppText(formData.campus, 120)}
+🏫 Campus: ${sanitizeForWhatsAppText(campusLabel, 120)}
 📅 Preferred Date: ${formData.visitDate || 'Tomorrow'}
 ⏰ Time Slot: ${sanitizeForWhatsAppText(formData.timeSlot, 80)}
 ----------------------------------
 Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would like to schedule a physical campus tour for our family.`;
 
-    setTimeout(() => {
-      openExternalUrl(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(waText)}`);
-      isSubmittingRef.current = false;
-    }, 1000);
+    openExternalUrl(`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(waText)}`);
+    isSubmittingRef.current = false;
   };
 
   if (!isOpen) return null;
@@ -116,7 +120,7 @@ Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would 
                     required
                     placeholder="Enter full name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: sanitizePersonName(e.target.value) })}
+                    onChange={(e) => setFormData({ ...formData, name: sanitizePersonName(e.target.value, { trim: false }) })}
                     maxLength={80}
                     className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-medium outline-none focus:border-[#0B3C91] bg-slate-50"
                   />
@@ -144,7 +148,7 @@ Hello Krishna Chaitanya Team, my visit reference ID is ${generatedRef}. I would 
                     id="visit-campus"
                     icon={MapPin}
                     value={formData.campus}
-                    options={CAMPUSES.map((campus) => ({ value: campus.name, label: campus.name }))}
+                    options={CAMPUSES.map((campus) => ({ value: campus.id, label: campusFormLabel(campus) }))}
                     onChange={(campus) => setFormData({ ...formData, campus })}
                   />
                 </div>

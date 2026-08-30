@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { CheckCircle, ChevronDown, X } from 'lucide-react';
 import { Course } from '../types';
 import { CourseStreamDetail } from '../data/courseStreamDetails';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface CourseStreamDetailModalProps {
   course: Course;
@@ -51,6 +52,7 @@ export const CourseStreamDetailModal: React.FC<CourseStreamDetailModalProps> = (
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  useBodyScrollLock(true);
 
   const whyChooseTitle =
     course.code === 'Long Term' ? 'Why Choose KCJC Long Term?' : `Why Choose KCJC ${course.code}?`;
@@ -61,8 +63,6 @@ export const CourseStreamDetailModal: React.FC<CourseStreamDetailModalProps> = (
 
   useEffect(() => {
     previousFocusRef.current = document.activeElement as HTMLElement;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
 
     if (bodyRef.current) {
       bodyRef.current.scrollTop = 0;
@@ -103,7 +103,6 @@ export const CourseStreamDetailModal: React.FC<CourseStreamDetailModalProps> = (
     return () => {
       window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = originalOverflow;
       previousFocusRef.current?.focus();
     };
   }, [course.id, handleClose]);

@@ -1,3 +1,5 @@
+import { ADMISSION_YEAR } from './collegeData';
+
 export const KCJC_ADVANTAGE_PAGE = {
   eyebrow: 'WHY KCJC',
   title: 'WHY THOUSANDS OF PARENTS TRUST KRISHNA CHAITANYA',
@@ -233,5 +235,5 @@ export const KCJC_ADVANTAGE_PAGE = {
   finalHeading: 'Begin Your Journey Towards Academic Excellence',
   finalDescription:
     'Whether your aspiration is to become an engineer, doctor, chartered accountant, entrepreneur, civil servant, or future leader, Krishna Chaitanya Junior College provides the academic foundation, guidance, and opportunities to help you achieve your goals.',
-  finalBadge: 'Admissions Open for 2026–27',
+  finalBadge: `Admissions Open for ${ADMISSION_YEAR}`,
 } as const;

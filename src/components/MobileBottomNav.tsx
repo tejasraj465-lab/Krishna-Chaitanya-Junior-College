@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, Send } from 'lucide-react';
-import { COLLEGE_INFO } from '../data/collegeData';
+import { COLLEGE_INFO, toTelHref } from '../data/collegeData';
 
 interface MobileBottomNavProps {
   onOpenApplyModal: () => void;
@@ -13,7 +13,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenApplyMod
       <div className="grid grid-cols-2 gap-2 max-w-md mx-auto items-center">
         {/* Call Button */}
         <a
-          href={`tel:${COLLEGE_INFO.phonePrimary}`}
+          href={toTelHref(COLLEGE_INFO.phonePrimary)}
           className="flex items-center justify-center gap-2 h-12 min-h-[48px] bg-blue-900/90 text-white rounded-[16px] hover:bg-blue-800 active:scale-95 transition-all text-xs font-bold border border-blue-500/30 px-3 cursor-pointer"
           aria-label="Call College Desk"
         >

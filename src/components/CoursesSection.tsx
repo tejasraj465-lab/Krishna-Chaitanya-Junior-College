@@ -11,7 +11,7 @@ import {
   ChevronRight,
   Sparkles,
 } from 'lucide-react';
-import { COURSES, COLLEGE_INFO } from '../data/collegeData';
+import { ADMISSION_YEAR, COURSES, COLLEGE_INFO } from '../data/collegeData';
 import { COURSE_CATEGORIES } from '../data/courseDetailsData';
 import { getCourseStreamDetail } from '../data/courseStreamDetails';
 import { CourseStreamDetailModal } from './CourseStreamDetailModal';
@@ -59,7 +59,7 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({
       <Container className="relative z-10">
         
         <SectionHeader
-          eyebrow="Programs Offered | Admissions 2026–2027"
+          eyebrow={`Programs Offered | Admissions ${ADMISSION_YEAR}`}
           title="Choose the Right Program for Your Future"
           description="Whether your goal is IIT, Medicine, Commerce, CA/CMA or other competitive examinations, Krishna Chaitanya offers specialized programs designed to help you succeed."
           className="max-sm:mb-4 max-sm:!space-y-1.5 max-sm:[&>span]:text-[10px] max-sm:[&>h2]:text-lg max-sm:[&>p]:text-[11px] max-sm:[&>p]:line-clamp-2"

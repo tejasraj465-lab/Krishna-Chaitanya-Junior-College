@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import { X, MessageCircle, CheckCircle2, MapPin, ChevronDown } from 'lucide-react';
 import { Button } from './ui';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
-import { COLLEGE_INFO } from '../data/collegeData';
+import { ADMISSION_YEAR, COLLEGE_INFO } from '../data/collegeData';
 
 const LEGACY_STORY = [
   'Established in 1998, Krishna Chaitanya Junior College was founded with a vision of providing quality Intermediate education that empowers students with knowledge, discipline, confidence, and strong values.',
@@ -341,7 +341,7 @@ const WhyKcjcBody: React.FC<{
 
       <section className="rounded-2xl bg-gradient-to-br from-[#0B3C91] via-[#072B6B] to-[#031333] text-white p-5 sm:p-6 text-center space-y-3">
         <span className="inline-flex bg-[#FBBF24] text-[#0B3C91] font-extrabold text-[10px] sm:text-xs px-3 py-1 rounded-full uppercase tracking-wider">
-          Admissions Open for 2026–27
+          Admissions Open for {ADMISSION_YEAR}
         </span>
         <h4 className="text-lg sm:text-xl font-bold font-serif leading-snug text-white">
           Begin Your Journey Towards Academic Excellence

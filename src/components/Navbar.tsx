@@ -12,7 +12,7 @@ import {
   ShieldCheck,
   BookOpen
 } from 'lucide-react';
-import { COLLEGE_INFO } from '../data/collegeData';
+import { ADMISSION_YEAR, COLLEGE_INFO, toTelHref } from '../data/collegeData';
 import { COURSE_CATEGORIES } from '../data/courseDetailsData';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
@@ -207,7 +207,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Left: Contact Info */}
           <div className="flex items-center gap-2 sm:gap-4 text-slate-200 shrink-0">
             <a 
-              href={`tel:${COLLEGE_INFO.phonePrimary}`} 
+              href={toTelHref(COLLEGE_INFO.phonePrimary)} 
               className="flex items-center gap-1 hover:text-[#FBBF24] transition-colors"
             >
               <Phone className="w-3 h-3 text-[#FBBF24]" />
@@ -224,11 +224,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 sm:gap-3 font-medium">
             <span className="bg-[#FBBF24] text-[#0B3C91] font-black px-1.5 sm:px-2 py-0.5 rounded text-label shrink-0 flex items-center gap-1 shadow-sm">
               <Sparkles className="w-2.5 h-2.5 shrink-0" />
-              <span>ADMISSIONS 2027-28 OPEN</span>
+              <span>ADMISSIONS {ADMISSION_YEAR} OPEN</span>
             </span>
 
             <a 
-              href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya Admission Team, I want to know about Intermediate Admissions 2026.')}`}
+              href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(`Hello Krishna Chaitanya Admission Team, I want to know about Intermediate Admissions ${ADMISSION_YEAR}.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-semibold transition-colors"
@@ -429,14 +429,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="pb-1 space-y-2">
             <div className="grid grid-cols-2 gap-2">
               <a
-                href={`tel:${COLLEGE_INFO.phonePrimary}`}
+                href={toTelHref(COLLEGE_INFO.phonePrimary)}
                 className="flex items-center justify-center gap-1.5 bg-slate-900 text-white text-xs font-bold py-3 min-h-[48px] px-3 rounded-xl shadow-sm hover:bg-slate-800 transition-all cursor-pointer"
               >
                 <Phone className="w-4 h-4 text-[#FBBF24]" />
                 <span>Call Helpline</span>
               </a>
               <a
-                href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya Admission Team, I want to know about Intermediate Admissions 2026.')}`}
+                href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(`Hello Krishna Chaitanya Admission Team, I want to know about Intermediate Admissions ${ADMISSION_YEAR}.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-1.5 bg-emerald-600 text-white text-xs font-bold py-3 min-h-[48px] px-3 rounded-xl shadow-sm hover:bg-emerald-700 transition-all cursor-pointer"
@@ -535,7 +535,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => { setMobileMenuOpen(false); onOpenApplyModal(); }}
               className="w-full py-3 bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer uppercase tracking-wider active:scale-98"
             >
-              <span>Apply Online For 2026-27</span>
+              <span>Apply Online For {ADMISSION_YEAR}</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

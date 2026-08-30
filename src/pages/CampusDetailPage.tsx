@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Phone, Mail, ExternalLink, Building2 } from 'lucide-react';
 import { Campus } from '../types';
+import { toTelHref } from '../data/collegeData';
 import { PageBanner } from '../components/PageBanner';
 
 interface CampusDetailPageProps {
@@ -150,13 +151,13 @@ export const CampusDetailPage: React.FC<CampusDetailPageProps> = ({
 
               <div className="flex flex-wrap gap-3">
                 <a
-                  href={`tel:${campus.phone}`}
+                  href={toTelHref(campus.phone)}
                   className="inline-flex items-center justify-center rounded-xl bg-white/10 px-5 py-3 text-xs font-bold text-white border border-white/15 transition-all hover:bg-white/20"
                 >
                   Call Campus
                 </a>
                 <button
-                  onClick={() => onOpenApplyModal(undefined, campus.name)}
+                  onClick={() => onOpenApplyModal(undefined, campus.id)}
                   className="inline-flex items-center justify-center rounded-xl bg-[#F97316] px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-white shadow-md transition-all hover:bg-[#EA580C]"
                 >
                   Apply Now

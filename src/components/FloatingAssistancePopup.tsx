@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Bot, MessageCircle, Phone, X, Sparkles, ChevronRight } from 'lucide-react';
-import { COLLEGE_INFO } from '../data/collegeData';
+import { ADMISSION_YEAR, COLLEGE_INFO } from '../data/collegeData';
 
 interface FloatingAssistancePopupProps {
   onOpenAIGuide: () => void;
@@ -52,7 +52,7 @@ export const FloatingAssistancePopup: React.FC<FloatingAssistancePopupProps> = (
                   Need Admissions Help?
                 </h4>
                 <span className="bg-amber-100 text-[#0B3C91] text-[9px] sm:text-[10px] font-extrabold px-1 sm:px-1.5 py-0.5 rounded">
-                  2027-28
+                  {ADMISSION_YEAR}
                 </span>
               </div>
               <p className="text-[9px] sm:text-[11px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">
@@ -101,7 +101,7 @@ export const FloatingAssistancePopup: React.FC<FloatingAssistancePopupProps> = (
 
           {/* WhatsApp Direct Chat Button */}
           <a
-            href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Krishna Chaitanya Junior College! I want to enquire about Intermediate 2026 Admissions.')}`}
+            href={`https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(`Hello Krishna Chaitanya Junior College! I want to enquire about Intermediate ${ADMISSION_YEAR} Admissions.`)}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsVisible(false)}

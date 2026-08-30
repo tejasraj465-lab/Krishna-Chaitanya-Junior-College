@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import { X } from 'lucide-react';
 import { NccExploreContent } from './NccExploreContent';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface NccExploreModalProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ export const NccExploreModal: React.FC<NccExploreModalProps> = ({ isOpen, onClos
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  useBodyScrollLock(isOpen);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -23,8 +25,6 @@ export const NccExploreModal: React.FC<NccExploreModalProps> = ({ isOpen, onClos
     if (!isOpen) return;
 
     previousFocusRef.current = document.activeElement as HTMLElement;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
 
     if (bodyRef.current) bodyRef.current.scrollTop = 0;
 
@@ -61,7 +61,6 @@ export const NccExploreModal: React.FC<NccExploreModalProps> = ({ isOpen, onClos
     return () => {
       window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = originalOverflow;
       previousFocusRef.current?.focus();
     };
   }, [isOpen, handleClose]);

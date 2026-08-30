@@ -9,7 +9,7 @@ export const COLLEGE_INFO = {
   phoneSecondary: "+91 63022 75510",
   whatsappNumber: "916302275510",
   email: "admissions@kcjc.edu.in",
-  website: "https://kcjc-phi.vercel.app",
+  website: "https://krishna-chaitanya-junior-college.vercel.app",
   logo: "https://ik.imagekit.io/tejasraju/kcjc%20logo.jpg",
   admissionExam: "KCJC Integrated Counseling & Aptitude Assessment",
   headquarters: "Nellore, Andhra Pradesh",
@@ -22,6 +22,12 @@ export const COLLEGE_INFO = {
   }
 };
 
+export const ADMISSION_YEAR = '2027-28';
+
+export const toTelHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`;
+
+export const campusFormLabel = (campus: Campus) => `${campus.name} (${campus.category})`;
+
 export const AFFILIATION_LOGOS = {
   bieap: 'https://ik.imagekit.io/tejasraju/board%20of%20intermedite%20.png',
   ncc: 'https://ik.imagekit.io/tejasraju/ncc.jpg',
@@ -32,7 +38,7 @@ export const HERO_SLIDES = [
     id: 1,
     title: "India's Rank 1 Junior College for IIT-JEE & NEET Coaching",
     subtitle: "Consistently producing AIR Top 10 Ranks in JEE Advanced, NEET & State EAMCET.",
-    badge: "ADMISSIONS OPEN 2026-27",
+    badge: `ADMISSIONS OPEN ${ADMISSION_YEAR}`,
     image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=80",
     ctaPrimary: "Apply For Admission",
     ctaSecondary: "Talk To Counselor"

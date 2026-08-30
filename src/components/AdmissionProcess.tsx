@@ -9,7 +9,7 @@ import {
   Sparkles,
   ChevronRight
 } from 'lucide-react';
-import { ADMISSION_STEPS } from '../data/collegeData';
+import { ADMISSION_STEPS, ADMISSION_YEAR } from '../data/collegeData';
 
 interface AdmissionProcessProps {
   onOpenApplyModal: () => void;
@@ -36,7 +36,7 @@ export const AdmissionProcess: React.FC<AdmissionProcessProps> = ({ onOpenApplyM
             Hassle-Free 4-Step Process
           </span>
           <p className="text-sm sm:text-base text-slate-600 mt-2">
-            Clear, transparent, and fast online or offline admission workflow for 2026-27 session.
+            Clear, transparent, and fast online or offline admission workflow for {ADMISSION_YEAR} session.
           </p>
         </div>
 

@@ -18,6 +18,7 @@ import { resolveCollegeGuideReply } from '../data/aiKnowledgeBase';
 import { CuteRobotIcon } from './CuteRobotIcon';
 import { sanitizeInternalPath, sanitizeSectionId } from '../utils/navigationAllowlist';
 import { openExternalUrl, stripControlChars } from '../utils/security';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface AICampusGuideProps {
   isOpen: boolean;
@@ -34,6 +35,7 @@ export const AICampusGuide: React.FC<AICampusGuideProps> = ({
   onNavigateToSection,
   onNavigateToPath,
 }) => {
+  useBodyScrollLock(isOpen);
   const MAIN_MENU_OPTIONS = [
     '🏛️ About College',
     '📚 Courses & Streams',

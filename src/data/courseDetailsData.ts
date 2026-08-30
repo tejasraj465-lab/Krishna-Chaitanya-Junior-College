@@ -306,6 +306,62 @@ export const PROGRAM_DETAILS: Record<string, ProgramDetail> = {
       'Career guidance for higher education and professional opportunities'
     ],
     outcome: 'The CEC Program enables students to achieve excellent results in Intermediate examinations while preparing them for higher education in commerce, law, management, public administration, and civil services.'
+  },
+
+  'mpc-longterm': {
+    id: 'mpc-longterm',
+    stream: 'MPC',
+    code: 'MPC LongTerm',
+    name: 'MPC Long Term Program (IIT-JEE Repeater)',
+    badge: 'LongTerm Repeater Batch',
+    tagline: 'Intensive Re-Attempt JEE Main & Advanced Rank Maximization',
+    overview: [
+      'The MPC Long Term Program at Krishna Chaitanya Junior College is designed for dedicated repeater students aiming for a higher rank in JEE Main and JEE Advanced. The batch revises the complete Mathematics, Physics, and Chemistry syllabus with deeper conceptual clarity and exam-focused problem solving.',
+      'Students receive structured practice, weekly grand tests, and continuous mentoring so they can close previous learning gaps and compete for admission into premier engineering institutes.'
+    ],
+    structure: [
+      'Intensive JEE Main and Advanced syllabus revision',
+      'Concept-based teaching in Mathematics, Physics, and Chemistry',
+      'Daily practice modules and problem-solving sessions',
+      'Weekly grand tests with detailed performance analysis',
+      'Full-length JEE pattern simulations',
+      'Continuous mentoring and doubt clarification'
+    ],
+    features: [
+      'Exclusive JEE-focused study material',
+      'Regular grand tests and rank-oriented feedback',
+      'Personalized assignments for weak areas',
+      'Faculty mentoring throughout the repeater year',
+      'Parent visibility of academic progress'
+    ],
+    outcome: 'The MPC Long Term Program helps repeater students rebuild their JEE preparation and aim for a stronger rank in JEE Main and Advanced.'
+  },
+
+  'cma-longterm': {
+    id: 'cma-longterm',
+    stream: 'MEC',
+    code: 'CA/CMA LongTerm',
+    name: 'CA / CMA Foundation Long Term Program',
+    badge: 'LongTerm Repeater Batch',
+    tagline: 'Focused Repeater Preparation for CA & CMA Foundation',
+    overview: [
+      'The CA / CMA Foundation Long Term Program is designed for students who want a dedicated repeater year to clear CA or CMA Foundation with stronger conceptual grounding in commerce, accounts, and quantitative aptitude.',
+      'The program combines Intermediate-aligned commerce coaching with professional-course practice tests, mentoring, and structured revision.'
+    ],
+    structure: [
+      'Complete Foundation syllabus revision',
+      'Concept teaching in Accounts, Economics, and Business studies',
+      'Regular practice tests and assessments',
+      'Structured revision cycles before examinations',
+      'Continuous mentoring and academic support'
+    ],
+    features: [
+      'Professional-course oriented study plan',
+      'Regular performance evaluation',
+      'Doubt clarification and mentoring',
+      'Career guidance for CA, CMA, and related pathways'
+    ],
+    outcome: 'Students gain the extra time and focused practice needed to clear CA / CMA Foundation and continue into professional commerce careers.'
   }
 };
 

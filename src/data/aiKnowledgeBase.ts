@@ -1,5 +1,6 @@
 import {
   ADMISSION_STEPS,
+  ADMISSION_YEAR,
   CAMPUSES,
   CHAIRMAN_MESSAGE,
   COLLEGE_INFO,
@@ -119,8 +120,8 @@ HOMEPAGE SECTION ORDER (top to bottom):
 APPLY / ADMISSION (no #admissions section on homepage — use Apply buttons):
 • Mobile: bottom bar "Apply Now" OR floating CTAs
 • Desktop: navbar "Apply Online" OR hero / final CTA buttons
-• Admission modal collects: name, phone, stream (MPC/BiPC/MEC/CEC), preferred campus
-• Submits with auto-generated Application ID (KCJC-2026-XXXXX) and opens WhatsApp to counselor
+• Admission modal collects: name, phone, stream (MPC/BiPC/MEC/CEC/Long Term), preferred campus
+• Submits with auto-generated Application ID (KCJC-${ADMISSION_YEAR.slice(0, 4)}-XXXXX) and opens WhatsApp to counselor
 • Exact fees, scholarships, and seat availability are NOT on the website — always direct to WhatsApp ${COLLEGE_INFO.phonePrimary}
 
 CAMPUS DIRECTORY & FILTERS:

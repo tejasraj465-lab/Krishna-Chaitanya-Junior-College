@@ -19,6 +19,8 @@ import {
   Target,
 } from 'lucide-react';
 import { PROGRAM_DETAILS, ProgramDetail } from '../data/courseDetailsData';
+import { ADMISSION_YEAR } from '../data/collegeData';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface CourseDetailModalProps {
   programId: string | null;
@@ -66,6 +68,8 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
   const program: ProgramDetail | null =
     programId && PROGRAM_DETAILS[programId] ? PROGRAM_DETAILS[programId] : null;
 
+  useBodyScrollLock(Boolean(program));
+
   const handleClose = useCallback(() => {
     onClose();
   }, [onClose]);
@@ -74,8 +78,6 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
     if (!program) return;
 
     previousFocusRef.current = document.activeElement as HTMLElement;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
 
     if (bodyRef.current) {
       bodyRef.current.scrollTop = 0;
@@ -116,7 +118,6 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
     return () => {
       window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = originalOverflow;
       previousFocusRef.current?.focus();
     };
   }, [programId, program, handleClose]);
@@ -340,7 +341,7 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
         {/* Footer */}
         <div className="shrink-0 px-4 py-3 sm:px-5 sm:py-3.5 bg-slate-100 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2.5">
           <p className="text-[11px] sm:text-xs text-slate-500 text-center sm:text-left">
-            Admissions open for 2026-27 batch across all campuses.
+            Admissions open for {ADMISSION_YEAR} batch across all campuses.
           </p>
           <div className="flex items-center gap-2.5 w-full sm:w-auto">
             <button
@@ -354,7 +355,7 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
               type="button"
               onClick={() => {
                 handleClose();
-                onApplyForProgram(program.name);
+                onApplyForProgram(program.id.includes('longterm') ? 'Long Term' : program.stream);
               }}
               className="flex-1 sm:flex-none px-5 py-2.5 bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5 uppercase tracking-wider min-h-[44px]"
             >

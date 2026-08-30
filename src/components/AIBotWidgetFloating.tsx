@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquareMore, Sparkles, X, MessageCircle } from 'lucide-react';
-import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
+import { ADMISSION_YEAR, COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
 import { CuteRobotIcon } from './CuteRobotIcon';
 
 interface AIBotWidgetFloatingProps {
@@ -22,7 +22,7 @@ export const AIBotWidgetFloating: React.FC<AIBotWidgetFloatingProps> = ({
   useEffect(() => {
     const messages = [
       "Have questions? Ask AI Guide 🤖",
-      "2026-27 Admissions Open! 🎓",
+      `${ADMISSION_YEAR} Admissions Open! 🎓`,
       "Ask about JEE/NEET Coaching 🏆",
       `${CAMPUSES.length} Nellore Campuses Info 📍`
     ];

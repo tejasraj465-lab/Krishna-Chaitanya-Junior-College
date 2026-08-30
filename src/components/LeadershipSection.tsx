@@ -75,7 +75,7 @@ export const LeadershipSection: React.FC = () => {
                   loading="lazy"
                 />
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-[#F97316] leading-tight">
+                  <p className="text-sm sm:text-base font-bold uppercase tracking-wide text-[#F97316] leading-tight">
                     {leader.title}
                   </p>
                   <p className="text-sm sm:text-base font-bold text-[#0B3C91] font-serif leading-snug mt-0.5">
@@ -149,7 +149,7 @@ export const LeadershipSection: React.FC = () => {
                       >
                         {selectedLeader.name}
                       </h3>
-                      <div className="inline-block bg-blue-50 text-[#0B3C91] px-3 py-1 rounded-lg text-xs font-bold border border-blue-100">
+                      <div className="inline-block bg-blue-50 text-[#0B3C91] px-3 py-1 rounded-lg text-sm font-bold border border-blue-100">
                         {selectedLeader.title}
                       </div>
                     </div>

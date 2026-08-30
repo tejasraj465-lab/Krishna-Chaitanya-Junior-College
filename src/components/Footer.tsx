@@ -11,7 +11,7 @@ import {
   Building2,
   GraduationCap,
 } from 'lucide-react';
-import { COLLEGE_INFO, COURSES, CAMPUSES } from '../data/collegeData';
+import { COLLEGE_INFO, COURSES, CAMPUSES, toTelHref } from '../data/collegeData';
 
 interface FooterProps {
   onNavigateHome?: () => void;
@@ -167,7 +167,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSect
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#FBBF24] shrink-0" />
                 <a
-                  href={`tel:${COLLEGE_INFO.phonePrimary.replace(/\s/g, '')}`}
+                  href={toTelHref(COLLEGE_INFO.phonePrimary)}
                   className="text-slate-200 hover:text-[#FBBF24] transition-colors font-semibold"
                 >
                   {COLLEGE_INFO.phonePrimary}
@@ -237,31 +237,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateToSect
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4 text-center sm:text-left">
+        <div className="pt-8 flex items-center justify-center text-xs text-slate-500 text-center">
           <p>
             © {new Date().getFullYear()} {COLLEGE_INFO.name}. All Rights Reserved.
           </p>
-          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-4 gap-y-2 text-slate-400">
-            <a href="/overview.xml" className="hover:text-white transition-colors">
-              Overview sitemap
-            </a>
-            <span className="hidden sm:inline">•</span>
-            <a href="/campuses.xml" className="hover:text-white transition-colors">
-              Campuses sitemap
-            </a>
-            <span className="hidden sm:inline">•</span>
-            <a href="/life-at-kcjc.xml" className="hover:text-white transition-colors">
-              Life sitemap
-            </a>
-            <span className="hidden sm:inline">•</span>
-            <a href="/courses.xml" className="hover:text-white transition-colors">
-              Courses sitemap
-            </a>
-            <span className="hidden sm:inline">•</span>
-            <a href="/feeds/overview.xml" className="hover:text-white transition-colors">
-              RSS feeds
-            </a>
-          </div>
         </div>
       </div>
     </footer>

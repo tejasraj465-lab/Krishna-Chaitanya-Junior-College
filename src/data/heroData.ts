@@ -1,3 +1,5 @@
+import { ADMISSION_YEAR } from './collegeData';
+
 export interface HeroSlide {
   id: number;
   image: string;
@@ -11,7 +13,7 @@ export const heroSlides: HeroSlide[] = [
     id: 1,
     image: "https://ik.imagekit.io/tejasraju/1785400591860.png",
     title: "Krishna Chaitanya Educational Institutions",
-    subtitle: "28+ Years Academic Supremacy • Admissions Open 2026-27",
+    subtitle: `28+ Years Academic Supremacy • Admissions Open ${ADMISSION_YEAR}`,
     button: "Apply Now"
   },
   {
@@ -45,7 +47,7 @@ export const heroSlides: HeroSlide[] = [
   {
     id: 6,
     image: "https://ik.imagekit.io/tejasraju/1785400400281.png",
-    title: "Admissions Open for 2026-2027",
+    title: `Admissions Open for ${ADMISSION_YEAR}`,
     subtitle: "MPC • BiPC • MEC • CEC • CA/CMA • Long Term Batches",
     button: "Apply Today"
   }

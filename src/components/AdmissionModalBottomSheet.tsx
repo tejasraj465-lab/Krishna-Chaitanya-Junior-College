@@ -14,7 +14,7 @@ import {
   Copy,
   Check,
 } from 'lucide-react';
-import { COLLEGE_INFO, CAMPUSES } from '../data/collegeData';
+import { ADMISSION_YEAR, CAMPUSES, COLLEGE_INFO, campusFormLabel } from '../data/collegeData';
 import { ThemedSelect } from './ui/ThemedSelect';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import {
@@ -42,32 +42,41 @@ const STREAM_OPTIONS = [
   { value: 'BiPC', label: 'BiPC — NEET / AIIMS' },
   { value: 'MEC', label: 'MEC — CA / IPMAT' },
   { value: 'CEC', label: 'CEC — CLAT / IAS' },
+  { value: 'Long Term', label: 'Long Term — NEET / JEE / CA Repeater' },
 ];
 
 const CAMPUS_OPTIONS = CAMPUSES.map((campus) => ({
-  value: campus.name,
-  label: campus.name,
+  value: campus.id,
+  label: campusFormLabel(campus),
 }));
 
 const resolveStream = (course?: string) => {
   const raw = (course ?? 'MPC').trim();
+  if (/long\s*term/i.test(raw) || /longterm/i.test(raw)) return 'Long Term';
+  const exact = STREAM_OPTIONS.find((option) => option.value === raw);
+  if (exact) return exact.value;
   const match = STREAM_OPTIONS.find(
-    (option) => option.value === raw || raw.startsWith(option.value) || raw.includes(option.value)
+    (option) => raw.startsWith(option.value) || raw.includes(option.value)
   );
   return match?.value ?? 'MPC';
 };
 
 const resolveCampus = (campus?: string) => {
   const raw = (campus ?? '').trim();
-  const match = CAMPUS_OPTIONS.find((option) => option.value === raw);
-  return match?.value ?? CAMPUS_OPTIONS[0]?.value ?? '';
+  const match = CAMPUSES.find((item) => item.id === raw || item.name === raw);
+  return match?.id ?? CAMPUSES[0]?.id ?? '';
+};
+
+const campusDisplayName = (campusId: string) => {
+  const campus = CAMPUSES.find((item) => item.id === campusId);
+  return campus ? campusFormLabel(campus) : campusId;
 };
 
 export const AdmissionModalBottomSheet: React.FC<AdmissionModalProps> = ({
   isOpen,
   onClose,
   preSelectedCourse = 'MPC',
-  preSelectedCampus = CAMPUSES[0]?.name ?? '',
+  preSelectedCampus = CAMPUSES[0]?.id ?? '',
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -151,7 +160,7 @@ export const AdmissionModalBottomSheet: React.FC<AdmissionModalProps> = ({
     setFormError('');
 
     const randomDigits = Math.floor(10000 + Math.random() * 90000);
-    const generatedId = `KCJC-2026-${randomDigits}`;
+    const generatedId = `KCJC-${ADMISSION_YEAR.slice(0, 4)}-${randomDigits}`;
     setApplicationId(generatedId);
 
     try {
@@ -166,22 +175,20 @@ export const AdmissionModalBottomSheet: React.FC<AdmissionModalProps> = ({
 
     setSubmitted(true);
 
-    const waText = `*Krishna Chaitanya Junior College Online Admission Application 2026-27*
+    const campusLabel = campusDisplayName(formData.campus);
+    const waText = `*Krishna Chaitanya Junior College Online Admission Application ${ADMISSION_YEAR}*
 ---------------------------------------
 🆔 *Application ID:* ${generatedId}
 👤 *Student Name:* ${sanitizeForWhatsAppText(studentName)}
 📱 *Phone Number:* ${phone}
 🎓 *Course Stream:* ${sanitizeForWhatsAppText(formData.course, 80)}
-🏫 *Preferred Campus:* ${sanitizeForWhatsAppText(formData.campus, 120)}
+🏫 *Preferred Campus:* ${sanitizeForWhatsAppText(campusLabel, 120)}
 ---------------------------------------
 Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted my details on the website. Please guide me regarding seat booking & admission counseling.`;
 
     const waUrl = `https://wa.me/${COLLEGE_INFO.whatsappNumber}?text=${encodeURIComponent(waText)}`;
-
-    window.setTimeout(() => {
-      openExternalUrl(waUrl);
-      isSubmittingRef.current = false;
-    }, 1000);
+    openExternalUrl(waUrl);
+    isSubmittingRef.current = false;
   };
 
   if (!isOpen) return null;
@@ -221,7 +228,7 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
                 <Sparkles className="w-3 h-3" /> Quick WhatsApp Admission Form
               </span>
               <h3 id="admission-modal-title" className="text-lg sm:text-2xl font-extrabold font-serif text-[#0B3C91] leading-none whitespace-nowrap">
-                Apply For Admission 2027-28
+                Apply For Admission {ADMISSION_YEAR}
               </h3>
               <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">
                 Fill in these details to connect with our counselor on WhatsApp.
@@ -241,7 +248,7 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
                     required
                     placeholder="Student full name"
                     value={formData.studentName}
-                    onChange={(e) => setFormData({ ...formData, studentName: sanitizePersonName(e.target.value) })}
+                    onChange={(e) => setFormData({ ...formData, studentName: sanitizePersonName(e.target.value, { trim: false }) })}
                     maxLength={80}
                     autoComplete="name"
                     className={FIELD}
@@ -330,7 +337,7 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-[#0B3C91]/30 rounded-2xl p-4 text-left space-y-2 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Unique Application ID</span>
-                <span className="bg-emerald-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">ACTIVE 2026</span>
+                <span className="bg-emerald-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">ACTIVE {ADMISSION_YEAR.slice(0, 4)}</span>
               </div>
 
               <div className="flex items-center justify-between bg-white rounded-xl p-2.5 border border-blue-200">
@@ -369,7 +376,7 @@ Hello Admission Counselor! My Application ID is ${generatedId}. I have submitted
                   🎓 <strong className="text-slate-800">Stream:</strong> {formData.course}
                 </p>
                 <p>
-                  🏫 <strong className="text-slate-800">Campus:</strong> {formData.campus}
+                  🏫 <strong className="text-slate-800">Campus:</strong> {campusDisplayName(formData.campus)}
                 </p>
               </div>
             </div>

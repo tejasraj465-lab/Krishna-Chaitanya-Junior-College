@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageBanner } from '../components/PageBanner';
 import { CoursesSection } from '../components/CoursesSection';
+import { ADMISSION_YEAR } from '../data/collegeData';
 
 interface CoursesPageProps {
   onNavigateHome: () => void;
@@ -16,7 +17,7 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({
   return (
     <main className="w-full overflow-hidden">
       <PageBanner
-        eyebrow="Programmes 2026–27"
+        eyebrow={`Programmes ${ADMISSION_YEAR}`}
         title="Courses at KCJC"
         description="Intermediate MPC, BiPC, MEC, CEC and Long Term programmes with integrated IIT-JEE, NEET, EAPCET, CA and CMA coaching."
         currentLabel="Courses"
