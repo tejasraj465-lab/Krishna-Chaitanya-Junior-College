@@ -411,30 +411,32 @@ function googleMapsLinks(
   embedPb: string,
   lat: number,
   lng: number,
-  options?: { cid?: string; placeName?: string }
+  _options?: { cid?: string; placeName?: string }
 ) {
-  const query = options?.placeName ? encodeURIComponent(options.placeName) : `${lat},${lng}`;
-  const cid = options?.cid ? `&cid=${options.cid}` : '';
+  const coordinates = encodeURIComponent(`${lat},${lng}`);
+
   return {
-    googleMapUrl: `https://maps.google.com/maps?ll=${lat},${lng}&z=18&q=${query}${cid}`,
+    googleMapUrl: `https://www.google.com/maps/search/?api=1&query=${coordinates}`,
     googleMapEmbedUrl: `https://www.google.com/maps/embed?pb=${embedPb}`,
   };
 }
 
 const MAP_VASISTA_PRABHANJANA =
-  '!1m18!1m12!1m3!1d687.0708898310592!2d79.97957702346223!3d14.446341992487854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c8ccc93b1073b%3A0x9bac5b2a6ae702fc!2sKrishna%20Chaitanya%20Junior%20College!5e0!3m2!1sen!2sin!4v1786716857778!5m2!1sen!2sin';
+  '!1m18!1m12!1m3!1d3390.7672040354446!2d79.97707107447427!3d14.446544786021738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c8ccc93b1073b%3A0x9bac5b2a6ae702fc!2sKrishna%20Chaitanya%20Junior%20College!5e1!3m2!1sen!2sin!4v1788845745803!5m2!1sen!2sin';
 const MAP_SARVAGNA =
-  '!1m18!1m12!1m3!1d15453.97750542334!2d79.9763507457338!3d14.456277926208072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c8cba1c47259b%3A0x2896aa5d9e35c7da!2sKrishna%20Chaitanya%20Junior%20College!5e0!3m2!1sen!2sin!4v1786716955081!5m2!1sen!2sin';
-const MAP_DURGAHMITTA =
-  '!1m18!1m12!1m3!1d7727.669846163829!2d79.9629271030426!3d14.436675115743578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf3eeae81c64d%3A0x1e07483d5481abe3!2sKrishna%20Chaitanya%20junior%20college%20ac%20campus!5e0!3m2!1sen!2sin!4v1786717030464!5m2!1sen!2sin';
+  '!1m18!1m12!1m3!1d3390.5513895393265!2d79.99049217447462!3d14.460693386009233!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c8cba1c47259b%3A0x2896aa5d9e35c7da!2sKrishna%20Chaitanya%20Junior%20College!5e1!3m2!1sen!2sin!4v1788845787174!5m2!1sen!2sin';
+const MAP_DURGAHMITTA_BOYS =
+  '!1m18!1m12!1m3!1d3391.2165376559474!2d79.95819667447368!3d14.417043286047853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf306efd3e0af%3A0xb0ea89548b35aafa!2sKrishna%20Chaitanya%20junior%20College%20(Durgahmitta%20Days%20%26%20Residential%20Boys%20Campus)!5e1!3m2!1sen!2sin!4v1788845645087!5m2!1sen!2sin';
+const MAP_DURGAHMITTA_GIRLS =
+  '!1m18!1m12!1m3!1d275.19583581901685!2d79.96061776858265!3d14.41605053949927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf39ea54ec28d%3A0x157e05b0d3adc126!2skrishna%20chaitanya%20junior%20college%20(%20Durgahmitta%20girls)!5e0!3m2!1sen!2sin!4v1788877103522!5m2!1sen!2sin';
 const MAP_EINSTEIN =
-  '!1m18!1m12!1m3!1d3672.656137634467!2d79.96979091451986!3d14.4366419869599!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf3eeae81c64d%3A0x1e07483d5481abe3!2sKrishna%20Chaitanya%20junior%20college%20ac%20campus!5e1!3m2!1sen!2sin!4v1786717339625!5m2!1sen!2sin';
+  '!1m18!1m12!1m3!1d384.54159457535866!2d79.97214346096726!3d14.436664214043349!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf3eeae81c64d%3A0x1e07483d5481abe3!2sKrishna%20Chaitanya%20junior%20college%20ac%20campus!5e1!3m2!1sen!2sin!4v1788845365489!5m2!1sen!2sin';
 const MAP_BUCHI =
-  '!1m18!1m12!1m3!1d3670.9789614829688!2d79.8829399!3d14.537930399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c91d5e90b78d5%3A0x6158fee164579b7a!2sKrishna%20Chaitanya%20Junior%20College!5e1!3m2!1sen!2sin!4v1786717780330!5m2!1sen!2sin';
+  '!1m18!1m12!1m3!1d3039.9910328773562!2d79.88065472962822!3d14.537934668043004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c91d5e90b78d5%3A0x6158fee164579b7a!2sKrishna%20Chaitanya%20Junior%20College!5e1!3m2!1sen!2sin!4v1788845574640!5m2!1sen!2sin';
 const MAP_CHANDRAHASA =
-  '!1m18!1m12!1m3!1d7727.793933660585!2d79.97058479357906!3d14.433100900000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf37135e4f627%3A0xbe56081ae2864ba!2sKrishna%20Chaitanya%20junior%20College%20(%20Chandra%20hasa%20campus)%20nellore!5e0!3m2!1sen!2sin!4v1786717842835!5m2!1sen!2sin';
+  '!1m18!1m12!1m3!1d3390.9720778736987!2d79.97753707447401!3d14.433100886033642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf37135e4f627%3A0xbe56081ae2864ba!2sKrishna%20Chaitanya%20junior%20College%20(%20Chandra%20hasa%20campus)%20nellore!5e1!3m2!1sen!2sin!4v1788845599873!5m2!1sen!2sin';
 const MAP_GOMATHY =
-  '!1m17!1m12!1m3!1d588.4057585886683!2d79.9835011946338!3d14.429153805146619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e1!3m2!1sen!2sin!4v1786718520203!5m2!1sen!2sin';
+  '!1m18!1m12!1m3!1d590.8170158208053!2d79.98306016232968!3d14.42902183791095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4cf3ed2e382797%3A0x71f7578603b18909!2skrishna%20chaitanya%20junior%20college%20(%20Gomathy%20campus%20Girls%20Residential)!5e0!3m2!1sen!2sin!4v1788877312282!5m2!1sen!2sin';
 
 export const CAMPUSES: Campus[] = [
   {
@@ -447,7 +449,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'prabhanjana@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/prabanjana.jpeg?updatedAt=1786795637864',
-    ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446341992487854, 79.97957702346223, {
+    ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446544786021738, 79.97707107447427, {
       cid: '11217441009613341436',
       placeName: 'Krishna Chaitanya Junior College',
     }),
@@ -465,7 +467,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'vasista@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/vasista.jpeg?updatedAt=1786795637958',
-    ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446341992487854, 79.97957702346223, {
+    ...googleMapsLinks(MAP_VASISTA_PRABHANJANA, 14.446544786021738, 79.97707107447427, {
       cid: '11217441009613341436',
       placeName: 'Krishna Chaitanya Junior College',
     }),
@@ -483,7 +485,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'sarvagna@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/stonehouse%20pet%20.jpeg?updatedAt=1786795638164',
-    ...googleMapsLinks(MAP_SARVAGNA, 14.456277926208072, 79.9763507457338, {
+    ...googleMapsLinks(MAP_SARVAGNA, 14.460693386009233, 79.99049217447462, {
       cid: '2924712327086720986',
       placeName: 'Krishna Chaitanya Junior College',
     }),
@@ -501,9 +503,9 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'durgahmitta.girls@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/durghamitta%20girls.jpeg?updatedAt=1786795636835',
-    ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
-      cid: '2163777574222801891',
-      placeName: 'Krishna Chaitanya junior college ac campus',
+    ...googleMapsLinks(MAP_DURGAHMITTA_GIRLS, 14.41605053949927, 79.96061776858265, {
+      cid: '1549306766769666342',
+      placeName: 'krishna chaitanya junior college ( Durgahmitta girls)',
     }),
     suitableFor: 'Girls',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
@@ -519,9 +521,9 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'durgahmitta.boys@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120',
-    ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
-      cid: '2163777574222801891',
-      placeName: 'Krishna Chaitanya junior college ac campus',
+    ...googleMapsLinks(MAP_DURGAHMITTA_BOYS, 14.417043286047853, 79.95819667447368, {
+      cid: '12748778602850945786',
+      placeName: 'Krishna Chaitanya junior College (Durgahmitta Days & Residential Boys Campus)',
     }),
     suitableFor: 'Boys',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
@@ -537,7 +539,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'einstein.girls@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542',
-    ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
+    ...googleMapsLinks(MAP_EINSTEIN, 14.436664214043349, 79.97214346096726, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
     }),
@@ -555,7 +557,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'einstein.boys@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/ac%20clg%20boys.jpeg?updatedAt=1787981614290',
-    ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
+    ...googleMapsLinks(MAP_EINSTEIN, 14.436664214043349, 79.97214346096726, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
     }),
@@ -573,7 +575,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'buchireddypalem@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/DSC_0284.JPG.jpeg',
-    ...googleMapsLinks(MAP_BUCHI, 14.5379304, 79.8829399, {
+    ...googleMapsLinks(MAP_BUCHI, 14.537934668043004, 79.88065472962822, {
       cid: '7014636663634107258',
       placeName: 'Krishna Chaitanya Junior College',
     }),
@@ -591,7 +593,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'res.einstein.girls@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/kvr.jpeg?updatedAt=1786795637542',
-    ...googleMapsLinks(MAP_EINSTEIN, 14.4366419869599, 79.96979091451986, {
+    ...googleMapsLinks(MAP_EINSTEIN, 14.436664214043349, 79.97214346096726, {
       cid: '2163777574222801891',
       placeName: 'Krishna Chaitanya junior college ac campus',
     }),
@@ -609,7 +611,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'chandrahasa@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/boys%20hostel.jpeg?updatedAt=1786795637950',
-    ...googleMapsLinks(MAP_CHANDRAHASA, 14.4331009, 79.97058479357906, {
+    ...googleMapsLinks(MAP_CHANDRAHASA, 14.433100886033642, 79.97753707447401, {
       cid: '857197414172878010',
       placeName: 'Krishna Chaitanya junior College ( Chandra hasa campus) nellore',
     }),
@@ -627,7 +629,7 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'gomathy@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/gomathy%20.jpeg?updatedAt=1787982294308',
-    ...googleMapsLinks(MAP_GOMATHY, 14.429153805146619, 79.9835011946338),
+    ...googleMapsLinks(MAP_GOMATHY, 14.42902183791095, 79.98306016232968),
     suitableFor: 'Girls (Residential)',
     coursesOffered: ['MPC (EAPCET)'],
     facilities: ['Secure Girls Hostel', 'In-House Faculty Mentors', 'Home-Style Nutritious Food', 'Surveillance'],
@@ -642,9 +644,9 @@ export const CAMPUSES: Campus[] = [
     phone: '+91 92470 33334',
     email: 'res.dargamitta@kcjc.edu.in',
     image: 'https://ik.imagekit.io/tejasraju/durgahmitta%20boys.jpeg?updatedAt=1786795638120',
-    ...googleMapsLinks(MAP_DURGAHMITTA, 14.436675115743578, 79.9629271030426, {
-      cid: '2163777574222801891',
-      placeName: 'Krishna Chaitanya junior college ac campus',
+    ...googleMapsLinks(MAP_DURGAHMITTA_BOYS, 14.417043286047853, 79.95819667447368, {
+      cid: '12748778602850945786',
+      placeName: 'Krishna Chaitanya junior College (Durgahmitta Days & Residential Boys Campus)',
     }),
     suitableFor: 'Boys (Residential)',
     coursesOffered: ['MPC (EAPCET)', 'BiPC (EAPCET)', 'MEC', 'CEC'],
