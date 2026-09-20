@@ -10,4 +10,4 @@ Allow: /
 Disallow: /api/
 Disallow: /gemini-config.php
 
-Sitemap: https://kcjcnellore.com/sitemap.xml
+Sitemap: https://krishna-chaitanya-junior-college.vercel.app/sitemap.xml
